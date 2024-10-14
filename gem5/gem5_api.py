@@ -122,7 +122,7 @@ def single_submission(code, testcases, problem_id, timing_env, queue, override_f
             f.write(code)
         print(f"app cfg cstd {app.config['cstd']} app.config['optimization_flag']: {app.config['optimization_flag']}  override_flags: {override_flags }")
         cflags = app.config['cstd'] + ' ' + app.config['optimization_flag'] + override_flags
-        bin_path, accs = benchmarking.compile_and_check_outputs(
+        bin_path, accs, errors = benchmarking.compile_and_check_outputs(
             code_path=code_path,
             problem_id=problem_id,
             testcases_dir=app.config['testcases_dir'], 
@@ -192,7 +192,7 @@ def dual_submission(code_v0, code_v1, testcases, problem_id, timing_env, queue, 
         cflags_v0 = app.config['cstd'] + ' ' + app.config['optimization_flag'] + override_flags_v0 
         cflags_v1 = app.config['cstd'] + ' ' + app.config['optimization_flag'] + override_flags_v1
         
-        bin_path_v0, accs_v0 = benchmarking.compile_and_check_outputs(
+        bin_path_v0, accs_v0, errors = benchmarking.compile_and_check_outputs(
             code_path=code_path_v0,
             problem_id=problem_id,
             testcases_dir=app.config['testcases_dir'], 
@@ -200,7 +200,7 @@ def dual_submission(code_v0, code_v1, testcases, problem_id, timing_env, queue, 
             cflags=cflags_v0, 
             testcases=testcases, 
             cpu_number=cpu_number)
-        bin_path_v1, accs_v1 = benchmarking.compile_and_check_outputs(
+        bin_path_v1, accs_v1, errors = benchmarking.compile_and_check_outputs(
             code_path=code_path_v1,
             problem_id=problem_id,
             testcases_dir=app.config['testcases_dir'], 

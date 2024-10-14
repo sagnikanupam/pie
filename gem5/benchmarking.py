@@ -130,7 +130,7 @@ def compile_and_check_outputs(code_path, problem_id, testcases_dir, timeout=None
         logging.info(f"Compiled {code_path} to {bin_path}")
     except Exception as e:
         errors["compile"] = e
-        return None, {tc_no: 0 for tc_no in input_output_pairs.keys()}
+        return None, {tc_no: 0 for tc_no in input_output_pairs.keys()}, errors
     
     accs = {}    
     
