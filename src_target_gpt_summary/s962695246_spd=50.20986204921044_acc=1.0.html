@@ -1,0 +1,146 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <bits/stdc++.h><br><br>using namespace std;<br><br><br><br><br><br>int main() {<br><br>    int k, x;<br><br>    cin >> k >> x;<br><br>    int begin = x - (k-1);<br><br>    int end = x + (k-1);<br><br><br><br>    vector<int> v(2000001);<br><br>    for (int i = begin; i <= end; ++i) {<br><br>        cout << i << " "s;<br><br>    }<br><br>}
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 50.20986204921044 <br>
+#include <stdio.h><br><br>#define FOR(i, a, b) for(int i = (a); i < (b); i++)<br><br>#define rep(i, n) FOR(i, 0, n)<br><br><br><br>int main() {<br><br>    int k, x;<br><br>    scanf("%d %d", &k, &x);<br><br>    rep(i, k*2-1) {<br><br>        printf("%d ", x-(k-1)+i);<br><br>    }<br><br>    return 0;<br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 9.456199783539988 <br>
+#include <bits/stdc++.h><br><br>using namespace std;<br><br><br><br><br><br>int main() {<br><br>    int k, x;<br><br>    cin >> k >> x;<br><br>    int begin = x - (k-1);<br><br>    int end = x + (k-1);<br><br><br><br>    for (int i = begin; i <= end; ++i) {<br><br>        cout << i << " "s;<br><br>    }<br><br>}
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program reads two integers from the input, `k` and `x`. It then calculates two values, `begin` and `end`, which are respectively `k-1` less than and `k-1` more than `x`. 
+
+The program then creates a vector `v` of size 2000001, but this vector is not used in the program.
+
+Finally, the program prints out all the integers from `begin` to `end` inclusive, each followed by a space. In other words, it prints out a range of `2k-1` consecutive integers centered around `x`. 
+
+For example, if `k` is 3 and `x` is 7, the program will print out the numbers 5, 6, 7, 8, 9 (which are the numbers from `7 - (3-1)` to `7 + (3-1)`).
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization made here is not an algorithmic optimization, but rather a memory optimization. The algorithmic complexity of both the slow and fast programs is the same, which is O(k), where k is the input to the program. This is because the main operation of the program, the for loop, runs k times.
+
+In the slow version of the program, a vector of size 2000001 is created. This is a memory-intensive operation, as it requires allocating space for 2000001 integers. However, this vector is not actually used in the program, so this memory allocation is unnecessary.
+
+In the optimized version of the program, this vector is removed. This reduces the memory usage of the program, which can significantly improve its performance, especially if memory is a bottleneck. This is why the optimized version of the program is faster.
+
+In summary, the optimization made to the slow program to make it faster was to remove the unnecessary vector allocation. This reduced the memory usage of the program, which improved its performance.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is not algorithmic, but rather due to the use of more efficient functions and constructs in C++. The algorithmic complexity of both programs is O(k), where k is the input to the program. This is because both programs have a single loop that runs k times.
+
+Here are the optimizations made:
+
+1. Use of scanf and printf instead of cin and cout: The cin and cout operations in C++ are slower than scanf and printf in C. This is because cin and cout have to maintain compatibility with C++ streams, which adds overhead. On the other hand, scanf and printf are simple C functions that directly read from and write to the buffer.
+
+2. Avoiding unnecessary vector creation: In the slower version, a vector of size 2000001 is created, but it's not used anywhere in the program. This unnecessary creation and initialization of a large vector takes time. In the optimized version, this vector is removed.
+
+3. Use of macros for loops: The optimized version uses the FOR and rep macros to create loops. While this doesn't necessarily make the program faster, it makes the code cleaner and easier to understand.
+
+4. Direct calculation in printf: Instead of calculating the value to be printed in a separate step (as in the slower version), the optimized version calculates it directly in the printf statement. This reduces the number of operations in the program.
+
+5. The optimized version also removes the use of the "s" string literal in the cout statement. This is a minor optimization, but every little bit helps.
+
+In summary, the optimized version is faster due to the use of more efficient functions (scanf and printf instead of cin and cout), removal of unnecessary operations (vector creation), and cleaner code (use of macros for loops and direct calculation in printf).
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is not algorithmic, but rather due to the use of more efficient functions and macros in C++. The algorithmic complexity of both the slow and fast programs is O(k), where k is the input to the program. This is because both programs contain a single loop that runs k times.
+
+Here are the optimizations made to the slow program to make it faster:
+
+1. Use of scanf and printf instead of cin and cout: The cin and cout operations in C++ are slower than scanf and printf in C. This is because cin and cout have to maintain compatibility with C++ streams, which adds overhead. On the other hand, scanf and printf are simple C functions that directly write to or read from the buffer.
+
+2. Use of macros: The optimized program uses the FOR and rep macros to simplify the loop. While this doesn't necessarily make the program faster, it does make the code cleaner and easier to understand.
+
+3. Removal of unnecessary operations: In the slow program, the begin and end variables are calculated for each iteration of the loop. In the optimized program, these calculations are done only once, which reduces the number of operations the program has to perform.
+
+4. Use of pre-increment instead of post-increment: The optimized program uses pre-increment (++i) instead of post-increment (i++). While this doesn't make a significant difference in modern compilers, it can be faster in some cases because post-increment requires a temporary variable to hold the original value of i, while pre-increment does not.
+
+5. Removal of unnecessary string concatenation: The slow program uses " "s to add a space after each number, which involves string concatenation. The optimized program simply includes the space in the printf format string, which is faster.
+
+6. Use of return 0 at the end of main: While this doesn't affect performance, it's good practice to include return 0 at the end of main to indicate that the program has finished successfully.
+        </p>
+    </div>
+</body>
+    </html>
+    

@@ -1,0 +1,166 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <bits/stdc++.h><br><br>using namespace std;<br><br>typedef long long ll;<br><br>#define rep(i, a, b) for (int i = a; i < b; i++)<br><br>//'A' = 65, 'Z' = 90, 'a' = 97, 'z' = 122<br><br><br><br>int main() {<br><br>    int s;<br><br>    cin >> s;<br><br>    int a[2000000] = {};<br><br>    bool flag[10000] = {};<br><br>    a[0] = s;<br><br>    flag[a[0]] = true;<br><br>    int i = 1;<br><br>    while(1) {<br><br>        if (a[i - 1] % 2 == 0) a[i] = a[i - 1] / 2;<br><br>        else a[i] = a[i - 1] * 3 + 1;<br><br>        if (flag[a[i]]) {<br><br>            cout << i + 1 << endl;<br><br>            return 0;<br><br>        }<br><br>        flag[a[i]] = true;<br><br>        i++;<br><br>    }<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 50.224882520959994 <br>
+#include<stdio.h><br><br>#include<string.h><br><br>#include<algorithm><br><br>using namespace std;<br><br>long long a[1000005],b[1000005];<br><br>int main()<br><br>{<br><br>	int n;<br><br>	scanf("%d",&n);<br><br>	a[1]=n;<br><br>	int cnt=1;<br><br>	for(int i=2;i<=100000;i++)<br><br>	{<br><br>		if(a[i-1]%2==0)<br><br>			a[i]=a[i-1]/2;<br><br>		else<br><br>			a[i]=a[i-1]*3+1;<br><br>		for(int j=1;j<i;j++)<br><br>		{<br><br>			if(a[i]==a[j])<br><br>			{<br><br>				printf("%d",i);<br><br>				return 0;<br><br>			}<br><br>		}<br><br>	}<br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 9.43946343913659 <br>
+#include <bits/stdc++.h><br><br>using namespace std;<br><br>typedef long long ll;<br><br>#define rep(i, a, b) for (int i = a; i < b; i++)<br><br>//'A' = 65, 'Z' = 90, 'a' = 97, 'z' = 122<br><br><br><br>int main() {<br><br>    int s;<br><br>    cin >> s;<br><br>    set<int> used;<br><br>    int a = s;<br><br>    while(used.count(a) == 0) {<br><br>        used.insert(a);<br><br>        if (a % 2 == 0) a /= 2;<br><br>        else a = a * 3 + 1;<br><br>    }<br><br>    cout << used.size() + 1 << endl;<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is an implementation of the Collatz conjecture, also known as the 3n + 1 conjecture. The conjecture is a mathematical hypothesis that no matter what positive integer you start with, if you follow the rules of the conjecture, you will always eventually reach the number 1.
+
+The program starts by taking an integer input from the user and stores it in the variable 's'. It then initializes an array 'a' of size 2,000,000 with all elements as 0 and a boolean array 'flag' of size 10,000 with all elements as false.
+
+The first element of array 'a' is set to the input number 's' and the corresponding index in the 'flag' array is set to true. 
+
+The program then enters an infinite loop where it calculates the next number in the sequence based on the previous number. If the previous number is even, it divides it by 2. If it's odd, it multiplies it by 3 and adds 1. This new number is stored in the next position of the 'a' array.
+
+The program then checks if this new number has been encountered before by checking the 'flag' array. If it has (i.e., flag[a[i]] is true), it prints the current iteration number (i + 1) and ends the program. If it hasn't, it sets the corresponding index in the 'flag' array to true and increments the iteration counter 'i'.
+
+The program continues this process until it encounters a number that it has seen before, at which point it prints the number of iterations it took to reach this point and ends.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization here is algorithmic. The optimized version of the program uses a different data structure and approach to solve the problem, which results in a more efficient algorithm.
+
+The original program uses an array to store the sequence and a boolean array to keep track of the numbers that have already appeared. The size of these arrays is fixed and quite large, which can lead to inefficient memory usage. The time complexity of this program is O(n), where n is the number of iterations needed to find a repeated number.
+
+The optimized program, on the other hand, uses a set to store the sequence. A set in C++ is implemented as a binary search tree and has an average time complexity of O(log n) for insertions and lookups. This is more efficient than scanning through an array, especially when the array is large. The space complexity is also improved, as a set only stores the numbers that have actually appeared, unlike the boolean array in the original program which has a fixed size regardless of the input.
+
+Here are the optimizations made to the slow program:
+
+1. Replaced the array and boolean array with a set. This reduces memory usage and improves the time complexity for checking if a number has already appeared.
+
+2. Removed the index variable 'i'. In the optimized program, the size of the set is used to determine the number of iterations, eliminating the need for an extra variable.
+
+3. Simplified the loop condition. The original program uses a while(1) loop and breaks out of the loop when a repeated number is found. The optimized program checks for a repeated number in the loop condition itself, making the code cleaner and easier to understand.
+
+4. The calculation of the next number in the sequence is done directly on 'a', eliminating the need to access array elements, which can be slower.
+
+In summary, the optimized program is faster due to more efficient use of data structures and a cleaner, more efficient algorithm.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization in the faster version of the program is primarily algorithmic. The algorithmic complexity of the slow program is O(n^2), while the fast program also has a complexity of O(n^2). However, the faster program has a smaller constant factor, which makes it faster in practice.
+
+Here are the optimizations made:
+
+1. Array Size Reduction: In the slow program, the size of the array 'a' is 2000000, while in the fast program, it is reduced to 1000005. This reduces the amount of memory that the program needs to allocate and deal with, which can speed up the program.
+
+2. Removal of Unused Array: The slow program uses an array 'flag' to keep track of the numbers that have been seen. However, this is not necessary and the faster program removes this array. This reduces the memory usage and the time taken to update this array.
+
+3. Use of C-style Input/Output: The faster program uses scanf and printf for input and output, which are faster than cin and cout used in the slow program. This can significantly speed up the program if there is a lot of input or output.
+
+4. Loop Optimization: In the slow program, the while loop continues indefinitely until it finds a duplicate number. In the fast program, the for loop has a definite end, which can make it faster in some cases.
+
+5. Use of Standard Libraries: The slow program uses the bits/stdc++.h library, which includes all the standard C++ libraries. This can slow down the program because it includes many unnecessary libraries. The fast program only includes the libraries that it needs, which can speed up the program.
+
+In summary, the faster program is more efficient in terms of memory usage and input/output operations, and it uses a more efficient loop structure. However, the algorithmic complexity is the same for both programs. The faster program is faster in practice because it has a smaller constant factor in its time complexity.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program uses a set to store and check for previously seen numbers, while the optimized version uses an array. 
+
+The time complexity of the original program is O(n log n) because each insertion and search operation in a set takes O(log n) time, and these operations are performed n times. 
+
+The optimized program has a time complexity of O(n^2). This is because for each number generated, it checks all previously generated numbers to see if it's a duplicate. This involves two nested loops, leading to a quadratic time complexity. 
+
+However, the actual speedup comes from the fact that arrays in C++ are generally faster than sets due to lower overhead and better cache performance. This is because arrays store elements in contiguous memory locations, allowing efficient access to their elements. On the other hand, sets in C++ are typically implemented as binary search trees, which do not store elements in contiguous memory locations, leading to more cache misses and slower access times.
+
+Here are the optimizations made to the original program:
+
+1. Replaced the set with an array: As mentioned above, arrays are generally faster than sets due to lower overhead and better cache performance.
+
+2. Removed unnecessary operations: The original program unnecessarily increments the size of the set by 1 before printing it. This operation is removed in the optimized program.
+
+3. Used faster I/O methods: The optimized program uses scanf and printf for input and output, which are generally faster than cin and cout used in the original program.
+
+4. Removed unnecessary typedef and macro: The optimized program removes the unused typedef and macro from the original program, making it cleaner and easier to read.
+
+5. Changed the loop condition: The optimized program generates numbers and checks for duplicates in the same loop, while the original program generates a number, checks if it's a duplicate, and then generates the next number in the next iteration. This change makes the optimized program slightly faster.
+
+Please note that while the optimized program is faster for the given input size, it may not be faster for larger input sizes due to its quadratic time complexity.
+        </p>
+    </div>
+</body>
+    </html>
+    

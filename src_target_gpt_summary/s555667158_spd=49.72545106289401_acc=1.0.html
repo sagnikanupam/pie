@@ -1,0 +1,174 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <iostream><br><br>#include<stdio.h><br><br>#include<algorithm><br><br>#include<bits/stdc++.h><br><br>#include<cmath><br><br>#include<cstring><br><br>#include<cstdio><br><br>#include<string.h><br><br>#include<cmath><br><br>#define maxn 1000010<br><br>#define ll long long<br><br>#define inf 0x3f3f3f3f<br><br>using namespace std;<br><br><br><br>ll h[maxn];<br><br>ll dp[maxn];<br><br>ll n,k;<br><br><br><br>int main()<br><br>{<br><br>    memset(h,0,sizeof h);<br><br>    scanf("%lld%lld",&n,&k);<br><br><br><br>    for(int i=1;i<=n;i++)<br><br>    {<br><br>        dp[i]=inf;<br><br>        scanf("%lld",&h[i]);<br><br>    }<br><br>    dp[1]=0;<br><br>    dp[0]=0;<br><br>    dp[2]=abs(h[2]-h[1]);<br><br>    for(int i=2;i<=n;i++)<br><br>    {<br><br>        for(int j=i-1;j>=max(i-k,1ll);j--)<br><br>            dp[i]=min(dp[i],dp[j]+abs(h[i]-h[j]));<br><br>    }<br><br>    printf("%lld\n",dp[n]);<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 49.72545106289401 <br>
+#pragma GCC optimize("O3")<br><br>#include <cstdio><br><br>#include <cstring><br><br>#include <algorithm><br><br>#include <cmath><br><br>#include <vector><br><br>using namespace std;<br><br><br><br>const int maxn = 110, inf = 0x3f3f3f3f;<br><br>int n, k, h[maxn], dp[maxn];<br><br><br><br>int main() {<br><br>	int i, j;<br><br>	scanf("%d %d", &n, &k);<br><br>	for (i = 1; i <= n; ++i) scanf("%d", &h[i]);<br><br>	for (i = 2; i <= n; ++i) dp[i] = inf;<br><br>	for (i = 1; i <= n; ++i) {<br><br>		for (j = 1; j <= k; ++j) {<br><br>			if (i - j <= 0) break;<br><br>			dp[i] = min(dp[i], dp[i - j] + abs(h[i] - h[i - j]));<br><br>		}<br><br>	}<br><br>	printf("%d\n", dp[n]);<br><br>	return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 9.461124626317394 <br>
+#include <bits/stdc++.h><br><br>#include <string><br><br>#include <cstdlib><br><br>using namespace std;<br><br><br><br>#define READ                freopen("in.txt", "r", stdin)<br><br>#define WRITE               freopen("out.txt", "w", stdout)<br><br><br><br>#define si(a)               scanf("%d", &a)<br><br>#define sii(a,b)            scanf("%d %d", &a, &b)<br><br>#define siii(a,b,c)         scanf("%d %d %d", &a, &b, &c)<br><br><br><br>#define CLR(a)              memset(a, 0, sizeof(a))<br><br>#define SET(a)              memset(a, -1, sizeof(a))<br><br><br><br>#define PI                  acos(-1.0)<br><br><br><br>#define pb                  push_back<br><br>#define mp                  make_pair<br><br>#define SORT(v)             sort(v.begin(), v.end())<br><br>#define REV(v)              reverse(v.begin(), v.end())<br><br>#define FOR(i, n)           for(int i=0; i<n; i++)<br><br>#define FOR1(i, n)          for(int i=1; i<=n; i++)<br><br>#define ROF(i, n)           for(int i=n-1; i>=0; i--)<br><br>#define ROF1(i, n)          for(int i=n; i>=1; i--)<br><br>#define LOOP(i, x, y)       for(int i=x; i<=y; i++)<br><br>#define fastIO()            ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);<br><br><br><br><br><br>typedef long long              LL;<br><br>typedef unsigned long long     ULL;<br><br>typedef vector<int>            VI;<br><br>typedef pair<int, int>         PII;<br><br>typedef pair<string, int>      PSI;<br><br>typedef pair<char, int>        PCI;<br><br><br><br>const int MAX = 100005;<br><br>const LL LMAX = 12158598925;<br><br>const double eps = 1e-9;<br><br>const int INF = 0x3f3f3f3f;<br><br><br><br>int dx[] = {-1, 0, 1, 0};<br><br>int dy[] = {0, 1, 0, -1};<br><br>int kx[] = {1, 1, 2, 2, -1, -1, -2, -2};<br><br>int ky[] = {2, -2, 1, -1, 2, -2, 1, -1};<br><br><br><br>LL dp[MAX], arr[MAX];<br><br><br><br><br><br>int main()<br><br>{<br><br>//    READ;<br><br>//    WRITE;<br><br><br><br>    int n, k; sii(n, k);<br><br>    FOR1(i, n) scanf("%lld", &arr[i]);<br><br><br><br>    dp[1] = 0;<br><br><br><br>    for(int i=2; i<=n; i++){<br><br>        LL p = INT_MAX;<br><br>        for(int j=1; j<=min(k, i-1); j++)<br><br>            p = min(p, abs(arr[i] - arr[i-j]) + dp[i-j]);<br><br><br><br>        dp[i] = p;<br><br>    }<br><br><br><br>    cout << dp[n] << endl;<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is designed to solve a dynamic programming problem. 
+
+The problem is about a frog that starts at the first stone and wants to reach the last stone. The frog can jump from one stone to another, but it can only jump up to 'k' stones at a time. Each stone has a certain height 'h[i]'. The cost of jumping from one stone to another is the absolute difference in their heights. The goal is to find the minimum total cost for the frog to reach the last stone from the first one.
+
+Here's a step-by-step breakdown of what the program does:
+
+1. The program starts by initializing an array 'h' to store the heights of the stones and an array 'dp' to store the minimum cost to reach each stone.
+
+2. It then reads the number of stones 'n' and the maximum number of stones the frog can jump at a time 'k' from the user.
+
+3. The program reads the heights of the stones from the user and stores them in the 'h' array.
+
+4. It initializes the first and second elements of the 'dp' array. The cost to reach the first stone is 0 because the frog starts there. The cost to reach the second stone is the absolute difference in the heights of the first and second stones.
+
+5. The program then calculates the minimum cost to reach each stone from the 2nd to the 'n'th stone. For each stone, it considers all the stones within 'k' distance behind it and chooses the one that results in the minimum cost.
+
+6. Finally, the program prints the minimum cost to reach the last stone, which is stored in 'dp[n]'.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization in the second version of the program is primarily algorithmic. The algorithmic complexity of both programs is O(n*k), where n is the number of elements and k is the maximum difference between indices of two elements that can be considered for the calculation. However, the second program is more efficient due to several reasons.
+
+1. Reduced Overhead: The second program has less overhead in terms of library inclusion. The first program includes several libraries that are not used, which can slow down the compilation time.
+
+2. Efficient Memory Usage: The second program uses an array (arr) to store the input values, whereas the first program uses two arrays (h and dp). This reduces the memory footprint of the second program.
+
+3. Efficient Looping: In the second program, the inner loop in the calculation of dp only runs min(k, i-1) times, whereas in the first program, it runs i-1 times. This reduces the number of iterations, making the second program faster.
+
+4. Input/Output Operations: The second program uses scanf and cout for input and output operations, which are faster than cin and printf used in the first program.
+
+5. Code Cleanliness: The second program is cleaner and more readable, with less clutter and better use of macros. This doesn't necessarily make the program run faster, but it makes the code easier to understand and maintain, which can lead to more efficient development and debugging.
+
+In summary, the optimizations made to the slow program to make it faster include reducing library inclusion, using memory more efficiently, optimizing the looping structure, using faster input/output operations, and improving code cleanliness.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is primarily algorithmic, although there are also some minor code optimizations.
+
+The original program has a time complexity of O(n*k), where n is the number of elements and k is the maximum distance that can be jumped. This is because for each element, it checks the minimum cost to reach it from each of the previous k elements. 
+
+The optimized program also has a time complexity of O(n*k), but it has a smaller constant factor, which makes it faster in practice. This is because it only checks the minimum cost to reach the current element from the previous k elements, rather than from all previous elements.
+
+Here are the specific optimizations that were made:
+
+1. Algorithmic Optimization: The inner loop in the optimized program only goes back k steps, rather than going back all the way to the beginning. This reduces the number of iterations and hence speeds up the program.
+
+2. Code Optimization: The optimized program uses the GCC compiler's O3 optimization flag, which enables all optimization options and can significantly speed up the program.
+
+3. Code Optimization: The optimized program uses fewer libraries, which can reduce the program's startup time and memory usage.
+
+4. Code Optimization: The optimized program uses int instead of long long for the variables, which can be faster because int operations are usually faster than long long operations.
+
+5. Code Optimization: The optimized program uses a vector to store the heights, which can be faster and use less memory than an array.
+
+6. Code Optimization: The optimized program uses the scanf and printf functions for input and output, which are faster than cin and cout.
+
+In summary, the optimized program is faster due to a combination of algorithmic and code optimizations. The algorithmic optimization reduces the number of iterations, and the code optimizations reduce the startup time, memory usage, and operation time.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program has a time complexity of O(n*k), where n is the number of elements and k is the maximum distance between elements that can be considered. The optimized program also has a time complexity of O(n*k), but it has been optimized to reduce the constant factors, which can significantly improve performance for large inputs.
+
+Here are the optimizations that were made:
+
+1. The use of `#pragma GCC optimize("O3")` tells the GCC compiler to use level 3 optimizations, which can significantly improve performance. This includes inline function expansion, loop unrolling, and other optimizations.
+
+2. The use of `scanf` and `printf` instead of `cin` and `cout` for input and output. The C++ streams `cin` and `cout` are significantly slower than the C functions `scanf` and `printf`.
+
+3. The use of a smaller constant for infinity (`inf`). In the original program, the constant `INF` is defined as `0x3f3f3f3f`, which is much larger than necessary. In the optimized program, `inf` is defined as `0x3f3f3f3f`, which is still large enough to represent infinity in the context of this program, but smaller than `INF`. This can reduce the time taken to compare and assign values.
+
+4. The use of a single array `dp` for dynamic programming, instead of two arrays `dp` and `arr`. This reduces the memory footprint of the program, which can improve cache performance and reduce the time taken to allocate and deallocate memory.
+
+5. The removal of unnecessary macros and typedefs. These don't directly affect performance, but they can make the code cleaner and easier to understand, which can help with optimization.
+
+6. The removal of the `READ` and `WRITE` macros, which were used for file input and output. These are not necessary for the problem at hand and can slow down the program.
+
+7. The removal of the `fastIO()` macro, which was used to speed up `cin` and `cout`. Since `scanf` and `printf` are used instead, this macro is not necessary.
+
+8. The removal of the `CLR` and `SET` macros, which were used to initialize arrays. These are not necessary for the problem at hand and can slow down the program.
+
+9. The removal of the `dx`, `dy`, `kx`, and `ky` arrays, which were not used in the program. This reduces the memory footprint of the program, which can improve cache performance and reduce the time taken to allocate and deallocate memory.
+        </p>
+    </div>
+</body>
+    </html>
+    

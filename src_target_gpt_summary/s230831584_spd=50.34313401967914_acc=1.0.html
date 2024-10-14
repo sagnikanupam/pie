@@ -1,0 +1,158 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <bits/stdc++.h><br><br>using namespace std;<br><br>#define IO ios::sync_with_stdio(false), cin.tie(0)<br><br>typedef long long ll;<br><br>const int maxn = 1e6 + 5;<br><br>const int inf = 0x3f3f3f3f;<br><br>ll a[maxn];<br><br>ll dp[maxn];<br><br><br><br>int main()<br><br>{<br><br>    IO;<br><br>    int n, k;<br><br>    cin >> n >> k;<br><br>    for (int i = 1; i <= n; ++i)<br><br>        cin >> a[i];<br><br>    memset(dp, inf, sizeof(dp));<br><br>    dp[1] = 0;<br><br>    for (int i = 2; i <= n; ++i)<br><br>    {<br><br>        for (int j = 1; j <= k; ++j)<br><br>        {<br><br>            dp[i] = min(dp[i], dp[max(i - j, 1)] + abs(a[i] - a[max(i - j, 1)]));<br><br>        }<br><br>    }<br><br>    cout << dp[n] << endl;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 50.34313401967914 <br>
+#include<cstdio><br><br>#include<cstring><br><br>#include<algorithm><br><br>#define maxn 2005<br><br>#define inf 0x3f3f3f3f<br><br>using namespace std;<br><br>int n,k,a[maxn],dp[maxn];<br><br>int main()<br><br>{<br><br>    scanf("%d%d",&n,&k);<br><br>    for(int i=1;i<=n;i++)<br><br>        scanf("%d",&a[i]);<br><br>    for(int i=2;i<=n;i++)<br><br>    {<br><br>        int Max=inf;<br><br>        for(int j=1;j<=k&&i-j>=1;j++)<br><br>            Max=min(Max,dp[i-j]+abs(a[i]-a[i-j]));<br><br>        dp[i]=Max;<br><br>    }<br><br>    printf("%d\n",dp[n]);<br><br>    return 0;<br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 9.27806903303933 <br>
+    #include <bits/stdc++.h><br><br>     <br><br>    using namespace std;<br><br>     <br><br>    void __print(int x) {<br><br>        cerr << x;<br><br>    }<br><br>    void __print(long x) {<br><br>        cerr << x;<br><br>    }<br><br>    void __print(long long x) {<br><br>        cerr << x;<br><br>    }<br><br>    void __print(unsigned x) {<br><br>        cerr << x;<br><br>    }<br><br>    void __print(unsigned long x) {<br><br>        cerr << x;<br><br>    }<br><br>    void __print(unsigned long long x) {<br><br>        cerr << x;<br><br>    }<br><br>    void __print(float x) {<br><br>        cerr << x;<br><br>    }<br><br>    void __print(double x) {<br><br>        cerr << x;<br><br>    }<br><br>    void __print(long double x) {<br><br>        cerr << x;<br><br>    }<br><br>    void __print(char x) {<br><br>        cerr << '\'' << x << '\'';<br><br>    }<br><br>    void __print(const char *x) {<br><br>        cerr << '\"' << x << '\"';<br><br>    }<br><br>    void __print(const string &x) {<br><br>        cerr << '\"' << x << '\"';<br><br>    }<br><br>    void __print(bool x) {<br><br>        cerr << (x ? "true" : "false");<br><br>    }<br><br>     <br><br>    template<typename T, typename V><br><br>    void __print(const pair<T, V> &x) {<br><br>        cerr << '{'; __print(x.first);<br><br>        cerr << ','; __print(x.second);<br><br>        cerr << '}';<br><br>    }<br><br><br><br>    template<typename T><br><br>    void __print(const T &x) {<br><br>        int f = 0;<br><br>        cerr << '{';<br><br>        for (auto &i: x)<br><br>            cerr << (f++ ? "," : ""), __print(i);<br><br>         cerr << "}";<br><br>    }<br><br>    void _print() {<br><br>        cerr << "]\n";<br><br>    }<br><br>    template <typename T, typename... V><br><br>    void _print(T t, V... v) {<br><br>        __print(t); <br><br>        if (sizeof...(v))<br><br>            cerr << ", ";<br><br>        _print(v...);<br><br>    }<br><br>     <br><br>    #ifndef ONLINE_JUDGE<br><br>    #define debug(x...) cerr << "[" << #x << "] = ["; _print(x)<br><br>    #else<br><br>    #define debug(x...)<br><br>    #endif<br><br>     <br><br>    #define forn(i, n) for(int i = 0; i < n; i++)<br><br>    #define forw(i, w) for(int i = n; i >= 0; i--)<br><br>    #define dforn(i, a, b) for(int i = a; i < b; i++)<br><br>    #define dforw(i, b, a) for(int i = b; i >= a; i--)<br><br>    #define read(v) for(auto &i:v) cin >> i;<br><br>    #define all(v) v.begin(), v.end()<br><br>     <br><br>    typedef long long ll;<br><br>    typedef vector<int> vi;<br><br>    typedef vector<double> vd;<br><br>    typedef pair<int, int> pii;<br><br>     <br><br>    int n, k;<br><br>    vi arr, dp;<br><br>     <br><br>    int main(){<br><br>    	ios_base::sync_with_stdio(0);<br><br>    	cout.tie(0);cin.tie(0);<br><br>    	<br><br>    	cin >> n >> k;<br><br>     <br><br>    	arr.assign(n, 0);<br><br>    	dp.assign(n, 999999999);<br><br>    	dp[0] = 0;<br><br>    	read(arr);<br><br>     <br><br>    	forn(i, n)<br><br>    		for(int j = i+1; j < n && j < i+k+1; j++)<br><br>    			dp[j] = min(dp[j], dp[i]+abs(arr[j]-arr[i]));<br><br>     <br><br>    	cout << dp[n-1] << endl;	<br><br>    	return 0;<br><br>    }
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is designed to solve a dynamic programming problem. It reads two integers from the input, `n` and `k`. `n` is the size of an array and `k` is a parameter that will be used in the dynamic programming algorithm. Then, it reads `n` integers from the input and stores them in an array `a`.
+
+The program then initializes an array `dp` with a large value (`inf`). This array will be used to store the minimum cost to reach each position in the array `a`. The cost to reach the first position is set to 0.
+
+The program then iterates over each position in the array `a` from the second position to the last. For each position `i`, it calculates the cost to reach that position from each of the previous `k` positions and updates `dp[i]` with the minimum of these costs. The cost to move from position `j` to position `i` is the absolute difference between the values at these positions in the array `a`.
+
+Finally, the program outputs the minimum cost to reach the last position in the array `a`.
+
+In summary, this program calculates the minimum total cost to move from the first position to the last position in an array, where the cost to move from one position to another is the absolute difference between the values at these positions, and it is only possible to move from a position to one of the next `k` positions.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization in the second version of the program is primarily algorithmic. The original program has a time complexity of O(n*k), where n is the number of elements and k is the maximum distance between elements that can be considered for the minimum difference calculation. This is because for each element, the program checks up to k previous elements to find the minimum difference.
+
+The optimized version of the program also has a time complexity of O(n*k), but it is faster due to a more efficient implementation. The main difference is that the optimized version avoids unnecessary computations and uses more efficient data structures.
+
+Here are the optimizations made:
+
+1. Efficient Data Structures: The optimized version uses vectors (vi and dp) instead of arrays. Vectors in C++ are more dynamic and efficient than arrays.
+
+2. Efficient Looping: In the optimized version, the inner loop starts from i+1 and goes up to the minimum of n and i+k+1. This avoids unnecessary iterations when the remaining elements are less than k.
+
+3. Efficient Input Reading: The optimized version uses the function read(v) to read the input into the vector, which is more efficient than reading each element individually.
+
+4. Debugging and Printing: The optimized version includes a set of debugging and printing functions that are more efficient and flexible than the simple cout and cin operations in the original program.
+
+5. Memory Allocation: The optimized version assigns memory to the vectors arr and dp only once, at the beginning of the program. This is more efficient than the repeated memory allocation in the original program.
+
+In summary, the optimized version of the program is faster due to a more efficient implementation of the same algorithm, using more efficient data structures, looping, input reading, debugging, printing, and memory allocation.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is algorithmic. The algorithmic complexity of both programs is O(n*k), where n is the number of elements and k is the maximum distance for comparison. However, the optimized version has a smaller constant factor, which makes it faster in practice.
+
+Here are the optimizations that were made:
+
+1. Input/Output Operations: The slow version uses cin and cout for input and output, which are slower than scanf and printf used in the optimized version. This is because cin and cout have additional overhead due to synchronization with stdio, which is not present with scanf and printf.
+
+2. Memory Allocation: The slow version uses a long long array for dp and a, which takes more memory (8 bytes per element) than the int array used in the optimized version (4 bytes per element). This can lead to more cache misses and slower memory access.
+
+3. Unnecessary Operations: In the slow version, the program calculates max(i - j, 1) twice in each inner loop iteration. The optimized version calculates it only once, which reduces the number of operations.
+
+4. Use of Constants: The slow version uses a constant maxn = 1e6 + 5, which is larger than the maximum value of n (2005). The optimized version uses a smaller constant, which can lead to faster memory access due to better cache utilization.
+
+5. Initialization of dp array: The slow version initializes the dp array with inf using memset, which is an O(n) operation. The optimized version does not do this, as it ensures that dp[i] is always set before it is used.
+
+6. Use of Standard Library: The slow version includes the entire standard library with #include <bits/stdc++.h>, which can slow down the compilation time. The optimized version only includes the necessary libraries, which can speed up the compilation time.
+
+In summary, the optimized version is faster due to more efficient input/output operations, better memory usage, fewer unnecessary operations, better use of constants, and more efficient use of the standard library.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program has a time complexity of O(n*k), while the optimized version also has a time complexity of O(n*k). However, the optimized version has a smaller constant factor, which makes it faster in practice.
+
+Here are the optimizations that were made:
+
+1. **Input/Output Optimization**: The optimized version uses `scanf` and `printf` for input and output, which are faster than `cin` and `cout` in C++. This is because `cin` and `cout` are synchronized with `stdio`, which means they maintain consistency with C-style standard input and output. This synchronization adds overhead and slows down the program. In the optimized version, this synchronization is not present, which speeds up the program.
+
+2. **Memory Allocation Optimization**: In the original program, vectors `arr` and `dp` are dynamically allocated using `assign`. In the optimized version, arrays `a` and `dp` are statically allocated, which is faster because dynamic memory allocation involves system calls and can cause page faults, both of which add overhead.
+
+3. **Loop Optimization**: In the original program, the inner loop iterates from `i+1` to `n`, but it breaks when `j >= i+k+1`. In the optimized version, the inner loop iterates from `1` to `k` and breaks when `i-j < 1`. This means the optimized version does fewer iterations, which speeds up the program.
+
+4. **Variable Initialization Optimization**: In the original program, `dp` is initialized with `999999999`. In the optimized version, `dp` is not explicitly initialized, which means it defaults to `0`. This is faster because it avoids unnecessary writes to memory.
+
+5. **Algorithmic Optimization**: In the original program, the minimum value is calculated by comparing `dp[j]` and `dp[i]+abs(arr[j]-arr[i])` for each `j`. In the optimized version, the minimum value is calculated by comparing `Max` and `dp[i-j]+abs(a[i]-a[i-j])` for each `j`. This means the optimized version does fewer additions and absolute value calculations, which speeds up the program.
+        </p>
+    </div>
+</body>
+    </html>
+    

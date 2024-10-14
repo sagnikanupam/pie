@@ -1,0 +1,172 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <bits/stdc++.h><br><br>using namespace std;<br><br>typedef long long int ll;<br><br>const int INF = 1000000000;<br><br>#define REP(i,s,n) for(int i=(int)(s);i<(int)(n);i++)<br><br>#define rep(i,n) REP(i, 0, n)<br><br>int dp[1001][1001];<br><br>int main(){<br><br>    cin.tie(0);<br><br>    ios::sync_with_stdio(false);<br><br>    string a, b;<br><br>    cin >> a >> b;<br><br>    int n = a.size(), m = b.size();<br><br>    memset(dp, 0, sizeof(dp));<br><br>    rep(i, m + 1) dp[0][i] = i;<br><br>    rep(i, n + 1) dp[i][0] = i;<br><br>    REP(i, 1, n + 1) REP(j, 1, m + 1){<br><br>        dp[i][j] = dp[i - 1][j - 1];<br><br>        if(a[i - 1] != b[j- 1]) dp[i][j] += 1;<br><br>        int temp = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1);<br><br>        dp[i][j] = min(temp, dp[i][j]);<br><br>    }<br><br>    cout << dp[n][m] << endl;<br><br>    return 0;<br><br>}
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 27.52861185407805 <br>
+#include <cstdio><br><br>#include <cstring><br><br>const int N=1005;<br><br>int n,m,dp[N][N];<br><br>char a[N],b[N];<br><br>int min(int a,int b){return a<b?a:b;}<br><br>int main()<br><br>{<br><br>	scanf("%s%s",a+1,b+1);<br><br>	n=strlen(a+1),m=strlen(b+1);<br><br>	for(int i=1;i<=n;i++) dp[i][0]=i;<br><br>	for(int i=1;i<=m;i++) dp[0][i]=i;<br><br>	for(int i=1;i<=n;i++)<br><br>		for(int j=1;j<=m;j++)<br><br>		{<br><br>			dp[i][j]=dp[i-1][j-1];<br><br>			if(a[i]!=b[j]) dp[i][j]++;<br><br>			dp[i][j]=min(dp[i][j],min(dp[i-1][j]+1,dp[i][j-1]+1));<br><br>		}<br><br>	printf("%d",dp[n][m]);<br><br>	return 0;<br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 5.093773322521034 <br>
+class _in{struct my_iterator{int it;const bool rev;explicit constexpr my_iterator(int it_, bool rev=false):it(it_),rev(rev){}constexpr int operator*(){return it;}constexpr bool operator!=(my_iterator& r){return it!=r.it;}void operator++(){rev?--it:++it;}};const my_iterator i,n;public:explicit constexpr _in(int n):i(0),n(n){}explicit constexpr _in(int i,int n):i(i,n<i),n(n){}constexpr const my_iterator& begin(){return i;}constexpr const my_iterator& end(){return n;}};<br><br><br><br>#include <bits/stdc++.h><br><br>using namespace std;<br><br><br><br>int main() {<br><br>    string s1, s2;<br><br>    cin >> s1 >> s2;<br><br>    int N = s1.size(), M = s2.size();<br><br>    vector<vector<int>> dp(N + 1, vector<int>(M + 1, 0));<br><br>    for(int i : _in(N + 1)) dp[i][0] = i;<br><br>    for(int j : _in(M + 1)) dp[0][j] = j;<br><br>    for(int i : _in(N)) for(int j : _in(M)) {<br><br>        dp[i + 1][j + 1] = dp[i][j];<br><br>        if(s1[i] != s2[j]) ++dp[i + 1][j + 1];<br><br>        int temp = min(dp[i][j + 1] + 1, dp[i + 1][j] + 1);<br><br>        dp[i + 1][j + 1] = min(dp[i + 1][j + 1], temp);<br><br>    }<br><br>    cout << dp[N][M] << endl;<br><br>}
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program calculates the minimum number of operations (insertions, deletions, and substitutions) required to transform one string into another. This is also known as the Levenshtein distance or edit distance.
+
+Here's a step-by-step breakdown of what the program does:
+
+1. It first includes the necessary libraries and defines some constants and macros.
+
+2. It then declares a 2D array `dp` of size 1001x1001. This array will be used to store the intermediate results of the calculation.
+
+3. In the `main` function, it sets up the input and output to be more efficient by tying `cin` to `0` and setting `ios::sync_with_stdio` to `false`.
+
+4. It reads two strings `a` and `b` from the input.
+
+5. It initializes the `dp` array with zeros using the `memset` function.
+
+6. It then initializes the first row and the first column of the `dp` array. The first row is initialized with the indices of the columns (i.e., `dp[0][i] = i`) and the first column is initialized with the indices of the rows (i.e., `dp[i][0] = i`). This is because transforming an empty string to a string of length `i` or `j` requires `i` or `j` operations, respectively.
+
+7. It then fills up the rest of the `dp` array using a nested loop. For each cell `dp[i][j]`, it first sets it equal to the value of the cell diagonally above and to the left (`dp[i - 1][j - 1]`). If the corresponding characters in the two strings are not equal, it increments the value of the cell by 1. It then sets the value of the cell to the minimum of its current value and the values of the cell above it and to its left incremented by 1. This is because each of these cells represents a possible operation: substitution, deletion, or insertion.
+
+8. Finally, it prints the value of the bottom-right cell of the `dp` array, which represents the minimum number of operations required to transform the first string into the second.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization in the faster version of the program is not algorithmic, but rather it's a code optimization. The algorithmic complexity of both the slow and fast programs remains the same, which is O(N*M), where N and M are the sizes of the input strings. This is because both versions of the program use the same dynamic programming approach to solve the problem.
+
+The optimizations made in the faster version of the program are as follows:
+
+1. Use of `std::vector` instead of raw arrays: In C++, `std::vector` is generally faster than raw arrays because it provides dynamic size and efficient memory allocation and deallocation. It also provides safety features such as bounds checking.
+
+2. Removal of unnecessary macros: The faster version of the program removes the `REP` and `rep` macros and replaces them with range-based for loops. This makes the code cleaner and easier to understand, and it may also improve performance because the compiler can optimize range-based for loops more effectively.
+
+3. Removal of unnecessary `typedef` and `const int INF`: These are not used in the program, so removing them makes the code cleaner and potentially faster because it reduces the amount of code that the compiler has to parse.
+
+4. Removal of `cin.tie(0)` and `ios::sync_with_stdio(false)`: These are used to optimize input/output in C++, but they are not necessary in this program because it does not mix C and C++ style input/output. Removing them makes the code cleaner and potentially faster because it reduces the amount of code that the compiler has to parse.
+
+5. Use of pre-increment (`++i`) instead of post-increment (`i++`): In C++, pre-increment is generally faster than post-increment because it does not require a temporary variable to hold the original value of the variable.
+
+6. Use of a custom iterator class `_in`: This class provides a convenient way to iterate over a range of integers. It may improve performance because it allows the compiler to optimize the loop more effectively.
+
+In summary, the faster version of the program is faster because it uses `std::vector` instead of raw arrays, removes unnecessary macros, typedefs, and constants, removes unnecessary input/output optimizations, uses pre-increment instead of post-increment, and uses a custom iterator class. These optimizations make the code cleaner, easier to understand, and potentially faster.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization in the faster version of the program is not algorithmic, but rather due to more efficient I/O operations and memory usage. The algorithmic complexity of both the slow and fast programs remains the same, which is O(n*m), where n and m are the lengths of the input strings. This is because both versions use the same dynamic programming approach to solve the problem.
+
+Here are the optimizations made in the faster version:
+
+1. I/O Operations: The slow version uses cin and cout for input and output, which are slower compared to scanf and printf used in the faster version. This is because cin and cout have additional overhead due to synchronization with stdio, which is not present with scanf and printf.
+
+2. String Handling: The slow version uses std::string to handle strings, which is slower and uses more memory compared to char arrays used in the faster version. This is because std::string has additional overhead for features like dynamic sizing and copy-on-write, which are not used in this program.
+
+3. Memory Usage: The slow version uses memset to initialize the dp array, which is an additional O(n*m) operation. The faster version avoids this by initializing the necessary elements of the dp array in the for loops.
+
+4. Function Calls: The slow version uses the min function from the standard library, which could have additional overhead compared to the custom min function used in the faster version.
+
+5. The faster version also avoids using unnecessary macros and typedefs, which can make the code cleaner and potentially faster by reducing the amount of code the compiler has to parse.
+
+In summary, the faster version of the program is more efficient due to better I/O operations, more efficient string handling, better memory usage, fewer function calls, and cleaner code.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization in the faster version of the program is not algorithmic, but rather due to more efficient use of the C++ language and its libraries. The algorithmic complexity of both the slow and fast programs is the same, O(N*M), where N and M are the lengths of the input strings. This is because both programs use the same dynamic programming approach to solve the problem.
+
+Here are the optimizations made in the faster version:
+
+1. Use of C-style I/O: The faster version uses scanf and printf for input and output, which are faster than cin and cout used in the slower version. This is because cin and cout have additional overhead due to synchronization with C's standard streams (stdin, stdout, stderr).
+
+2. Use of C-style strings: The faster version uses C-style strings (char arrays) instead of std::string. C-style strings are generally faster because they are simpler and have less overhead.
+
+3. Avoiding unnecessary object creation: The slower version uses a custom iterator class (_in) to iterate over the ranges. This adds unnecessary overhead due to object creation and destruction. The faster version simply uses integer indices to iterate over the arrays.
+
+4. Use of a custom min function: The faster version uses a custom min function instead of std::min. This could potentially be faster due to inlining and avoiding the overhead of a function call.
+
+5. Avoiding unnecessary memory allocation: The slower version uses std::vector to create the dp array, which has additional overhead compared to a simple C-style array used in the faster version.
+
+6. Avoiding unnecessary initialization: The slower version initializes the dp array with 0s, which is unnecessary because the dp array is fully filled in the subsequent loops.
+
+7. Avoiding unnecessary namespace usage: The slower version uses the std namespace, which can slow down the lookup of functions and variables. The faster version avoids this by using specific functions and variables without the namespace.
+
+In summary, the faster version of the program is more efficient due to better use of the C++ language and its libraries, not due to an algorithmic optimization. The algorithmic complexity of both versions is the same.
+        </p>
+    </div>
+</body>
+    </html>
+    

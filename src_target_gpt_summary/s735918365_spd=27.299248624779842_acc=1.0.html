@@ -1,0 +1,164 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <bits/stdc++.h><br><br>#include <sstream><br><br>using namespace std;<br><br>#define pr(x) cout<<x<br><br>#define prs cout<<" "<br><br>#define prn cout<<"\n"<br><br>#define sc(x) cin>>x<br><br>#define ll long long int<br><br><br><br>int n,k;<br><br>int a[1000005];<br><br>int dp[1000005];<br><br><br><br>int solve(int i)<br><br>{ <br><br>    //cout<<n<<k<<endl;<br><br>    if(i == (n-1)) return 0;<br><br>    if(i >= n) return INT_MAX;<br><br>    if(dp[i] != -1)  return dp[i];<br><br>    vector<int> v(k,INT_MAX);<br><br>    for(int j=1; j<=k; j++)<br><br>    {<br><br>        if(j+i > n-1)<br><br>         break;<br><br>        else<br><br>         v[j-1] = abs(a[i] - a[i+j])+solve(i+j);<br><br>    }<br><br>    dp[i] = *min_element(v.begin(), v.end());<br><br>    v.clear();<br><br>    return dp[i];<br><br>}<br><br><br><br>int main()<br><br>{<br><br>    ios :: sync_with_stdio(false); cin.tie(0);<br><br>    int t=1;<br><br>    //cin >> t;<br><br>    for(int i9 = 1; i9 <= t; i9++)<br><br>    {<br><br>        cin>>n>>k;<br><br>        memset(dp, -1, sizeof(dp));<br><br>        for(int i=0; i<n; i++)<br><br>          cin>>a[i];<br><br>        cout<<solve(0)<<endl;<br><br>        //cout<<"Cae #"<<i9<<": "<<res<<endl;<br><br>    }<br><br>}
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 27.299248624779842 <br>
+#include <cstdio><br><br>#include <algorithm><br><br>#define MAXN 1000005<br><br>using namespace std;<br><br>int n,k;<br><br>int a[MAXN],dp[MAXN];<br><br>int main() {<br><br>    scanf("%d%d",&n,&k);<br><br>    for (int i=0;i<n;i++) scanf("%d",&a[i]);<br><br>    for (int i=1;i<n;i++) dp[i]=1e9;<br><br>    for (int i=0;i<n-1;i++) for (int j=1;j<=k;j++) if (i+j<n) dp[i+j]=min(dp[i+j],dp[i]+abs(a[i]-a[i+j]));<br><br>    printf("%d\n",dp[n-1]);<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 2.8188469473796682 <br>
+#include<bits/stdc++.h><br><br>#define F first<br><br>#define S second<br><br>#define REP(i, a, b, c) for(int i = a; i <= b; i+=c)<br><br>#define pb push_back<br><br>#define int long long int<br><br>#define MOD 1000000007<br><br>using namespace std;<br><br><br><br>/*class Graph {<br><br><br><br>  map<int, list<pair<int, int> > > l;<br><br><br><br>public:<br><br>  void addEdge(int x, int y, int cost) {<br><br>    l[x].pb(make_pair(y, cost));<br><br>    l[y].pb(make_pair(x, cost));<br><br>  }<br><br><br><br>  int dfs_helper(int n, int node, map<int, int> &vis, map<int, int> &count, int &ans) {<br><br>    //cout << node << " " ;<br><br>    vis[node] = 1;<br><br>    count[node] = 1;<br><br>    for (auto m : l[node]) {<br><br>      if (!vis[m.F]) {<br><br>        vis[m.F] = 1;<br><br>        count[node] += dfs_helper(m.F, vis, count, ans);<br><br>        ans += 2 * min(count[node], n - count[node]) * m.S.S;<br><br>      }<br><br>    }<br><br>    return count[node];<br><br>  }<br><br><br><br>  void dfs() {<br><br>    map<int, int> vis;<br><br>    map<int, int> count;<br><br>    int ans = 0;<br><br>    dfs_helper(0, vis, count, ans);<br><br>    cout << ans << endl;<br><br>  }<br><br><br><br>};*/<br><br><br><br>int dp[100005];<br><br><br><br>int f(int a[], int i, int n, int k)<br><br>{<br><br>  //cout << i << endl;<br><br>  if (i == (n - 1))<br><br>    return 0;<br><br>  if (i >= n)<br><br>    return INT_MAX;<br><br>  if (dp[i] != -1)<br><br>    return dp[i];<br><br>  int ans = INT_MAX;<br><br>  for (int j = 1; j <= k; j++)<br><br>  {<br><br>    if (i + j <= n - 1)<br><br>    {<br><br>      ans = min(ans, abs(a[i] - a[i + j]) + f(a, i + j, n, k));<br><br>    }<br><br>  }<br><br>  return dp[i] = ans;<br><br>}<br><br><br><br><br><br>int32_t main()<br><br>{<br><br>  ios :: sync_with_stdio(false); cin.tie(0);<br><br>  int t = 1;<br><br>  //cin >> t;<br><br>  for (int i9 = 1; i9 <= t; i9++)<br><br>  {<br><br>    /* Graph G;<br><br>     int n, x, y, cost;<br><br>     cin >> n;<br><br>     while (n--) {<br><br>       cin >> x >> y >> cost;<br><br>       G.addEdge(x, y, cost);<br><br>     }<br><br>     G.dfs();*/<br><br>    //freopen("ouputnew.txt", "w", stdout);<br><br>    //flclose(stdout);<br><br>    memset(dp, -1 , sizeof (dp));<br><br>    int n, k;<br><br>    cin >> n >> k;<br><br>    int a[n];<br><br>    for (int i = 0; i < n; i++)<br><br>      cin >> a[i];<br><br>    cout << f(a, 0, n, k);<br><br>  }<br><br>}<br><br><br>
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is designed to solve a dynamic programming problem. The problem is about finding the minimum total cost to reach the end of a sequence of numbers, given that from any position, you can move to any of the next 'k' positions. The cost of moving from one position to another is the absolute difference between the numbers at these two positions.
+
+Here's a step-by-step breakdown of what the program does:
+
+1. The program starts by defining some macros for common operations like printing and scanning, and defining some global variables.
+
+2. The `solve` function is the core of the program. It takes an index 'i' as an argument and returns the minimum cost to reach the end of the sequence from this index. It uses memoization to store the results of subproblems in the 'dp' array to avoid redundant calculations.
+
+3. The function first checks if the current index is the last index of the sequence. If it is, it returns 0 because no cost is needed to reach the end from the end itself.
+
+4. If the current index is beyond the end of the sequence, it returns a large number (INT_MAX) to indicate that this is not a valid solution.
+
+5. If the function has been called before with the same index, it returns the previously computed result.
+
+6. The function then calculates the cost of moving to each of the next 'k' positions and recursively calls itself to find the cost from those positions to the end. It stores these costs in a vector 'v'.
+
+7. The function then finds the minimum cost in the vector 'v', stores it in the 'dp' array for future reference, and returns it.
+
+8. The `main` function reads the number of test cases, the length of the sequence 'n', and the maximum step size 'k'. It then reads the sequence of numbers and calls the `solve` function with the first index of the sequence. It finally prints the minimum total cost to reach the end of the sequence.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization in the faster version of the program is algorithmic. The main difference between the two versions is how they handle the recursive function calls and the use of the vector in the slower version.
+
+In the slower version, a vector `v` is created in each recursive call to the `solve` function. This vector is filled with the results of the recursive calls and then the minimum element is found. This operation is costly both in terms of time and space complexity. The time complexity is O(n*k) and the space complexity is O(n) due to the use of the vector and the recursion stack.
+
+In the faster version, the vector is removed and instead a single integer `ans` is used to keep track of the minimum result. This reduces the space complexity to O(1) for each recursive call. The time complexity remains the same O(n*k), but the constant factors are reduced due to the removal of the vector operations.
+
+In summary, the optimizations made to the slower program to make it faster are:
+
+1. Removed the use of the vector `v` in the recursive function, reducing space complexity and time spent on vector operations.
+2. Used a single integer `ans` to keep track of the minimum result, reducing space complexity and time spent on finding the minimum element in the vector.
+3. Removed unnecessary code and comments, making the program cleaner and easier to understand.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program has a time complexity of O(n*k^2) due to the nested loops and the use of min_element function inside the solve function. The optimized version has a time complexity of O(n*k), which is significantly faster.
+
+Here are the optimizations that were made:
+
+1. Algorithmic Optimization: The original program uses a recursive function to solve the problem, which can be quite slow due to the overhead of function calls and the use of a vector to store temporary results. The optimized version uses a dynamic programming approach with a single loop, which is much faster and more memory efficient.
+
+2. Input/Output Optimization: The original program uses cin and cout for input and output, which are slower compared to scanf and printf used in the optimized version. This is because cin and cout have additional overhead due to their synchronization with C++ streams.
+
+3. Memory Optimization: The original program uses a vector to store temporary results in each recursive call, which is cleared after each use. This can lead to a lot of unnecessary memory allocation and deallocation. The optimized version avoids this by using a single array for dynamic programming.
+
+4. Removal of unnecessary code: The original program has some unnecessary code like the macros for printing and scanning, and the use of ios::sync_with_stdio(false) and cin.tie(0) which are not needed in this case. The optimized version removes all these unnecessary parts.
+
+5. Use of constants: The optimized version uses a constant for the maximum array size, which can be faster and safer than using a hard-coded value.
+
+In summary, the optimized version is faster due to a more efficient algorithm, faster input/output methods, better memory usage, and cleaner code.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is algorithmic. The original program uses a recursive function to solve the problem, which can lead to a lot of repeated calculations. The optimized version uses dynamic programming to avoid these repeated calculations, which makes it significantly faster.
+
+The time complexity of the slow program is O(n*k*n), where n is the size of the array and k is the maximum step size. This is because for each element in the array, the function could potentially be called for each of the next k elements, and each function call involves a loop of size n.
+
+The time complexity of the fast program is O(n*k), because it uses a loop of size n and within that loop, it potentially updates the dp array for each of the next k elements. This is a significant improvement over the slow program.
+
+Here are the optimizations that were made:
+
+1. The recursive function was replaced with a loop. This avoids the overhead of function calls and allows the program to use a dp array to store intermediate results, which can be reused later.
+
+2. The dp array was initialized with a large value for all elements except the first one. This makes it easier to update the dp array in the loop, because we don't need to check if the dp value has been set before.
+
+3. The input was read using scanf instead of cin. This is a minor optimization, but scanf is generally faster than cin in C++.
+
+4. The output was printed using printf instead of cout. Again, this is a minor optimization, but printf is generally faster than cout in C++.
+
+5. The program uses less memory. The slow program uses two maps to keep track of visited nodes and counts, while the fast program only uses a single array. This reduces the memory usage and also makes the program faster, because accessing elements in an array is generally faster than accessing elements in a map.
+        </p>
+    </div>
+</body>
+    </html>
+    

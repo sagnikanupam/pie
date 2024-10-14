@@ -1,0 +1,168 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <bits/stdc++.h><br><br>using namespace std;<br><br><br><br>int main() {<br><br>  int s; cin>>s;<br><br>  vector<int> A(pow(10,6)+1);<br><br>  A[0]=s;<br><br>  int i=0;<br><br>  while (true) <br><br>  {<br><br>    if (A[i]%2 == 0) <br><br>    {<br><br>      A[i+1] = A[i]/2;<br><br>    }<br><br>    else <br><br>    {<br><br>      A[i+1] = 3*A[i]+1;<br><br>    }<br><br>    i++;<br><br><br><br>    for (int j=0; j<i; j++) <br><br>    {<br><br>      if (A[j] == A[i]) {<br><br>        cout << i+1 << endl;<br><br>        return 0;<br><br>      }<br><br>    }<br><br>  }<br><br>}
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 27.382041215713144 <br>
+#include <stdio.h><br><br>int main()<br><br>{<br><br>    int s,c=1;<br><br>    scanf("%d",&s);<br><br>    while(s!=4&&s!=2&&s!=1)<br><br>    {<br><br>        if(s%2!=0)<br><br>        {<br><br>            s=3*s+1;<br><br>        }<br><br>        else<br><br>        {<br><br>            s=s/2;<br><br>        }<br><br>        c++;<br><br>    }<br><br>    printf("%d",c+3);<br><br>    return 0;<br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 5.044861626238633 <br>
+#include <bits/stdc++.h><br><br>using namespace std;<br><br>typedef long long ll;<br><br>template<class T> inline bool chmax(T& a, T b) { if (a < b) { a = b; return 1; } return 0; }<br><br>template<class T> inline bool chmin(T& a, T b) { if (a > b) { a = b; return 1; } return 0; }<br><br><br><br>const ll INF=(1LL<<60);<br><br>const int mod=1000000007;<br><br><br><br>int main(){<br><br>    int s; cin >> s;<br><br>    set<int> se;<br><br>    se.insert(s);<br><br>    int pre=s;<br><br>    int now;<br><br>    int id=1;<br><br><br><br>    while(true){<br><br>        id++;<br><br>        if(pre%2==0) now=pre/2;<br><br>        else now=3*pre+1;<br><br><br><br>        if(se.find(now)!=se.end()){<br><br>            cout << id << endl;<br><br>            return 0;<br><br>        }<br><br><br><br>        se.insert(now);<br><br>        pre=now;<br><br><br><br>    }<br><br>}
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is an implementation of the Collatz conjecture, also known as the 3n + 1 conjecture. The conjecture is a mathematical hypothesis that no matter what positive integer you start with, if you keep applying a certain set of rules, you will eventually reach the number 1.
+
+Here's how the program works:
+
+1. It starts by taking an integer input from the user and stores it in the variable `s`.
+
+2. It then creates a vector `A` of size 10^6 + 1, and sets the first element of `A` to be `s`.
+
+3. The program enters an infinite loop where it applies the following rules to the current number `A[i]`:
+
+   - If `A[i]` is even, it divides it by 2 and stores the result in `A[i+1]`.
+   
+   - If `A[i]` is odd, it multiplies it by 3, adds 1, and stores the result in `A[i+1]`.
+
+4. After calculating `A[i+1]`, the program checks if `A[i+1]` has appeared before in the sequence by comparing it with all previous elements of `A`.
+
+5. If `A[i+1]` has appeared before, it prints the index `i+1` (which represents the number of steps taken to reach a number that has already appeared in the sequence) and then terminates the program.
+
+This program is essentially trying to find the number of steps it takes for a sequence starting with `s` to reach a number that has already appeared in the sequence, according to the rules of the Collatz conjecture.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization here is algorithmic. The main difference between the two programs is the way they check for repeated numbers. The slower program uses a vector and a nested loop to check for repetitions, while the faster program uses a set and a single loop.
+
+In terms of algorithmic complexity:
+
+1. The slower program has a time complexity of O(n^2) because it uses a nested loop to check for repeated numbers. Each iteration of the outer loop potentially involves iterating through all the previous elements, leading to quadratic time complexity.
+
+2. The faster program has a time complexity of O(n log n) because it uses a set to check for repeated numbers. Inserting an element into a set and checking for an element's existence in a set both have a time complexity of O(log n), so the overall time complexity is linearithmic.
+
+The optimizations made to the slower program to make it faster are:
+
+1. Replacing the vector with a set: In C++, a set is implemented as a binary search tree. Inserting an element into a set and checking for an element's existence in a set are both faster than doing the same operations on a vector.
+
+2. Removing the nested loop: The faster program only uses a single loop to generate the sequence and check for repeated numbers. This reduces the time complexity from quadratic to linearithmic.
+
+3. Using a variable to hold the previous number: The faster program uses a variable to hold the previous number in the sequence, which avoids the need to access the last element of the set, further improving performance.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The optimized version of the program is faster because it reduces the amount of computation and memory usage.
+
+The original program has a time complexity of O(n^2) because of the nested loop where it checks if the current number has appeared before. This is done by iterating through all previous numbers for each new number. The space complexity is also high because it stores all previous numbers in a vector.
+
+The optimized program, on the other hand, has a time complexity of O(n) because it only performs a single loop, and it doesn't check for previous occurrences of numbers. The space complexity is also O(1) because it doesn't store any previous numbers, only the current number and the count.
+
+Here are the optimizations made to the slow program to make it faster:
+
+1. Removed the use of vector to store all previous numbers. This reduces memory usage and eliminates the need to search through the vector for each new number.
+
+2. Removed the check for previous occurrences of numbers. This is based on the observation that the sequence will eventually reach 1, 2, or 4, at which point it will start repeating. So instead of checking for any repetition, the program now only checks if the current number is 1, 2, or 4.
+
+3. Replaced the use of C++ I/O (cin, cout) with C I/O (scanf, printf). C I/O functions are generally faster than their C++ counterparts.
+
+4. Removed the use of the pow function to calculate the size of the vector. This is a minor optimization as the pow function is relatively expensive compared to simple arithmetic operations.
+
+5. Simplified the calculation of the next number in the sequence. In the original program, this was done in two steps (first calculating the new number and then assigning it to the vector), while in the optimized program it's done in a single step.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program uses a set to store all previously encountered values and checks for each new value whether it has been encountered before. This requires time to insert and search in the set, which can be costly. The optimized version, on the other hand, takes advantage of the fact that the sequence will always reach 1, 2, or 4 eventually, and thus it doesn't need to store or check any previous values.
+
+The time complexity of the original program is O(n log n) due to the use of a set for storing and checking values. The time complexity of the optimized program is O(n), as it simply performs a fixed number of operations for each value until it reaches 1, 2, or 4.
+
+The optimizations made to the original program are as follows:
+
+1. Removed the use of a set: The original program stored all previously encountered values in a set and checked each new value against this set. This was removed in the optimized version, significantly reducing the time complexity.
+
+2. Simplified condition checks: The original program checked whether each new value was even or odd to determine the next value. The optimized version does the same, but it also checks whether the value is 1, 2, or 4 to determine when to stop the loop. This removes the need to check against all previously encountered values.
+
+3. Removed unnecessary variables and functions: The original program used several additional variables and functions that were not necessary for the logic of the program. These were removed in the optimized version, simplifying the code and potentially improving performance.
+
+4. Changed from C++ IO to C IO: The optimized version uses scanf and printf for input and output instead of cin and cout. This can be faster due to less overhead.
+
+Overall, the optimized version is faster due to a more efficient algorithm and simpler, more efficient code.
+        </p>
+    </div>
+</body>
+    </html>
+    

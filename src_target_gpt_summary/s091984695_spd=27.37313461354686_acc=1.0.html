@@ -1,0 +1,158 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <iostream> // cout, endl, cin<br><br>#include <string> // string, to_string, stoi<br><br>#include <vector> // vector<br><br>#include <algorithm> // min, max, swap, sort, reverse, lower_bound, upper_bound<br><br>#include <utility> // pair, make_pair<br><br>#include <tuple> // tuple, make_tuple<br><br>#include <cstdint> // int64_t, int*_t<br><br>#include <cstdio> // printf<br><br>#include <map> // map<br><br>#include <queue> // queue, priority_queue<br><br>#include <set> // set<br><br>#include <stack> // stack<br><br>#include <deque> // deque<br><br>#include <unordered_map> // unordered_map<br><br>#include <unordered_set> // unordered_set<br><br>#include <bitset> // bitset<br><br><br><br>#include <math.h><br><br>#include <stdlib.h><br><br><br><br><br><br>#define rep(i,n) for (int i = 0; i < (n); ++i)<br><br>using namespace std;<br><br>typedef long long ll;<br><br><br><br>template<class T> inline bool chmin(T &a, T b) { if(a > b){ a = b; return true; } return false; }<br><br>template<class T> inline bool chmax(T &a, T b) { if(a < b){ a = b; return true; } return false; }<br><br><br><br>//INT_MAX	2,147,483,647 = 2*1.0e9<br><br><br><br>int calc(int a){<br><br>  if(a%2 == 0) return a/2;<br><br>  else return 3 * a + 1;<br><br>}<br><br><br><br>int main(){<br><br>  int s;<br><br>  cin >> s;<br><br><br><br>  vector<int> a(1000010,-1);<br><br>  a[0] = s;<br><br><br><br>  int ans = -1;<br><br>  for(int i = 1; i < 1000000; i++){<br><br>    a[i] = calc(a[i-1]);<br><br>    for(int j = 0;  j < i; j++){<br><br>      if(a[i] == a[j]){<br><br>        cout << i+1 << endl;<br><br>        return 0;<br><br>      }<br><br>    }<br><br>  }<br><br>  <br><br>  return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 27.37313461354686 <br>
+#include<cstdio><br><br>#include<cstring><br><br>#include<algorithm><br><br>using namespace std;<br><br>int s,vis[200001];<br><br>int main(){<br><br>	scanf("%d",&s);<br><br>	for(int i=1;i<=1000000;i++){<br><br>		if(vis[s]){<br><br>			printf("%d\n",i);<br><br>			return 0;<br><br>		}<br><br>		vis[s]=1;<br><br>		if(s&1) s=3*s+1;<br><br>		else s/=2;<br><br>	}<br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 5.051832234997175 <br>
+#include <iostream> // cout, endl, cin<br><br>#include <string> // string, to_string, stoi<br><br>#include <vector> // vector<br><br>#include <algorithm> // min, max, swap, sort, reverse, lower_bound, upper_bound<br><br>#include <utility> // pair, make_pair<br><br>#include <tuple> // tuple, make_tuple<br><br>#include <cstdint> // int64_t, int*_t<br><br>#include <cstdio> // printf<br><br>#include <map> // map<br><br>#include <queue> // queue, priority_queue<br><br>#include <set> // set<br><br>#include <stack> // stack<br><br>#include <deque> // deque<br><br>#include <unordered_map> // unordered_map<br><br>#include <unordered_set> // unordered_set<br><br>#include <bitset> // bitset<br><br><br><br>#include <math.h><br><br>#include <stdlib.h><br><br><br><br><br><br>#define rep(i,n) for (int i = 0; i < (n); ++i)<br><br>using namespace std;<br><br>typedef long long ll;<br><br><br><br>template<class T> inline bool chmin(T &a, T b) { if(a > b){ a = b; return true; } return false; }<br><br>template<class T> inline bool chmax(T &a, T b) { if(a < b){ a = b; return true; } return false; }<br><br><br><br>//INT_MAX	2,147,483,647 = 2*1.0e9<br><br><br><br>int main(){<br><br>  int s;<br><br>  cin >> s;<br><br><br><br>  set<int> st;<br><br><br><br>  while(st.count(s) == 0){<br><br>    st.insert(s);<br><br>    if(s%2 == 0) s = s/2;<br><br>    else s = 3*s+1;<br><br>  }<br><br><br><br>  cout << st.size() + 1 << endl;<br><br>  <br><br>  return 0;<br><br>}<br>
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is an implementation of the Collatz conjecture, also known as the 3n + 1 conjecture. The conjecture is a mathematical hypothesis that no matter what positive integer you start with, if you repeatedly apply a specific operation, you will eventually reach the number 1.
+
+The operation is as follows: if the current number is even, divide it by 2; if it's odd, multiply it by 3 and add 1. 
+
+The program starts by reading an integer 's' from the user. It then creates a vector 'a' of size 1000010, initializing all elements to -1, and sets the first element to 's'. 
+
+The program then enters a loop where it applies the operation to the last calculated number (stored in 'a[i-1]') and stores the result in 'a[i]'. After each calculation, it checks if the new number has appeared before in the vector 'a'. If it has, it prints the index 'i+1' (which represents the number of operations performed) and ends the program. 
+
+If the program doesn't find any repeated number after 1000000 iterations, it ends without printing anything. 
+
+The purpose of this program is to find the number of steps it takes for the sequence to reach a number that has already appeared in the sequence, starting from the input number 's'.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization made here is algorithmic. The original program has a time complexity of O(n^2) due to the nested loop structure, where 'n' is the number of iterations until the same number appears in the sequence. The optimized version has a time complexity of O(n log n) because it uses a set to check for repeated numbers, and the operations of inserting and searching in a set have a time complexity of O(log n).
+
+The slow program calculates the sequence of numbers and stores them in a vector. For each new number, it checks if this number has appeared before by scanning the entire vector up to the current position. This results in a quadratic time complexity because for each new number, potentially all previous numbers need to be checked.
+
+The optimized program, on the other hand, uses a set to store the sequence of numbers. A set in C++ is implemented as a binary search tree, and it automatically sorts its elements and does not allow duplicates. Checking if a number has appeared before is done by calling the count function on the set, which is much faster than scanning a vector because it takes advantage of the binary search tree structure. This reduces the time complexity from quadratic to logarithmic for each insertion and search operation.
+
+In summary, the optimizations made to the slow program are:
+1. Replacing the vector with a set to store the sequence of numbers.
+2. Removing the need for a separate calculation function by integrating the calculation into the main loop.
+3. Removing the nested loop structure by using the set's count function to check for repeated numbers.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program has a time complexity of O(n^2) due to the nested loop structure, where 'n' is the number of iterations (up to 1,000,000). The optimized program, on the other hand, has a time complexity of O(n), which is significantly faster for large 'n'.
+
+The original program calculates the next value in the sequence and then checks if this value has appeared before by scanning all previously calculated values. This is inefficient because it performs redundant checks and does not take advantage of the fact that the sequence values can be used as indices in an array.
+
+The optimized program uses an array 'vis' to keep track of which values have been visited. Instead of scanning all previously calculated values to check if a value has appeared before, it simply checks the 'vis' array at the index corresponding to the current value. This is a constant time operation, making the overall algorithm much faster.
+
+Here are the optimizations made to the original program:
+
+1. Removed unnecessary includes: The optimized program only includes the libraries it needs, reducing overhead.
+
+2. Simplified code: The optimized program removes unnecessary functions and typedefs, making the code simpler and easier to read.
+
+3. Algorithmic optimization: The optimized program uses an array to keep track of visited values, reducing the time complexity from O(n^2) to O(n).
+
+4. Bitwise operation: The optimized program uses a bitwise operation (s&1) to check if 's' is odd, which is faster than the modulus operation used in the original program.
+
+5. Direct output: The optimized program directly outputs the result when it is found, instead of storing it in a variable first.
+
+6. Reduced array size: The optimized program uses an array of size 200001 instead of 1000010, reducing memory usage.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is both algorithmic and non-algorithmic. 
+
+Algorithmic Complexity:
+The slow program has a time complexity of O(n log n) because it uses a set to store and check for the existence of numbers. Insertion and search in a set are both O(log n) operations. The fast program, on the other hand, has a time complexity of O(n) because it uses an array (vis) to store and check for the existence of numbers. Array access is an O(1) operation.
+
+Non-Algorithmic Optimizations:
+1. The slow program uses cin and cout for input and output, which are slower than scanf and printf used in the fast program. This is because cin and cout have additional overheads like std::ios_base::sync_with_stdio(false), cin.tie(NULL), and cout.tie(NULL) which are not present in scanf and printf.
+2. The slow program uses int data type for the variable 's' while the fast program uses the same variable as an index for the array 'vis'. This reduces the number of operations performed in the fast program.
+3. The slow program uses a set to store the numbers which is slower than the array used in the fast program. This is because sets in C++ are typically implemented as binary search trees, and operations like insertion and search take O(log n) time. On the other hand, arrays provide constant time access.
+4. The slow program uses the count function to check if a number exists in the set. This is slower than directly accessing the array index in the fast program.
+
+In summary, the optimizations made to the slow program to make it faster are:
+1. Replacing cin and cout with scanf and printf for faster input and output.
+2. Using an array instead of a set for storing and checking the existence of numbers.
+3. Using the variable 's' as an array index instead of a separate integer.
+4. Checking the existence of a number by directly accessing the array index instead of using the count function.
+        </p>
+    </div>
+</body>
+    </html>
+    

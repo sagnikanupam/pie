@@ -1,0 +1,162 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+  #include <bits/stdc++.h><br><br>  #define endl "\n"<br><br>  #define ll long long int<br><br>  #define vi vector<int><br><br>  #define vll vector<ll><br><br>  #define vvi vector < vi ><br><br>  #define pii pair<int,int><br><br>  #define pll pair<long long, long long><br><br>  #define mod 1000000007<br><br>  #define inf 1000000000000000001;<br><br>  #define all(c) c.begin(),c.end()<br><br>  #define mp(x,y) make_pair(x,y)<br><br>  #define mem(a,val) memset(a,val,sizeof(a))<br><br>  #define pb push_back<br><br>  #define f first<br><br>  #define se second<br><br>  <br><br>  using namespace std;<br><br>  ll k2;<br><br>  ll arr[1000000];<br><br>  ll arr2[1000000];<br><br><br><br>  ll func(ll n,ll cur){<br><br>    if(cur==n)<br><br>      return 0;<br><br>    if(cur>n)<br><br>      return inf;<br><br>    if(arr2[cur]!=-1)<br><br>      return arr2[cur];<br><br><br><br>    ll sum=inf;<br><br>    for (ll i = 1; i <=k2; ++i)<br><br>    {<br><br>      sum=min(sum,func(n,cur+i)+abs(arr[cur]-arr[cur+i]));<br><br>    }<br><br><br><br>    return arr2[cur]=sum;<br><br>  }<br><br><br><br><br><br>  int main()<br><br>  {<br><br>    std::ios::sync_with_stdio(false);<br><br>    ll n=0,m=0,k=0,x=0,t1=0,t2=0,t3=0,f=0,sum=0,count=0;<br><br><br><br>    cin>>n>>k2;<br><br><br><br>    for (ll i = 0; i < n; ++i){<br><br>      cin>>arr[i];<br><br>    }<br><br><br><br>    mem(arr2,-1);<br><br><br><br>    cout<<func(n-1,0);<br><br><br><br>    return 0;<br><br>  }
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 49.9367659511 <br>
+#include<stdio.h><br><br>#include<stdlib.h><br><br><br><br>#define min(x, y) (x) > (y) ? (y) : (x)<br><br><br><br>int arr[100005];<br><br>int mem[100005];<br><br>int n, k;<br><br><br><br>int solve(int idx)<br><br>{<br><br><br><br>    if (idx >= n - 1)<br><br>        return 0;<br><br><br><br>    if (mem[idx] != -1)<br><br>        return mem[idx];<br><br><br><br>    int ret = 1 << 28;<br><br><br><br>    for (int i = 1; i <= k && i + idx < n; i++)<br><br>        ret = min(ret, abs(arr[i + idx] - arr[idx]) + solve(i + idx));<br><br><br><br>    return mem[idx] = ret;<br><br><br><br>}<br><br><br><br>int main()<br><br>{<br><br><br><br>    scanf("%d %d", &n, &k);<br><br><br><br>    for (int i = 0; i < n; i++)<br><br>        scanf("%d", &arr[i]);<br><br><br><br>    for (int i = 0; i < n; i++)<br><br>        mem[i] = -1;<br><br><br><br>    printf("%d\n", solve(0));<br><br><br><br>    return 0;<br><br><br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 9.339641943604883 <br>
+  #include <bits/stdc++.h><br><br>  #define endl "\n"<br><br>  #define ll long long int<br><br>  #define vi vector<int><br><br>  #define vll vector<ll><br><br>  #define vvi vector < vi ><br><br>  #define pii pair<int,int><br><br>  #define pll pair<long long, long long><br><br>  #define mod 1000000007<br><br>  #define inf 1000000000000000001;<br><br>  #define all(c) c.begin(),c.end()<br><br>  #define mp(x,y) make_pair(x,y)<br><br>  #define mem(a,val) memset(a,val,sizeof(a))<br><br>  #define pb push_back<br><br>  #define f first<br><br>  #define se second<br><br>  <br><br>  using namespace std;<br><br>  int main()<br><br>  {<br><br>    std::ios::sync_with_stdio(false);<br><br>    ll n=0,m=0,k=0,x=0,t1=0,t2=0,t3=0,f=0,sum=0,count=0;<br><br><br><br>    cin>>n>>k;<br><br>    ll arr[n+1],dp[n+1];<br><br>    arr[0]=inf; dp[0]=0; <br><br>   <br><br>    for (ll i = 1; i <= n; ++i){<br><br>      cin>>arr[i];<br><br>    }<br><br>    dp[1]=0;<br><br><br><br>    for (ll i = 2; i <= n; ++i)<br><br>    {<br><br>      dp[i]=INT_MAX;<br><br>      for (ll j = 1; j <=k; ++j)<br><br>      {<br><br>        if(i-j>=1)<br><br>         dp[i]=min(abs(arr[i]-arr[i-j])+dp[i-j],dp[i]);<br><br>      }<br><br>    }<br><br><br><br>    cout<<dp[n]<<endl;<br><br><br><br>    return 0;<br><br>  }<br><br><br>
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is designed to solve a dynamic programming problem. It reads two inputs from the user: an integer `n` and another integer `k2`. Then it reads `n` more integers into an array `arr`.
+
+The main functionality of the program is encapsulated in the function `func`. This function is a recursive function that calculates the minimum sum of absolute differences between consecutive elements in the array `arr`, where the difference between the indices of these consecutive elements is less than or equal to `k2`. 
+
+The function `func` uses memoization to store previously computed results in the array `arr2` to avoid redundant calculations. If the function has already been computed for a certain index `cur`, it returns the stored result. If not, it calculates the result and stores it in `arr2` before returning it.
+
+The program then prints the minimum sum of absolute differences for the entire array `arr` starting from the first element (index 0) to the last element (index `n-1`). 
+
+The program uses several macros to simplify the code and make it more readable. For example, `ll` is a macro for `long long int`, `vi` is a macro for `vector<int>`, `inf` is a macro for a very large number, `pb` is a macro for `push_back`, etc. 
+
+The line `std::ios::sync_with_stdio(false);` is used to untie C++ standard streams from their corresponding C streams. This can potentially speed up input/output operations, but it means that you cannot mix C++ and C standard IO in the program.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization here is algorithmic. The original program uses a recursive function to solve the problem, which can lead to a lot of repeated calculations. The optimized version uses dynamic programming to avoid these repeated calculations, which makes it significantly faster.
+
+The time complexity of the original program is O(n^k), where n is the size of the array and k is the maximum number of steps that can be taken. This is because for each element of the array, the function could potentially be called k times recursively.
+
+The time complexity of the optimized program is O(n*k), which is much better. This is because it uses a loop to calculate the minimum cost for each element of the array, and for each element, it only needs to consider the previous k elements.
+
+The optimizations made to the slow program are as follows:
+
+1. The recursive function was replaced with a loop. This avoids the overhead of function calls and prevents the same calculations from being done multiple times.
+
+2. The use of dynamic programming. The optimized program calculates the minimum cost for each element of the array and stores these values in a separate array (dp). This allows it to reuse these values later, instead of recalculating them.
+
+3. The use of an array to store the input data. This allows the program to access the data more quickly and efficiently.
+
+4. The use of the min function to find the minimum cost. This is more efficient than using a loop to compare each value individually.
+
+Overall, these optimizations significantly reduce the number of calculations that the program needs to perform, which makes it run much faster.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is primarily algorithmic. Both the original and optimized versions of the program use a dynamic programming approach to solve the problem, but the optimized version has a more efficient implementation.
+
+The time complexity of both programs is O(n*k), where n is the size of the array and k is the maximum number of steps that can be taken from each position. This is because for each position in the array, the program checks up to k possible steps. However, the constant factors in the time complexity are significantly reduced in the optimized version, leading to a faster runtime.
+
+Here are the optimizations made in the optimized version:
+
+1. Input/Output Operations: The optimized version uses scanf and printf for input and output, which are faster than cin and cout used in the original version. This is because cin and cout have additional overhead due to synchronization with stdio, which is not present with scanf and printf.
+
+2. Memory Initialization: The optimized version initializes the memory array with a loop, which is faster than using memset in the original version. This is because memset has to set each byte individually, while the loop can set an entire int at once.
+
+3. Min Function: The optimized version uses a macro to calculate the minimum, which is faster than the min function used in the original version. This is because the macro is replaced by the preprocessor before compilation, resulting in faster code.
+
+4. Array Indexing: The optimized version calculates the index of the array only once in the loop, while the original version calculates it twice. This reduces the number of operations and makes the code faster.
+
+5. Conditional Checks: The optimized version has fewer conditional checks in the loop, which makes it faster. The original version checks if the current position is greater than n, which is not necessary because the loop in the optimized version already ensures that the index is within bounds.
+
+In summary, the optimized version of the program is faster due to more efficient input/output operations, memory initialization, use of macros, array indexing, and conditional checks.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is algorithmic. The original program uses a bottom-up dynamic programming approach, while the optimized version uses a top-down dynamic programming approach (also known as memoization).
+
+The time complexity of both programs is O(n*k), where n is the size of the array and k is the maximum jump length. This is because for each element of the array, the program checks up to k previous elements to find the minimum cost.
+
+However, the optimized version is faster due to several reasons:
+
+1. **Avoiding unnecessary computation**: In the original program, the inner loop runs for every element of the array, even if it's not necessary. In the optimized version, the function solve() is only called when it's needed, and the result is stored in the mem[] array for future use. This avoids redundant computation.
+
+2. **Using native C functions and libraries**: The optimized version uses scanf and printf for input/output, which are faster than cin and cout used in the original program. It also uses the native C abs() function for absolute value calculation, which is faster than the C++ std::abs() function.
+
+3. **Reducing memory usage**: The original program uses std::vector for dynamic arrays, which has some overhead compared to native C arrays used in the optimized version. Also, the original program uses long long int data type, which takes more memory than the int data type used in the optimized version.
+
+4. **Avoiding unnecessary initialization**: In the original program, the dp[] array is initialized with INT_MAX for all elements. In the optimized version, the mem[] array is initialized with -1 only, and the actual minimum cost is calculated when needed.
+
+In summary, the optimized version is faster due to a combination of algorithmic optimization (using top-down dynamic programming), using faster input/output functions and libraries, reducing memory usage, and avoiding unnecessary computation and initialization.
+        </p>
+    </div>
+</body>
+    </html>
+    

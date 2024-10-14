@@ -144,7 +144,7 @@ class PieSingleResult(PieResult):
     
     def to_dict(self):
         result = {}
-        result["compile_success"] = self.compile_success
+        result["compile_success"] = self.compilation #self.compile_success
         result["accs"] = self.accs
         result["mean_acc"] = self.mean_acc
         result["agg_runtime"] = self.agg_runtime

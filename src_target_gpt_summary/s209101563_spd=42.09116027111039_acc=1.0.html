@@ -1,0 +1,164 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <bits/stdc++.h><br><br>#define ll long long<br><br>#define endl "\n"<br><br>using namespace std;<br><br>inline int D()<br><br>{<br><br>    int t;<br><br>    scanf("%d",&t);<br><br>    return t;<br><br>}<br><br>inline ll llD()<br><br>{<br><br>    ll t;<br><br>    scanf("%lld",&t);<br><br>    return t;<br><br>}<br><br><br><br>const int Max=1e6+9;<br><br>const int OO=-1e6;<br><br>int st[4]= {1,0,0,-1};<br><br>int nt[4]= {0,1,-1,0};<br><br>int n,m;<br><br>bool valid(int x,int y)<br><br>{<br><br>    return x>-1 && y>-1 && x<n && y<m;<br><br>}<br><br>ll mem[Max];<br><br>void init()<br><br>{<br><br>    memset(mem,-1,sizeof mem);<br><br>}<br><br>//////////////////////////////////////////////////////////<br><br><br><br>ll a[Max];<br><br><br><br>ll solve (int i )<br><br>{<br><br>    if(i==n-1)return 0;<br><br>    if(i>=n)<br><br>        return Max;<br><br><br><br>    ll &ret=mem[i];<br><br>    if(~ret)return ret;<br><br>    ret=1e9;<br><br>    for(int j=0;j<=m;j++)<br><br>    ret=min(ret,(solve(i+j)+abs(a[i]-a[i+j])));<br><br><br><br>     return mem[i]=ret;<br><br>}<br><br><br><br>void Fast()<br><br>{<br><br>    std::ios_base::sync_with_stdio(0);<br><br>    cin.tie(0);<br><br>    cout.tie(0);<br><br>    cerr.tie(0);<br><br>}<br><br>int main()<br><br>{<br><br>   init();<br><br>   n =D();<br><br>m =D();<br><br>   for(int i=0; i<n;i++)<br><br>   {<br><br>       a[i]=llD();<br><br>   }<br><br>   printf("%lld",solve(0));<br><br><br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 42.09116027111039 <br>
+#include <stdio.h><br><br>#define ABS(x) (((x) > 0) ? (x) : -(x))<br><br>#define min(a, b) (((a) < (b)) ? (a) : (b))<br><br>int main()<br><br>{<br><br>    int i, j, n, m;<br><br>    long long a[100005], dp[100005];<br><br>    scanf("%d%d", &n, &m);<br><br>    for (i = 0; i < n; i++)<br><br>    {<br><br>        scanf("%lld", &a[i]);<br><br>        dp[i] = 1e18;<br><br>    }<br><br>    dp[0] = 0;<br><br>    for (i = 0; i < n; i++)<br><br>    {<br><br>        for (j = i + 1; j <= i + m && j < n; j++)<br><br>        {<br><br>            dp[j] = min(dp[j], dp[i] + ABS(a[i] - a[j]));<br><br>        }<br><br>    }<br><br>    printf("%lld\n", dp[n - 1]);<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 9.226286622669122 <br>
+#include <bits/stdc++.h><br><br>#include <set><br><br>using namespace std;<br><br>#define mp             make_pair<br><br>#define pb             push_back<br><br>#define fi             first<br><br>#define se             second<br><br>#define sz(x)          (int)((x).size())<br><br>#define fill(x, y)     memset(x, y, sizeof(y))<br><br>#define all(x)         (x).begin(), (x).end()<br><br>typedef long long      ll;<br><br>typedef pair<int, int> ii;<br><br>typedef pair<ii, int>  iii;<br><br>typedef vector<int>    vi;<br><br>typedef vector<ii>     vii;<br><br>typedef vector<iii>    viii;<br><br><br><br>const int INF = 1e9 + 5;<br><br><br><br>int main() {<br><br>  ios::sync_with_stdio(false);<br><br>  cin.tie(0);<br><br>  int N, K;<br><br>  cin >> N >> K;<br><br>  vi h(N+1);<br><br>  h[0] = INF;<br><br>  for (int i = 1; i <= N; i++) {<br><br>    cin >> h[i];<br><br>  }<br><br>  vi dp(N+1, INF);<br><br>  dp[0] = 0;<br><br>  dp[1] = 0;<br><br>  for (int i = 2; i <= N; i++) {<br><br>    for (int j = 1; j <= min(i-1,K); j++) {<br><br>      dp[i] = min(dp[i], dp[i - j] + abs(h[i] - h[i - j]));<br><br>    }<br><br>  }<br><br>  cout << dp[N] << "\n";<br><br>  return 0;<br><br>}
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is a dynamic programming solution to a problem, which seems to be about finding the minimum cost to reach the end of a sequence of numbers.
+
+Here's a step-by-step breakdown of what the program does:
+
+1. The program starts by defining some utility functions and constants. The `D()` and `llD()` functions are used to read an integer and a long long integer from the input, respectively. The `valid()` function checks if a given pair of coordinates is within the bounds of a 2D grid. The `init()` function initializes a memory array used for dynamic programming to -1.
+
+2. The `Fast()` function is used to speed up input and output operations in C++. It does this by disabling the synchronization of C++'s standard streams with the standard C streams and unties the tied standard streams.
+
+3. The `main()` function starts by initializing the memory array and reading the values of `n` and `m` from the input. `n` is the size of the sequence and `m` is the maximum step size.
+
+4. The program then reads `n` numbers from the input and stores them in the array `a`.
+
+5. The `solve()` function is the core of the program. It uses dynamic programming to find the minimum cost to reach the end of the sequence from the `i`-th position. The cost of moving from position `i` to position `i+j` is the absolute difference between the numbers at these positions. The function considers all possible step sizes from 0 to `m`.
+
+6. Finally, the program prints the minimum cost to reach the end of the sequence from the first position.
+
+The program assumes that the input numbers are non-negative and that `m` is less than or equal to `n`. If these conditions are not met, the program may not work correctly.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization made here is algorithmic. The original program uses a recursive approach with memoization to solve the problem, while the optimized version uses a dynamic programming approach.
+
+The original program has a time complexity of O(N*M) where N is the size of the array and M is the maximum jump length. This is because for each element in the array, it checks all possible jumps, and each check involves a recursive call. Although memoization is used to store previously computed results, the recursion still adds overhead.
+
+The optimized program has a time complexity of O(N*K) where N is the size of the array and K is the maximum jump length. This is because it uses a bottom-up dynamic programming approach, where it iteratively computes the minimum cost for each position in the array, considering all possible jumps from previous positions. This avoids the overhead of recursion and makes the program faster.
+
+Here are the optimizations made to the original program:
+
+1. Algorithmic Optimization: The original program uses a recursive approach with memoization, which has overhead due to recursion. The optimized program uses a dynamic programming approach, which avoids this overhead and is faster.
+
+2. Input/Output Optimization: The original program uses scanf and printf for input and output, which are slower than cin and cout in C++. The optimized program uses cin and cout, which are faster.
+
+3. Data Structure Optimization: The original program uses an array to store the minimum cost for each position. The optimized program uses a vector, which is a more flexible and efficient data structure in C++.
+
+4. Code Simplification: The original program has some unnecessary code, such as the valid function and the Fast function, which are not used. The optimized program removes this unnecessary code, making it simpler and faster.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program uses a recursive approach with memoization to solve the problem, while the optimized version uses a dynamic programming approach with a bottom-up strategy. 
+
+The original program's time complexity is O(n*m), where n is the size of the array and m is the maximum jump size. This is because for each element, it recursively computes the minimum cost for the next m elements. However, due to the recursive nature of the program, there is a significant overhead due to function calls and stack operations. 
+
+The optimized program also has a time complexity of O(n*m), but it avoids the overhead of recursion by using a bottom-up dynamic programming approach. It iteratively computes the minimum cost for each element based on the previously computed costs, which is more efficient.
+
+Here are the optimizations made to the slow program:
+
+1. Algorithmic Optimization: The slow program uses a top-down dynamic programming approach (also known as memoization), which involves a lot of recursive calls. The optimized program uses a bottom-up dynamic programming approach, which avoids the overhead of recursion.
+
+2. Code Simplification: The optimized program removes unnecessary functions and code, making it more straightforward and easier to understand. For example, it removes the 'valid' function (which is not used), the 'Fast' function (which is not necessary), and the 'init' function (which is replaced by initializing dp[i] to 1e18 directly in the main function).
+
+3. Efficient I/O Operations: The slow program uses both scanf/printf and cin/cout for input/output, which is slower due to synchronization. The optimized program uses only scanf/printf, which is faster.
+
+4. Macro Usage: The optimized program uses macros for calculating the absolute value and the minimum of two numbers, which is faster than calling a function.
+
+5. Memory Usage: The slow program uses a larger array size (Max=1e6+9) for 'mem' and 'a', while the optimized program uses a smaller array size (100005) for 'dp' and 'a', which is more memory-efficient.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is algorithmic. The original program has a time complexity of O(N*K), where N is the number of elements and K is the maximum distance that can be jumped. The optimized program has a time complexity of O(N*M), where M is the maximum distance that can be jumped. In the worst case scenario, K is equal to N, so the original program has a time complexity of O(N^2), while the optimized program has a time complexity of O(N*M). If M is significantly smaller than N, the optimized program will be significantly faster.
+
+The optimizations made to the slow program to make it faster are:
+
+1. Loop Optimization: In the slow program, the inner loop iterates from 1 to min(i-1,K), while in the optimized program, the inner loop iterates from i+1 to min(i+M, N). This reduces the number of iterations, especially when M is much smaller than N.
+
+2. Memory Optimization: The slow program uses vectors to store the input and the dynamic programming array, while the optimized program uses arrays. Arrays are generally faster than vectors because vectors have additional overhead for dynamic resizing.
+
+3. Input/Output Optimization: The slow program uses cin and cout for input and output, which are slower than scanf and printf used in the optimized program. This can make a significant difference in programs that perform a lot of input/output operations.
+
+4. Removal of unnecessary operations: The slow program uses the abs function from the standard library, while the optimized program uses a custom ABS macro. The standard abs function has additional overhead for type checking and other operations, while the custom ABS macro is a simple conditional operation. This can make a significant difference in programs that call abs a large number of times.
+
+5. The slow program uses a lot of unnecessary typedefs and macros, which can slow down the compilation time. The optimized program removes all these unnecessary typedefs and macros.
+        </p>
+    </div>
+</body>
+    </html>
+    

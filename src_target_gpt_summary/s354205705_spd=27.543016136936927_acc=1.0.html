@@ -1,0 +1,166 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <bits/stdc++.h><br><br>using namespace std;<br><br>typedef long long int ll;<br><br>vector<int> memo(1000000, INT_MAX);<br><br>void solve(){<br><br>	int n, k; cin>>n>>k;<br><br>	vector<int> a(n);<br><br>	for (int i = 0; i < n; ++i)<br><br>	{<br><br>		cin>>a[i];<br><br>	}<br><br><br><br>	memo[0] = 0;<br><br>	for (int i = 0; i < n; ++i)<br><br>	{<br><br>		for(int j=i+1;j<=i+k;j++){<br><br>			if(j<n){<br><br>				memo[j] = min(memo[j], memo[i]+abs(a[i]-a[j]));<br><br>			}<br><br>		}<br><br>	}<br><br>	cout<<memo[n-1]<<"\n";<br><br>}<br><br>int main(){<br><br>    ios_base::sync_with_stdio(false);<br><br>    cin.tie(nullptr);<br><br>    // ll t; cin>>t;<br><br>    // while(t--)<br><br>    solve();<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 27.543016136936927 <br>
+#include <cstdio><br><br>#include <algorithm><br><br>using namespace std;<br><br>const int N = 1e5 + 5;<br><br>const int INF = 0x3f3f3f3f;<br><br>int n, k, h[N], dp[N];<br><br>int main()<br><br>{<br><br>    scanf("%d%d", &n, &k);<br><br>    for (int i = 1; i <= n; i++)<br><br>        scanf("%d", &h[i]);<br><br>    for (int i = 2; i <= n; i++)<br><br>    {<br><br>        dp[i] = INF;<br><br>        for (int j = 1; j <= k && i - j >= 1; j++)<br><br>            dp[i] = min(dp[i], dp[i - j] + abs(h[i] - h[i - j]));<br><br>    }<br><br>    printf("%d\n", dp[n]);<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 5.117614055170522 <br>
+#include<bits/stdc++.h><br><br>using namespace std;<br><br>#define  ft  ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);<br><br>#define  ll  long long<br><br>int main()<br><br>{<br><br>    ft<br><br>    ll t,i,j,n,m,l,r;<br><br>    cin>>n>>m;<br><br>    ll a[n+2],d[n+2];<br><br>    for(i=1;i<=n;i++)<br><br>    {<br><br>        cin>>a[i];<br><br>    }<br><br>    d[1]=0;<br><br>    for(i=2;i<=n;i++)<br><br>    {<br><br>        d[i]=LLONG_MAX;<br><br>        for(j=1;j<=m;j++)<br><br>        {<br><br>            if((i-j)>0)<br><br>            {<br><br>                d[i]=min(d[i],abs(a[i]-a[i-j])+d[i-j]);<br><br>            }<br><br>        }<br><br>    }<br><br>    cout<<d[n]<<"\n";<br><br>    return 0;<br><br>}
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is designed to solve a specific problem, which involves finding the minimum total absolute difference between elements in a sequence. 
+
+Here's a step-by-step breakdown of what the program does:
+
+1. The program starts by reading two integers from the input: `n` and `k`. `n` is the size of the sequence and `k` is the maximum distance that can be covered in a single step.
+
+2. It then reads `n` integers from the input, which are the elements of the sequence.
+
+3. The program uses dynamic programming to solve the problem. It initializes a memoization array `memo` of size 1,000,000 with all elements set to `INT_MAX`. This array is used to store the minimum total absolute difference for each position in the sequence.
+
+4. The program sets `memo[0]` to 0 because the total absolute difference at the first position is always 0.
+
+5. The program then iterates over each position `i` in the sequence. For each position, it calculates the total absolute difference for all positions `j` that can be reached from `i` in a single step (i.e., all positions `j` such that `i < j <= i + k`). It does this by adding the absolute difference between the elements at positions `i` and `j` to `memo[i]`, and updating `memo[j]` with this value if it's smaller than the current value of `memo[j]`.
+
+6. Finally, the program prints the value of `memo[n-1]`, which is the minimum total absolute difference for the entire sequence.
+
+The program assumes that the input is well-formed and doesn't contain any errors. It doesn't check for possible errors such as missing or extra input values, non-integer input values, or values that are out of the expected range.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization here is algorithmic. The original program has a time complexity of O(n*k), where n is the size of the array and k is the maximum distance that can be jumped. This is because for each element in the array, the program checks up to k elements ahead. The optimized program also has a time complexity of O(n*k), but it is faster due to a more efficient implementation.
+
+Here are the optimizations made:
+
+1. Array Size: In the slow program, the size of the memo array is fixed at 1000000, which is unnecessary if n is much smaller than this. In the optimized program, the size of the d array is set to n+2, which is just enough for the task.
+
+2. Array Indexing: In the slow program, the array is 0-indexed and the loop starts from 0. In the optimized program, the array is 1-indexed and the loop starts from 1. This makes the code cleaner and easier to understand, and it also eliminates the need to check if j is less than n in the inner loop.
+
+3. Loop Range: In the slow program, the inner loop runs from i+1 to i+k. In the optimized program, the inner loop runs from 1 to m. This reduces the number of iterations when m is less than k.
+
+4. Variable Names: The optimized program uses more meaningful variable names, which makes the code easier to read and understand.
+
+5. Input/Output Speed: The optimized program uses the macro "ft" to speed up input and output operations. This can make a significant difference in programs that handle a large amount of data.
+
+In summary, the optimized program is faster because it uses a more efficient implementation of the same algorithm, it uses just enough memory, it reduces the number of loop iterations, and it speeds up input and output operations.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program has a time complexity of O(n*k), while the optimized version also has a time complexity of O(n*k). However, the optimized version has a smaller constant factor, which makes it faster in practice.
+
+Here are the optimizations that were made:
+
+1. **Input/Output Optimization**: The optimized version uses `scanf` and `printf` for input and output, which are faster than `cin` and `cout`. This is because `cin` and `cout` are synchronized with `stdio`, which means they maintain consistency with C-style streams (`printf`, `scanf`, etc.). This synchronization has a performance cost. In the optimized version, this synchronization is not necessary, so `scanf` and `printf` are used for faster I/O.
+
+2. **Memory Allocation Optimization**: In the original program, a large vector `memo` of size 1000000 is allocated at the start, regardless of the actual input size `n`. In the optimized version, the array `dp` is allocated with size `N`, which is just slightly larger than the maximum possible `n`. This reduces the memory footprint of the program, which can lead to better cache performance.
+
+3. **Loop Optimization**: In the original program, the inner loop iterates from `i+1` to `i+k`, even when `j` exceeds `n`. In the optimized version, the inner loop only iterates from `1` to `k` and checks if `i-j` is within bounds. This reduces the number of iterations of the inner loop, which can lead to a significant speedup when `k` is large.
+
+4. **Data Type Optimization**: The original program uses `long long int` for no reason, while the optimized version uses `int`, which is faster to operate on.
+
+5. **Constant Optimization**: The original program uses `INT_MAX` as the initial value for `memo`, while the optimized version uses `INF` defined as `0x3f3f3f3f`. This is a minor optimization, but `0x3f3f3f3f` is a larger value that fits in an `int`, so it provides a wider range for the input values.
+
+In summary, the optimized version is faster due to a combination of I/O optimization, memory allocation optimization, loop optimization, data type optimization, and constant optimization.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is primarily algorithmic, although there are also some minor changes in the way input/output is handled.
+
+The time complexity of the original program is O(n*m), where n is the size of the array and m is the maximum difference between indices. This is because for each element in the array, the program checks up to m previous elements to find the minimum difference.
+
+The optimized program also has a time complexity of O(n*m), but it's faster in practice due to a more efficient implementation. The main difference is that the optimized program uses a fixed-size array instead of a variable-size array, which can be faster due to better memory locality. It also uses scanf and printf for input/output instead of cin and cout, which are slower due to additional overhead from C++ streams.
+
+Here are the specific optimizations made:
+
+1. Algorithmic: The algorithm itself hasn't changed, but the implementation is more efficient. The optimized program uses a fixed-size array instead of a variable-size array, which can be faster due to better memory locality.
+
+2. Input/Output: The optimized program uses scanf and printf for input/output instead of cin and cout. The latter are slower due to additional overhead from C++ streams.
+
+3. Memory Allocation: The original program uses variable-length arrays, which are allocated on the stack and can cause stack overflow for large inputs. The optimized program uses a fixed-size array, which avoids this issue.
+
+4. Constants: The optimized program defines constants for the maximum array size and a large number (INF), which makes the code easier to understand and modify.
+
+5. Code Structure: The optimized program has a cleaner code structure, with less unnecessary code (like the "ft" macro and the "ll" typedef in the original program), which makes it easier to understand and optimize further.
+        </p>
+    </div>
+</body>
+    </html>
+    

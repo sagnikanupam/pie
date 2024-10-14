@@ -1,0 +1,167 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+//g++ -std=gnu++14 a.cpp<br><br>//#include <bits/stdc++.h><br><br>#include <algorithm><br><br>#include <bitset><br><br>#include <complex><br><br>#include <deque><br><br>#include <iostream><br><br>#include <istream><br><br>#include <iterator><br><br>#include <map><br><br>#include <queue><br><br>#include <set><br><br>#include <stack><br><br>#include <string><br><br>#include <vector><br><br>#include <tuple><br><br>#include <iomanip><br><br>#include <random><br><br>#include <math.h><br><br><br><br>using namespace std;<br><br><br><br>#define ll long long<br><br>#define rep(i, n) for(ll i = 0; i < (n); i++)<br><br>ll MOD = 1e9 + 7;<br><br>int INF = 1 << 30;<br><br>ll INFL = 1LL << 60;<br><br><br><br>int main(){<br><br>  int  N,K;<br><br>  cin >> N >> K;<br><br>  vector<int> h(1000000);<br><br>  vector<int> dp(1000000, INF);<br><br>  for(int i = 1;i <= N;i++) cin >> h.at(i);<br><br>  dp[1] = 0;<br><br>  for(int i = 1;i < N;i++){<br><br>    for(int j = 1;j <= K;j++){<br><br>      dp[i+j] = min(dp[i+j],dp[i]+abs(h[i+j]-h[i]));<br><br>    }<br><br>  }<br><br>  cout << dp[N] << endl;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 48.00901188136315 <br>
+#include <cstdio><br><br>#include <algorithm><br><br><br><br>#define MAX_N 100000<br><br><br><br>using namespace std;<br><br><br><br>int N, K;<br><br>int h[MAX_N + 1];<br><br><br><br>int main() {<br><br>    scanf("%d %d", &N, &K);<br><br>    for (int i = 1; i <= N; i++) {<br><br>        scanf("%d", &h[i]);<br><br>    }<br><br>    int dp[MAX_N + 1];<br><br>    for (int i = 1; i <= N; i++) {<br><br>        dp[i] = 1000000000;<br><br>    }<br><br>    dp[1] = 0;<br><br>    for (int i = 1; i <= N; i++) {<br><br>        for (int j = 1; j <= K; j++) {<br><br>            if (i + j <= N) {<br><br>                dp[i + j] = min(dp[i + j], dp[i] + abs(h[i] - h[i + j]));<br><br>            }<br><br>        }<br><br>    }<br><br>    printf("%d\n", dp[N]);<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 3.6025008071616687 <br>
+//g++ -std=gnu++14 a.cpp<br><br><br><br>#include <algorithm><br><br>#include <bitset><br><br>#include <complex><br><br>#include <deque><br><br>#include <iostream><br><br>#include <istream><br><br>#include <iterator><br><br>#include <map><br><br>#include <queue><br><br>#include <set><br><br>#include <stack><br><br>#include <string><br><br>#include <vector><br><br>#include <tuple><br><br>#include <iomanip><br><br>#include <random><br><br>#include <math.h><br><br><br><br>using namespace std;<br><br><br><br>#define ll long long<br><br>#define rep(i, n) for(ll i = 0; i < (n); i++)<br><br>ll MOD = 1e9 + 7;<br><br>int INF = 1 << 30;<br><br>ll INFL = 1LL << 60;<br><br><br><br>int main(){<br><br>  ll N,K;<br><br>  cin >> N >> K;<br><br>  vector<ll> h(100010);<br><br>  rep(i,N){<br><br>    cin >> h[i];<br><br>  }<br><br>  vector<ll> dp(100010,INFL);<br><br>  dp[0] = 0;<br><br>  for(int i = 0;i <N;i++){<br><br>    for(int j = 1;j <= K;j++){<br><br>      dp[i+j] = min(dp[i]+abs(h[i]-h[i+j]),dp[i+j]);<br><br>    }<br><br>    //dp[i+1] = min(dp[i]+abs(h[i]-h[i+1]),dp[i+1]);<br><br>    //if(i >= 2)dp[i] = min(dp[i-1]+abs(h[i-1]-h[i]),dp[i-2]+abs(h[i]-h[i-2]));<br><br>  }<br><br>  cout << dp[N-1] << endl;<br><br>}<br>
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is solving a dynamic programming problem. It reads two integers from the input, N and K. Then it reads a sequence of N integers into a vector h. The program is designed to find the minimum total cost to reach the end of a path from the start, where the cost of stepping from position i to position i+j is the absolute difference between h[i] and h[i+j]. 
+
+Here's a step-by-step breakdown:
+
+1. The program reads two integers, N and K, from the input. N is the length of the path and K is the maximum step size.
+
+2. It then initializes a vector h of size 1,000,000 and a vector dp of the same size, filled with a large number (INF). The vector h is used to store the height of each position on the path, and dp is used to store the minimum cost to reach each position.
+
+3. The program reads the heights of the N positions into the vector h.
+
+4. It sets the cost to reach the first position as 0, because we start from there.
+
+5. Then, for each position i from 1 to N-1, it calculates the cost to step to each of the next K positions from i (if they exist), and updates the cost in dp if it's less than the current cost.
+
+6. Finally, it prints the minimum cost to reach the end of the path, which is stored in dp[N].
+
+The "#define" lines at the beginning are defining some constants for use in the program. The "using namespace std;" line is telling the compiler to use the standard namespace, which includes things like cin, cout, and vector. The "#include" lines are including various libraries that the program needs to run.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization here is algorithmic. The original program has a time complexity of O(NK), where N is the number of elements and K is the maximum jump length. The optimized program also has a time complexity of O(NK), but it has been optimized to reduce the constant factors, which makes it run faster in practice.
+
+Here are the optimizations that were made:
+
+1. Array Size: In the slow version, the size of the arrays 'h' and 'dp' are unnecessarily large (1,000,000 elements), which can lead to inefficient use of memory and cache. In the optimized version, the size of these arrays is just slightly larger than N, which is more efficient.
+
+2. Input Reading: In the slow version, the elements of 'h' are read starting from index 1, leaving 'h[0]' unused. In the optimized version, the elements are read starting from index 0, which is more natural in C++ and avoids wasting one element.
+
+3. Initialization of 'dp': In the slow version, 'dp' is initialized with 'INF', which is a large but not extremely large number. In the optimized version, 'dp' is initialized with 'INFL', which is a much larger number. This ensures that 'dp[i+j]' will always be less than 'dp[i]' + abs(h[i+j]-h[i]) for valid 'i' and 'j', so the 'min' function will always choose the correct value.
+
+4. Loop Bounds: In the slow version, the outer loop goes from 1 to N-1, and the inner loop goes from 1 to K. This means that 'dp[i+j]' may be updated for 'i+j' greater than N, which is unnecessary. In the optimized version, the outer loop goes from 0 to N-1, and the inner loop still goes from 1 to K, but 'dp[i+j]' is only updated if 'i+j' is less than N. This avoids unnecessary updates.
+
+5. Output: In the slow version, 'dp[N]' is printed, which is the minimum cost to reach the N+1-th stone. In the optimized version, 'dp[N-1]' is printed, which is the minimum cost to reach the N-th stone. This is more consistent with the problem statement (assuming that the goal is to reach the N-th stone).
+
+In summary, the optimized version is faster because it uses memory more efficiently, avoids unnecessary computations, and has a more appropriate initialization of 'dp'. The time complexity is the same, but the constant factors are smaller.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is not algorithmic, but rather due to the use of more efficient I/O operations and memory management. The algorithmic complexity of both programs is the same, which is O(N*K), where N is the number of elements and K is the maximum step size.
+
+Here are the optimizations made:
+
+1. I/O Operations: The slow version uses cin and cout for input and output, which are slower compared to scanf and printf used in the optimized version. This is because cin and cout have additional overhead due to synchronization with stdio, which is not present with scanf and printf.
+
+2. Memory Allocation: In the slow version, vectors are used to store the data, which have additional overhead due to dynamic memory allocation and deallocation. In the optimized version, arrays are used, which are more efficient as they are allocated on the stack.
+
+3. Memory Usage: The slow version initializes vectors with a size of 1,000,000, which may be larger than necessary, leading to wasted memory. The optimized version uses arrays of size N+1, which is exactly the size needed.
+
+4. Initialization: The slow version initializes the dp vector with INF, which is an operation of O(N). The optimized version initializes dp array with a large number only when necessary, which reduces the number of initializations.
+
+5. Unnecessary Operations: The slow version uses the at() function to access elements in the vector, which includes a range check and is slower than the [] operator used in the optimized version.
+
+6. Preprocessor Directives: The slow version uses #define to define constants and a loop macro, which can make the code harder to read and debug. The optimized version does not use these, making the code cleaner and easier to understand.
+
+In summary, the optimized version is faster due to more efficient I/O operations, better memory management, and cleaner code.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is both algorithmic and non-algorithmic. 
+
+Algorithmic Complexity:
+Both the slow and fast programs have the same algorithmic complexity of O(N*K), where N is the number of elements and K is the maximum jump length. This is because for each element, the program checks up to K future elements to calculate the minimum cost.
+
+Optimizations:
+
+1. Non-algorithmic Optimization: The optimized version uses C-style input/output functions (scanf/printf) instead of C++ style (cin/cout). The C-style functions are generally faster and can significantly reduce the execution time for programs that involve a lot of input/output operations.
+
+2. Algorithmic Optimization: The optimized version avoids unnecessary computations. In the slow version, the program tries to update dp[i+j] even when i+j exceeds the size of the array, which is unnecessary and can lead to accessing memory out of bounds. The optimized version includes a condition to check if i+j is within the array size before trying to update dp[i+j].
+
+3. Memory Optimization: The optimized version uses a static array instead of a vector. Although this doesn't change the time complexity, it can make the program run faster. Static arrays are stored in the stack, which allows faster access than vectors that are stored in the heap. Also, vectors have additional overheads like capacity management which are not present in static arrays.
+
+4. The optimized version also reduces the size of the dp array to N+1, which is the exact size needed. The slow version uses a larger size of 100010, which uses more memory and can slow down the program.
+
+In summary, the optimized version is faster due to more efficient input/output operations, avoiding unnecessary computations, using faster data structures, and using less memory.
+        </p>
+    </div>
+</body>
+    </html>
+    

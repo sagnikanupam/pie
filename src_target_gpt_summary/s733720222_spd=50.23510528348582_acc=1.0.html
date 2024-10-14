@@ -1,0 +1,160 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <bits/stdc++.h><br><br>#define ll      	long long int<br><br>#define PI      	acos(-1)<br><br>#define read    	freopen("in.txt","r",stdin)<br><br>#define uu      	first<br><br>#define vv      	second<br><br>#define write   	freopen("out.txt","w",stdout)<br><br>#define pii     	pair<int,int><br><br>#define pll         pair<ll,ll><br><br>#define INF     	1e9<br><br>#define EPS     	1e-8<br><br>#define MAX     	1000006<br><br>#define MOD     	1000000007<br><br>#define fastRead 	ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0)<br><br>using namespace std;<br><br>int n ,k;<br><br>ll ara[MAX] ,dp[MAX];<br><br><br><br>ll solve(int id) {<br><br>    if( id ==n-1 ) return 0;<br><br>    ll &ret = dp[id];<br><br>    if( ret != -1) return ret;<br><br><br><br>    ret = INF;<br><br><br><br>    for(int i = 1 ; i <=k && id + i < n ; i++ ) {<br><br>//        cout<<id<<" "<<i<<endl;<br><br>        ret = min(ret , abs(ara[id+i] - ara[id]) + solve(id+i) );<br><br>    }<br><br>    return ret;<br><br>}<br><br><br><br>int main()<br><br>{<br><br>    fastRead;<br><br>    cin>>n>>k;<br><br>    for(int i = 0 ; i < n ; i++ ) cin>>ara[i];<br><br>    memset(dp , - 1, sizeof dp);<br><br>    cout<<solve(0)<<endl;<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 50.23510528348582 <br>
+#include<cstdio><br><br>#include<cstring><br><br>#include<algorithm><br><br>using namespace std;<br><br>int n,m,a[100010];<br><br>long long f[100010];<br><br>int main()<br><br>{<br><br>	scanf("%d%d",&n,&m);<br><br>	for(int i=1;i<=n;i++) scanf("%d",&a[i]);<br><br>	f[n]=0;<br><br>	for(int i=n-1;i;i--)<br><br>	{<br><br>		long long t=1e18;<br><br>		for(int j=i+1;j<=n;j++)<br><br>		{<br><br>			t=min(t,f[j]+abs(a[j]-a[i])) ;<br><br>			if(j-i==m) break;<br><br>		}<br><br>		f[i]=t;<br><br>	}<br><br>	printf("%lld\n",f[1]);<br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 9.469075575535236 <br>
+#include<bits/stdc++.h><br><br>#define MAX 1000006<br><br>#define INF 2e9<br><br>using namespace std;<br><br>int ara[MAX] , dp[MAX];<br><br><br><br>int main()<br><br>{<br><br>    int n , k;<br><br>    cin>>n >> k;<br><br>    for(int i =0 ; i < n ; i++ ) cin>>ara[i];<br><br><br><br>	for(int i =1 ; i < n ; i++ ) {<br><br><br><br>        int val = INF;<br><br>        for(int j = 1 ; j <= k ; j++ ) {<br><br><br><br>			if( i - j < 0 ) continue;<br><br>            val = min(val , abs(ara[i] - ara[i-j]) + dp[i-j] );<br><br>        }<br><br>        dp[i] = val;<br><br>	}<br><br>	cout<<dp[n-1]<<endl;<br><br>	return 0;<br><br><br><br>}<br>
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is a dynamic programming solution to a problem where it finds the minimum cost to reach the end of an array from the start, given certain conditions.
+
+Here's a step-by-step breakdown of what the program does:
+
+1. The program starts by defining several macros for convenience, such as `ll` for `long long int`, `PI` for the mathematical constant Pi, `read` and `write` for file input/output, `uu` and `vv` for the `first` and `second` elements of a pair, `pii` and `pll` for pairs of integers and long long integers, `INF` for a large number representing infinity, `EPS` for a small number representing a negligible quantity, `MAX` for the maximum size of the array, `MOD` for the modulus operation in arithmetic, and `fastRead` for speeding up cin and cout operations.
+
+2. It then declares two global variables `n` and `k`, an array `ara` of size `MAX`, and a dynamic programming array `dp` of size `MAX`.
+
+3. The `solve` function is the core of the program. It takes an index `id` as input and returns the minimum cost to reach the end of the array from that index. If the index is already at the end of the array, the cost is 0. If the cost has been previously calculated (i.e., `dp[id]` is not -1), it returns the previously calculated cost. Otherwise, it calculates the cost by considering all possible steps from 1 to `k` that can be taken from the current index, and choosing the step that results in the minimum cost. The cost of a step is the absolute difference between the values at the current index and the index after the step, plus the cost to reach the end from the index after the step.
+
+4. The `main` function reads the values of `n` and `k` from the input, reads the values of the array `ara`, initializes the `dp` array to -1, and then prints the minimum cost to reach the end of the array from the start by calling the `solve` function with 0 as the argument.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization made here is an algorithmic optimization. The slow version of the program uses a recursive approach with memoization (top-down dynamic programming), while the optimized version uses an iterative approach (bottom-up dynamic programming).
+
+The slow version of the program has a time complexity of O(n*k), but due to the overhead of recursion, it is slower. Each recursive call adds to the call stack, which takes extra time and space. Moreover, the check for whether a state has been computed before (if(ret != -1) return ret;) also adds to the time complexity.
+
+The optimized version also has a time complexity of O(n*k), but it is faster because it avoids the overhead of recursion and the check for pre-computed states. It directly computes the states in a bottom-up manner, starting from the base case and building up to the solution.
+
+Here are the optimizations made to the slow program to make it faster:
+
+1. Changed the approach from top-down dynamic programming (recursion + memoization) to bottom-up dynamic programming (iteration). This avoids the overhead of recursion and the check for pre-computed states.
+
+2. Removed unnecessary macros and includes. The optimized version only includes the necessary library and defines the necessary macros, which makes the code cleaner and potentially faster.
+
+3. Removed the use of long long int where int would suffice. Using a smaller data type can make the program faster because it uses less memory.
+
+4. Removed the use of fastRead macro. Although this macro is supposed to make I/O operations faster, it can sometimes make the program slower due to the overhead of synchronization. In this case, removing it made the program faster.
+
+5. Removed the use of global variables. Although this doesn't directly affect the speed of the program, it makes the code cleaner and easier to understand.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization made here is algorithmic. The original program uses a recursive approach with memoization (top-down dynamic programming), while the optimized version uses a bottom-up dynamic programming approach.
+
+The time complexity of the original program is O(n*k) where n is the number of elements and k is the maximum step size. This is because for each element, the program checks up to k next elements. However, due to the recursive nature of the program, there can be a lot of function call overhead, especially when n and k are large.
+
+The optimized version also has a time complexity of O(n*k), but it avoids the function call overhead by using an iterative approach. It starts from the end of the array and works its way to the front, storing the minimum cost at each step. This approach is generally faster and more efficient than the recursive approach.
+
+Here are the optimizations made to the original program:
+
+1. Algorithmic Optimization: The recursive function calls in the original program were replaced with a bottom-up dynamic programming approach. This reduces the function call overhead and makes the program run faster.
+
+2. Input/Output Optimization: The original program uses C++ I/O functions (cin, cout), which are slower compared to C-style I/O functions (scanf, printf). The optimized version uses scanf and printf, which are faster.
+
+3. Memory Optimization: The original program uses a larger array size (MAX = 1000006) than necessary. The optimized version uses an array size that is just enough to hold the input data.
+
+4. Code Simplification: The optimized version removes unnecessary macros and includes, making the code simpler and easier to understand. This doesn't necessarily make the program run faster, but it does make the code cleaner and more maintainable.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program has a time complexity of O(n*k), where n is the number of elements and k is the maximum distance between elements that can be considered for the minimum calculation. This is because for each element, the program checks up to k previous elements to find the minimum value. 
+
+The optimized version of the program has a time complexity of O(n*m), where m is the maximum distance between elements that can be considered for the minimum calculation. However, in this case, m is a constant value, so the time complexity can be considered as O(n), which is significantly faster than the original program.
+
+Here are the optimizations that were made to the original program:
+
+1. Algorithmic Optimization: The optimized program calculates the minimum value in a more efficient way. Instead of checking up to k previous elements for each element, it only checks up to m previous elements. Since m is a constant value, this reduces the time complexity from O(n*k) to O(n).
+
+2. Memory Optimization: The optimized program uses less memory by using a single array to store the input values and the calculated minimum values. This reduces the amount of memory required and can also improve performance by reducing the amount of memory access.
+
+3. Input/Output Optimization: The optimized program uses scanf and printf for input and output, which are faster than cin and cout used in the original program. This can significantly improve performance for programs that involve a large amount of input and output.
+
+4. Code Simplification: The optimized program simplifies the code by removing unnecessary elements, such as the INF constant and the continue statement in the loop. This makes the code easier to read and understand, and can also improve performance by reducing the number of operations.
+
+5. Type Optimization: The optimized program uses long long for the minimum value calculation, which can handle larger values and prevent overflow. This can improve performance by avoiding unnecessary checks and conversions.
+        </p>
+    </div>
+</body>
+    </html>
+    

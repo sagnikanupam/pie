@@ -1,0 +1,160 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include<bits/stdc++.h><br><br>using namespace std;<br><br><br><br>int main(){<br><br>    long long s, i(1);<br><br>    scanf("%lld", &s);<br><br>    vector<long long> memo(1000100, -1);<br><br>    while(1){<br><br>        if(memo[s] >= 0)return 0 & printf("%lld", i);<br><br>        memo[s] = i;<br><br>        if(s & 1)s = 3 * s + 1;<br><br>        else s >>= 1;<br><br>        ++i;<br><br>    }<br><br>}
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 50.491988919671265 <br>
+#include<cstdio><br><br><br><br>int main(){<br><br>    long long s, i;<br><br>    scanf("%lld", &s);<br><br>    for(i=1;s!=4&&s!=2&&s!=1;++i){<br><br>        if(s & 1)s = 3 * s + 1;<br><br>        else s >>= 1;<br><br>    }<br><br>    printf("%lld", i + 3);<br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 9.596238515786709 <br>
+#include<bits/stdc++.h><br><br>using namespace std;<br><br><br><br>int main(){<br><br>    long long s, i(1);<br><br>    scanf("%lld", &s);<br><br>    if(s == 4 || s == 2 || s == 1)return 0 & printf("%lld", 4);<br><br>    while(1){<br><br>        if(s == 4)return 0 & printf("%lld", i + 3);<br><br>        if(s & 1)s = 3 * s + 1;<br><br>        else s >>= 1;<br><br>        ++i;<br><br>    }<br><br>}<br>
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is an implementation of the Collatz Conjecture, also known as the 3n + 1 conjecture. 
+
+The program starts by reading a single long long integer 's' from the standard input. It then enters an infinite loop where it performs the following steps:
+
+1. It checks if the current value of 's' has been encountered before by looking it up in a vector 'memo' that serves as a memory. If 's' has been encountered before, it prints the step at which it was encountered and terminates the program.
+
+2. If 's' has not been encountered before, it stores the current step 'i' in the 'memo' vector at the index corresponding to 's'.
+
+3. It then checks if 's' is an odd number by performing a bitwise AND operation with 1. If 's' is odd, it multiplies 's' by 3 and adds 1. If 's' is even, it divides 's' by 2 using a right shift operation.
+
+4. It increments the step counter 'i' by 1.
+
+The program continues this process until it encounters a number that it has seen before, at which point it prints the step at which that number was first encountered and terminates. This is based on the Collatz Conjecture, which states that this process will eventually reach the number 1, regardless of the starting number.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization made here is an algorithmic optimization. The optimized version of the program is faster because it reduces the number of iterations by directly checking if the input number `s` is 1, 2, or 4. If it is, the program immediately returns 4, which is the number of steps it takes for these numbers to reach 1 according to the Collatz conjecture. This conjecture is what the program is implementing: for any number, if it's even, it's divided by 2, and if it's odd, it's multiplied by 3 and 1 is added, and this process is repeated until the number becomes 1.
+
+The algorithmic complexity of both the slow and fast programs is O(log n) in the worst case. This is because the Collatz sequence decreases by about half in each step when the number is even, and increases by about three times when the number is odd. However, the odd case doesn't happen as frequently, so the overall trend is a decrease, leading to a logarithmic time complexity.
+
+The optimizations made to the slow program to make it faster are:
+
+1. Removed the use of a vector to memoize the results. This not only saves memory but also the time taken to access the vector.
+
+2. Added a direct check for the numbers 1, 2, and 4 at the start of the program. This allows the program to immediately return the result for these numbers without going into the loop.
+
+3. Removed the check for the number 4 inside the loop. This check is unnecessary because the loop will naturally terminate when the number becomes 1, which is the end point of the Collatz sequence for any number.
+
+These optimizations significantly reduce the number of operations performed by the program, making it run faster.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is algorithmic. The original program uses a memoization technique to store previously computed values, but this is unnecessary for this problem and adds extra time complexity. The optimized version removes this unnecessary storage and computation, which significantly speeds up the program.
+
+The time complexity of the slow program is O(n) due to the use of a vector to store previously computed values, where n is the size of the input. The time complexity of the fast program is also O(n), but the constant factor is much smaller because it doesn't involve any extra storage or lookup operations.
+
+The following optimizations were made to the slow program to make it faster:
+
+1. Removed the use of the vector for memoization. This eliminates the need for memory allocation and deallocation, as well as the time spent on accessing the vector elements.
+
+2. Removed the use of the bits/stdc++.h header file, which includes a large number of standard C++ libraries and can slow down the compilation time. Instead, only the necessary cstdio library is included.
+
+3. Simplified the loop condition. Instead of checking if a value has been seen before, the optimized version simply checks if the value is 1, 2, or 4. These are the only possible end values for any sequence in the Collatz conjecture, which this program appears to be implementing.
+
+4. Removed the unnecessary bitwise AND operation (0 & printf("%lld", i)) in the return statement of the slow program. The optimized program directly prints the result.
+
+5. The optimized program adds 3 to the final result. This is because it stops the loop when s is 1, 2, or 4, so it needs to add the extra steps to reach 1 in the Collatz sequence.
+
+These changes significantly reduce the amount of computation and memory usage, making the optimized program much faster than the original one.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is not algorithmic, but rather it's a code optimization. The algorithmic complexity of both the slow and fast programs is the same, which is O(log n) because the value of 's' is halved in each iteration of the loop.
+
+Here are the optimizations that were made to the slow program to make it faster:
+
+1. Removal of unnecessary checks: In the slow version of the program, there are unnecessary checks for 's' being equal to 4, 2, or 1 both before and inside the loop. In the optimized version, these checks are combined into a single check in the loop condition, which makes the program faster.
+
+2. Removal of unnecessary operations: In the slow version, the program returns 0 & printf("%lld", 4) or 0 & printf("%lld", i + 3) when 's' equals to 4. The bitwise AND operation with 0 is unnecessary because it always results in 0. In the optimized version, the program directly prints 'i + 3' without any unnecessary operations.
+
+3. Removal of unnecessary library: In the slow version, the program includes the 'bits/stdc++.h' library, which includes all the standard C++ libraries. This is unnecessary and can slow down the compilation time. In the optimized version, the program only includes the 'cstdio' library, which is the only library needed for this program.
+
+4. Efficient incrementation: In the slow version, the incrementation of 'i' is done with the '++i' operator inside the loop. In the optimized version, the incrementation is done in the loop condition, which is slightly more efficient.
+
+5. Removal of unnecessary initialization: In the slow version, 'i' is initialized with the value 1 at the beginning of the program. In the optimized version, 'i' is not initialized until it is used in the loop, which saves a little bit of time.
+
+These optimizations make the program more efficient by removing unnecessary operations and checks, and by using more efficient ways to perform necessary operations.
+        </p>
+    </div>
+</body>
+    </html>
+    

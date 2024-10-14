@@ -1,0 +1,175 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <bits/stdc++.h><br><br><br><br>// #include <ext/pb_ds/assoc_container.hpp><br><br>// #include <ext/pb_ds/tree_policy.hpp><br><br>// #include <ext/pb_ds/detail/standard_policies.hpp><br><br><br><br>using namespace std;<br><br>// using namespace __gnu_pbds;<br><br><br><br>#define int ll<br><br>#define endl "\n"<br><br>#define pb push_back<br><br>#define mp make_pair<br><br>#define ff first<br><br>#define ss second<br><br>#define all(c) c.begin(), c.end()<br><br>#define vi vector<int><br><br>#define pii pair<int,int><br><br>#define For(i,s,e) for (ll i=(s); i<(e); i++)<br><br>#define MAX 500005<br><br>#define initialize(arr,elem) memset(arr,elem,sizeof(arr))<br><br><br><br>typedef long long ll;<br><br>// typedef tree< int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;<br><br>int memo[MAX], arr[MAX];<br><br>int k = 2;<br><br>int solve(int i){<br><br>	if (memo[i] !=-1) return memo[i];<br><br>	if (i==1) return memo[i] = 0;<br><br>	int dp = 100000000000000;<br><br>	for (int j =i-1; j>=i-k && j>0;j--){<br><br>		dp = min(dp,solve(j) + abs(arr[i]-arr[j]));<br><br>	}<br><br>	return memo[i] = dp;<br><br>}<br><br>signed main()<br><br>{<br><br>	ios_base::sync_with_stdio(false);<br><br>	cin.tie(NULL);<br><br>	cout.tie(NULL);<br><br>		<br><br>	<br><br>	int n;<br><br>	cin>>n>>k;<br><br>	initialize(memo,-1);<br><br>	For(i,1,n+1) cin>>arr[i];<br><br>	cout<<solve(n)<<endl;<br><br>	// For(i,1,3) cout<<memo[i]<<" ";<br><br><br><br><br><br><br><br>	return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 27.975648546412977 <br>
+#include<cstdio><br><br>#include<cstring><br><br>#include<algorithm><br><br>#define maxn 100005<br><br>using namespace std;<br><br>typedef long long ll;<br><br>int n,k,a[maxn];<br><br>ll dp[maxn];<br><br>inline int read(){<br><br>    int x=0,f=1;char c=getchar();<br><br>    while(c<'0' || c>'9'){if(c=='-') f=-1;c=getchar();}<br><br>    while(c>='0' && c<='9'){x=(x<<1)+(x<<3)+(c^48);c=getchar();}<br><br>    return x*f;<br><br>}<br><br>int main(){<br><br>    n=read();k=read();<br><br>    for(int i=1;i<=n;++i) a[i]=read();<br><br>    dp[1]=0;<br><br>    for(int i=2;i<=n;++i){<br><br>        dp[i]=0x3f3f3f3f3f3f3f3fll;<br><br>        for(int j=i-1;j>=max(1,i-k);--j){<br><br>            dp[i]=min(dp[i],dp[j]+abs(a[i]-a[j]));<br><br>        }<br><br>    }<br><br>    printf("%lld\n",dp[n]);<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 5.042093930274976 <br>
+#include <bits/stdc++.h><br><br> <br><br>using namespace std;<br><br><br><br>typedef long long ll;<br><br>#define int ll<br><br>#define pb push_back<br><br>const int INF = 1e18;<br><br><br><br>signed main(){<br><br><br><br>	ios_base::sync_with_stdio(false);<br><br>	cin.tie(0);<br><br><br><br>	int n,k; cin>>n>>k;<br><br>	int cost[n+1];<br><br>	for(int i=1;i<=n;i++)<br><br>		cin>>cost[i];<br><br><br><br>	vector<int> dp(n+1,INF);<br><br>	dp[1] = 0;<br><br>	for(int i=1;i<n;i++){<br><br>		for(int j=i+1;j <= min(i+k,n);j++) <br><br>			dp[j] = min(dp[j],dp[i] + abs(cost[i]-cost[j]));<br><br>	}<br><br>	cout<< dp[n];<br><br><br><br><br><br>	return 0;<br><br>}
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is a dynamic programming solution to a problem where it finds the minimum cost to reach the end of a sequence of numbers. The cost of moving from one number to another is the absolute difference between the two numbers. The program can jump up to 'k' steps backwards from the current position.
+
+Here's a step-by-step breakdown of what the program does:
+
+1. The program starts by defining several macros and types for convenience. For example, `int` is redefined as `ll` (long long), `pb` is defined as `push_back`, `mp` as `make_pair`, and so on.
+
+2. The program then defines a function `solve(int i)`. This function uses memoization to store previously computed results in an array `memo`. The function checks if the result for the current index `i` is already computed. If it is, it returns the stored result. If not, it calculates the minimum cost to reach the index `i` from any of the previous `k` indices and stores this result in `memo[i]`.
+
+3. The `main()` function first sets up faster I/O by disabling synchronization with C's standard streams and untying `cin` from `cout`. It then reads the number of elements `n` and the maximum jump length `k`.
+
+4. The `memo` array is initialized with -1, indicating that no results have been computed yet.
+
+5. The program reads the sequence of `n` numbers into the array `arr`.
+
+6. Finally, the program calls `solve(n)` to compute and print the minimum cost to reach the end of the sequence.
+
+The program uses dynamic programming to avoid redundant computations, which makes it efficient for large inputs.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization made here is algorithmic. The original program uses a recursive function with memoization to solve the problem, while the optimized version uses a bottom-up dynamic programming approach.
+
+The time complexity of the original program is O(n*k) because for each of the 'n' elements, it performs 'k' operations in the worst case. However, due to the overhead of function calls and the use of memoization, the actual running time is slower.
+
+The time complexity of the optimized program is also O(n*k), but it avoids the overhead of function calls and memoization by using a bottom-up approach. This makes it faster in practice.
+
+The optimizations made to the slow program to make it faster are:
+
+1. Replacing the recursive function with a bottom-up dynamic programming approach: This avoids the overhead of function calls and the need for memoization.
+
+2. Removing unused code and comments: This makes the code cleaner and easier to read, but doesn't affect performance.
+
+3. Changing the way the minimum cost is calculated: In the original program, the minimum cost is calculated by iterating backwards from the current position. In the optimized program, it is calculated by iterating forwards from the start. This makes the code simpler and easier to understand.
+
+4. Using a constant for infinity: In the original program, a large number is hard-coded as the initial value for 'dp'. In the optimized program, a constant is used instead. This makes the code more readable and avoids potential errors if the value needs to be changed.
+
+5. Removing the 'initialize' function: In the original program, this function is used to initialize the 'memo' array. In the optimized program, the 'dp' array is initialized directly when it is declared. This makes the code simpler and avoids the need for an extra function call.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization in the faster version of the program is not algorithmic, but rather due to the use of more efficient I/O operations and memory management. The algorithmic complexity of both programs is the same, O(n*k), where n is the number of elements and k is the maximum distance to check.
+
+Here are the optimizations made:
+
+1. I/O Operations: The slower version uses cin and cout for input and output, which are slower compared to scanf and printf used in the faster version. This is because cin and cout have additional overhead due to synchronization with stdio, which can be turned off using ios_base::sync_with_stdio(false), but even then scanf and printf are generally faster.
+
+2. Memory Initialization: The slower version uses memset to initialize the memo array, which is slower than direct assignment used in the faster version.
+
+3. Use of Inline Function: The faster version uses an inline function for reading input. Inline functions are faster because they are expanded at compile time, avoiding the overhead of function call stack setup and teardown.
+
+4. Use of Bitwise Operations: The faster version uses bitwise operations for calculating the input value, which are faster than arithmetic operations.
+
+5. Use of Long Long: The slower version uses a typedef to define int as long long, which is a 64-bit integer. The faster version uses int and long long where appropriate, avoiding the unnecessary use of 64-bit integers.
+
+6. Use of Macros: The slower version uses macros for common operations, which can slow down the program due to the preprocessor having to replace the macros with their definitions at compile time. The faster version avoids this by using the operations directly.
+
+7. Use of Magic Number: The faster version uses a magic number for initializing dp[i], which is faster than calculating the maximum value at runtime.
+
+In summary, the faster version of the program is more efficient due to better I/O operations, memory management, use of inline functions, bitwise operations, appropriate use of data types, avoiding macros, and use of magic numbers.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization in the faster version of the program is both algorithmic and non-algorithmic. 
+
+Algorithmic Complexity:
+The slow program has a time complexity of O(n*k) where n is the number of elements and k is the maximum distance that can be jumped. This is because for each element, the program checks up to k elements ahead in the worst case.
+
+The optimized program also has a time complexity of O(n*k). However, the actual number of operations performed in the optimized version is less due to the optimizations made, which makes it faster in practice.
+
+Optimizations:
+
+1. Input/Output Optimization: The optimized version uses getchar() and printf() for input and output, which are faster than cin and cout used in the slower version. This is a non-algorithmic optimization.
+
+2. Memory Optimization: The optimized version uses a fixed-size array instead of a vector. This can be faster because vectors in C++ are dynamic and can take extra time to resize when elements are added.
+
+3. Loop Optimization: In the slower version, the inner loop starts from the current position and goes up to k positions ahead. In the optimized version, the inner loop starts from the current position and goes back to up to k positions. This doesn't change the time complexity, but it reduces the number of iterations in the loop, making the program faster.
+
+4. Inline Function: The optimized version uses an inline function for reading input. Inline functions are faster because they are expanded at compile time, eliminating the overhead of function calls.
+
+5. Bit Manipulation: The optimized version uses bit manipulation for calculating the input value, which is faster than simple arithmetic operations.
+
+In summary, the optimized version of the program is faster due to a combination of algorithmic and non-algorithmic optimizations, including faster input/output methods, memory optimization, loop optimization, use of inline functions, and bit manipulation.
+        </p>
+    </div>
+</body>
+    </html>
+    

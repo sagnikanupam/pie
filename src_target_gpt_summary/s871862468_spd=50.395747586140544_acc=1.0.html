@@ -1,0 +1,168 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include "bits/stdc++.h"<br><br>#define ll long long<br><br>#define PI 3.1415926535897932384626433832795l<br><br>#define MAX_NUM 1000000000<br><br>using namespace std;<br><br>template <typename T> inline T __lcm(T a,T b)<br><br>{<br><br>    return (a*b)/__gcd(a,b);<br><br>}<br><br><br><br>ll h[1000000];<br><br>ll dp[1000000];<br><br>ll n,k;<br><br>ll fun(ll i)<br><br>{<br><br>    if(i>=n)<br><br>    {<br><br>        return MAX_NUM;<br><br>    }<br><br>    if(i==n-1)<br><br>    {<br><br>        return 0;<br><br>    }<br><br>    if(dp[i]!=-1)<br><br>    {<br><br>        return dp[i];<br><br>    }<br><br>    //return dp[i]=min(fabs(h[i]-h[i+1])+fun(i+1),fabs(h[i]-h[i+2])+fun(i+2));<br><br>    ll minimum=MAX_NUM;<br><br>    for(int j=1;j<=k;j++)<br><br>    {<br><br>        ll temp=fabs(h[i]-h[i+j])+fun(i+j);<br><br>        minimum=min(minimum,temp);<br><br>    }<br><br>    return dp[i]=minimum;<br><br>}<br><br><br><br>int main()<br><br>{<br><br>    cin>>n>>k;<br><br>    for(int i=0;i<n;i++)<br><br>    {<br><br>        cin>>h[i];<br><br>    }<br><br>    memset(dp,-1,sizeof(dp[0])*1000000);<br><br>    ll ans=fun(0);<br><br>    printf("%lld\n",ans);<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 50.395747586140544 <br>
+#include <cstdio><br><br>#include <algorithm><br><br>#include <cstring><br><br>using namespace std;<br><br>#define MAXN 100001<br><br>#define INF 0x3f3f3f3f<br><br>int n, K, a[MAXN], f[MAXN];<br><br>int main()<br><br>{<br><br>    scanf("%d%d", &n, &K);<br><br>    for (int i = 1; i <= n; ++i) scanf("%d", &a[i]), f[i] = INF;<br><br>    f[1] = 0;<br><br>    for (int i = 1; i <= n; ++i)<br><br>        for (int j = 1; j <= K; ++j)<br><br>            if (i + j <= n) f[i + j] = min(f[i + j], f[i] + abs(a[i] - a[i + j]));<br><br>    printf("%d\n", f[n]);<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 9.318773599866196 <br>
+#include<bits/stdc++.h><br><br>using namespace std;<br><br><br><br><br><br><br><br>int main() {<br><br>    ios_base::sync_with_stdio(false);<br><br><br><br>    long long int a,b,c,d,i,j,k,n,m;<br><br>    cin>>n>>k;<br><br>    long long int ar[n+1],dp[n+1];<br><br>    for(i=0;i<n;i++)<br><br>        cin>>ar[i];<br><br>     dp[0]=0;<br><br>     for(i=1;i<n;i++)<br><br>        dp[i]=INT_MAX;<br><br>    //dp[1]=abs(ar[1]-ar[0]);<br><br>    for(i=0;i<n;i++)<br><br>    {<br><br>        //a=INT_MAX;<br><br>        for(j=1;j<=k && i+j<n;j++)<br><br>        {<br><br>           c=i+j;<br><br>           dp[c]=min(dp[c],(dp[i]+abs(ar[i]-ar[c])));<br><br>           //cout<<i<<" "<<c<<" "<<dp[0]<<" "<<dp[c]<<"\n";<br><br>        }<br><br><br><br><br><br>    }<br><br>    cout<<dp[n-1]<<"\n";<br><br>    return 0;<br><br>}<br>
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is a dynamic programming solution to a problem that involves finding the minimum cost to traverse a series of heights. The heights are represented as an array `h` of `n` elements, and the cost to move from one height to another is the absolute difference between the two heights.
+
+The program starts by reading two inputs: `n` and `k`. `n` is the number of heights and `k` is the maximum number of steps that can be taken from any given height.
+
+The heights are then read into the array `h`.
+
+The `fun` function is a recursive function that calculates the minimum cost to reach the end of the array from a given index `i`. It uses memoization to store previously calculated results in the `dp` array to avoid redundant calculations. 
+
+If the current index `i` is at or beyond the end of the array, the function returns a maximum number (defined as `MAX_NUM`). If `i` is at the second last index of the array, the function returns 0 because no cost is needed to move from the last height to the end.
+
+For any other index, the function calculates the cost to move from the current height to each of the next `k` heights and recursively calls itself for the next index. It keeps track of the minimum cost found.
+
+Finally, the program calls `fun(0)` to start the calculation from the first height and prints the minimum cost to traverse all the heights.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization made here is algorithmic. The original program uses a recursive approach with memoization (top-down dynamic programming), while the optimized version uses a bottom-up dynamic programming approach.
+
+The time complexity of the original program is O(n*k), where n is the number of elements and k is the maximum step size. This is because for each element, the program computes the minimum cost for the next k steps. However, due to the recursive nature of the function, there can be a lot of function call overhead, which can slow down the program significantly.
+
+The optimized version also has a time complexity of O(n*k), but it avoids the function call overhead by using an iterative approach. It calculates the minimum cost for each step iteratively and stores the result in a dynamic programming table. This approach is generally faster and more efficient than the recursive approach.
+
+Here are the optimizations made to the original program:
+
+1. Changed the recursive approach to an iterative one: This avoids the function call overhead and makes the program faster.
+
+2. Removed unnecessary computations: In the original program, the minimum cost for each step is calculated by calling the function recursively for each possible next step. In the optimized version, the minimum cost is calculated directly using the results stored in the dynamic programming table.
+
+3. Removed unnecessary variables and functions: The optimized version removes the template function for calculating the least common multiple, which is not used in the program. It also removes the unnecessary variables and defines the variables closer to where they are used, which can make the program easier to understand and maintain.
+
+4. Used faster input/output methods: The optimized version uses the "ios_base::sync_with_stdio(false);" statement, which can make the input/output operations faster in C++. 
+
+5. Removed the use of the "fabs" function: The optimized version uses the "abs" function instead of "fabs", which is faster for integer inputs. 
+
+6. Reduced the size of the dynamic programming table: The original program uses a table of size 1000000, while the optimized version uses a table of size n+1, which can save memory when n is much less than 1000000.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program uses a recursive approach with memoization to solve the problem, while the optimized version uses a bottom-up dynamic programming approach. 
+
+The time complexity of the original program is O(n*k), where n is the number of elements and k is the maximum step size. This is because for each element, the program potentially makes k recursive calls. However, due to the overhead of recursion and the fact that the memoization table is not always used effectively (since the program may compute the same subproblem multiple times before it gets memoized), the actual running time can be much higher.
+
+The time complexity of the optimized program is also O(n*k), but in practice, it runs much faster. This is because it uses a bottom-up approach, which eliminates the overhead of recursion and ensures that each subproblem is only computed once. 
+
+Here are the specific optimizations that were made:
+
+1. Algorithmic optimization: The program was rewritten to use a bottom-up dynamic programming approach instead of recursion with memoization. This eliminates the overhead of recursion and ensures that each subproblem is only computed once.
+
+2. Memory optimization: The program uses a single array f[] to store the results of subproblems, instead of two separate arrays h[] and dp[]. This reduces the memory footprint of the program.
+
+3. Input/Output optimization: The program uses scanf and printf for input and output, which are faster than cin and cout.
+
+4. Code simplification: The program removes unnecessary code, such as the definition of the PI constant and the __lcm function, which are not used in the program. This makes the code cleaner and easier to understand, although it does not affect performance.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization here is both algorithmic and non-algorithmic. 
+
+Algorithmic Complexity:
+Both the slow and the optimized versions of the program have the same time complexity of O(n*k), where n is the size of the array and k is the maximum number of steps that can be taken from any position. This is because for each element in the array, the program checks up to k future elements to find the minimum cost. 
+
+Non-Algorithmic Optimizations:
+1. The optimized version uses scanf and printf for input and output, which are faster than cin and cout used in the slow version. This is because cin and cout have additional overhead due to synchronization with stdio, which is not present with scanf and printf.
+
+2. The optimized version uses a fixed size array, which is faster than the dynamic size array used in the slow version. Dynamic size arrays have additional overhead for memory allocation and deallocation.
+
+3. The optimized version uses memset to initialize the array, which is faster than the loop used in the slow version. memset is a built-in function that directly operates on memory and is usually optimized by the compiler.
+
+4. The optimized version uses the macro INF to represent a large number, which is faster than using INT_MAX in the slow version. Macros are replaced by their values at compile time, so there is no runtime overhead.
+
+5. The optimized version uses the macro MAXN to represent the maximum size of the array, which is faster than using n+1 in the slow version. Again, macros are replaced by their values at compile time, so there is no runtime overhead.
+
+6. The optimized version uses the function min, which is faster than the conditional operator used in the slow version. The function min is usually optimized by the compiler.
+
+In summary, the optimized version is faster due to more efficient use of input/output functions, memory allocation, array initialization, representation of large numbers, and minimum value calculation.
+        </p>
+    </div>
+</body>
+    </html>
+    

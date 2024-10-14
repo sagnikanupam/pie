@@ -1,0 +1,154 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <iostream><br><br>#include <algorithm><br><br>#include <string><br><br>#include <cstring><br><br>#include <iomanip><br><br><br><br>using namespace std;<br><br>typedef long long ll;<br><br>const int maxn=1e6+1111;<br><br><br><br>int arr[maxn];<br><br>int dp[maxn];<br><br>int main(){<br><br>    int n,k;<br><br>    scanf("%d%d",&n,&k);<br><br>    memset(dp,0x3f3f3f,sizeof(dp));<br><br>    dp[0]=dp[1]=0;<br><br>    for(int i=1;i<=n;++i){<br><br>        scanf("%d",arr+i);<br><br>        for(int j=1;j<=k&&i-j>0;++j){<br><br>            dp[i]=min(dp[i-j]+abs(arr[i]-arr[i-j]),dp[i]);<br><br>        }<br><br>    }<br><br>    printf("%d\n",dp[n]);<br><br>    return 0;<br><br>}
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 27.64052645330175 <br>
+#include<cstdio><br><br>#include<algorithm><br><br>#include<cstring><br><br>#include<cctype><br><br>using namespace std;<br><br>inline int read()<br><br>{<br><br>	int x=0;bool flg=false;<br><br>	char ch=getchar();<br><br>	for(;!isdigit(ch);ch=getchar()) if(ch=='-') flg=true;<br><br>	for(;isdigit(ch);ch=getchar()) x=x*10+(ch^48);<br><br>	return flg?-x:x;<br><br>}<br><br>const int N=100010;<br><br>int dp[N],a[N];<br><br>int n,k;<br><br>int main()<br><br>{<br><br>	n=read(),k=read();<br><br>	for(int i=1;i<=n;i++) a[i]=read();<br><br>	dp[1]=0;<br><br>	for(int i=2;i<=n;i++)<br><br>	{<br><br>		dp[i]=dp[i-1]+abs(a[i]-a[i-1]);<br><br>		for(int j=2;j<=k;j++)<br><br>			if(i-j>=1) dp[i]=min(dp[i],dp[i-j]+abs(a[i]-a[i-j]));<br><br>	}<br><br>	printf("%d\n",dp[n]);<br><br>	return 0;<br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 5.154455235128371 <br>
+#include <iostream><br><br>#include <algorithm><br><br>#include <string><br><br>#include <cstring><br><br>#include <iomanip><br><br><br><br>using namespace std;<br><br>typedef long long ll;<br><br>const int maxn=1e5+1111;<br><br><br><br>int arr[maxn];<br><br>int dp[maxn];<br><br>int main(){<br><br>    int n,k;<br><br>    scanf("%d%d",&n,&k);<br><br>    dp[0]=dp[1]=0;<br><br>    for(int i=1;i<=n;++i){<br><br>        scanf("%d",arr+i);<br><br>        if(i>1) dp[i]=dp[i-1]+abs(arr[i]-arr[i-1]);<br><br>        for(int j=2;j<=k&&i-j>0;++j){<br><br>            dp[i]=min(dp[i-j]+abs(arr[i]-arr[i-j]),dp[i]);<br><br>        }<br><br>    }<br><br>    printf("%d\n",dp[n]);<br><br>    return 0;<br><br>}
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is designed to solve a dynamic programming problem. It reads two integers, n and k, from the input. The integer n represents the number of elements in an array, and k represents the maximum distance that can be jumped from one element to another in the array.
+
+The program then reads n integers, which are the elements of the array. The array is 1-indexed, meaning the first element is at position 1, not 0.
+
+The program uses dynamic programming to find the minimum total absolute difference between the elements that can be achieved by jumping from one element to another, with the constraint that the maximum distance of a jump is k elements.
+
+The dp array is used to store the minimum total absolute difference that can be achieved up to each position in the array. dp[i] represents the minimum total absolute difference that can be achieved up to position i in the array.
+
+The program initializes dp[0] and dp[1] to 0, and all other dp[i] to a very large number (0x3f3f3f).
+
+Then, for each position i in the array from 1 to n, the program calculates dp[i] as the minimum of dp[i] and dp[i-j] + abs(arr[i] - arr[i-j]) for all j from 1 to k such that i-j > 0. This represents all possible jumps that can be made to position i.
+
+Finally, the program prints dp[n], which is the minimum total absolute difference that can be achieved for the entire array.
+
+In summary, this program finds the minimum total absolute difference that can be achieved by jumping from one element to another in an array, with a maximum jump distance of k.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization made here is an algorithmic optimization. The algorithmic complexity of the slow program is O(n*k), while the fast program also has a complexity of O(n*k). However, the constant factors in the fast program are smaller, which makes it faster in practice.
+
+The slow program calculates dp[i] for each i from 1 to n by considering all j from 1 to k. This means that it performs k operations for each i, leading to a total of n*k operations.
+
+The optimized program, on the other hand, uses a clever trick to reduce the number of operations. It first sets dp[i] to dp[i-1] + abs(arr[i] - arr[i-1]) for i > 1. This means that it only needs to consider j from 2 to k in the loop, reducing the number of operations by approximately a factor of 2 for large k.
+
+In summary, the optimization made to the slow program to make it faster is to reduce the number of operations performed in the inner loop by initializing dp[i] to dp[i-1] + abs(arr[i] - arr[i-1]) for i > 1, and then only considering j from 2 to k in the loop. This reduces the number of operations by approximately a factor of 2 for large k, which makes the program faster in practice.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization in the faster version of the program is not algorithmic, but rather it's due to more efficient I/O operations and memory usage. The algorithmic complexity of both the slow and fast programs remains the same, which is O(n*k), where n is the number of elements and k is the maximum difference between indices.
+
+Here are the optimizations made in the faster version:
+
+1. Efficient I/O: The faster version uses getchar() and putchar() functions for input and output, which are faster than scanf() and printf(). The function read() is an implementation of fast input, which reads characters directly from the buffer, skipping non-digit characters, and constructs the integer. This is faster than scanf() which has to parse the format string and has more overhead.
+
+2. Reduced Memory Usage: The faster version uses less memory by declaring the array size to be exactly what's needed (N=100010), while the slower version declares a larger array (maxn=1e6+1111) which uses more memory. Although this doesn't affect the time complexity, it can make the program run faster by fitting better in cache and reducing the chance of page faults.
+
+3. Loop Optimization: In the faster version, the inner loop starts from 2, because the case of 1 is already handled before the loop (dp[i]=dp[i-1]+abs(a[i]-a[i-1]);). This reduces the number of iterations of the inner loop by one for each outer loop iteration.
+
+4. Avoiding unnecessary operations: In the slower version, the program calculates dp[i-j]+abs(arr[i]-arr[i-j]) even when it's not going to be used (when it's larger than the current dp[i]). The faster version only calculates it when necessary (when i-j>=1).
+
+5. Using inline function: The function read() is declared as inline, which suggests to the compiler to insert the complete body of the function in every place that the function is called, instead of calling the function where it is defined. This can make the program faster by avoiding function call overhead, at the cost of possibly increasing the size of the binary.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization in the faster version of the program is not algorithmic, but rather it's due to the use of more efficient I/O operations and memory management. The algorithmic complexity of both the slow and fast programs remains the same, which is O(n*k), where n is the number of elements and k is the range of elements to be compared.
+
+Here are the optimizations made in the faster version:
+
+1. **Faster I/O Operations**: The faster version uses getchar() and putchar() functions for input and output, which are faster than scanf() and printf(). This is because getchar() and putchar() handle one character at a time, while scanf() and printf() need to parse the format string, which takes more time.
+
+2. **Avoiding unnecessary operations**: The faster version avoids unnecessary operations by using bitwise operations. For example, the expression (ch^48) is used instead of (ch-'0') to convert a character digit to an integer. Bitwise operations are generally faster than arithmetic operations.
+
+3. **Inline function for reading input**: The faster version uses an inline function read() for reading the input. Inline functions are faster because they are expanded at compile time, which eliminates the overhead of function calls.
+
+4. **Memory Management**: The faster version uses less memory by declaring variables in the smallest possible scope. This can potentially make the program faster by reducing the amount of memory that needs to be accessed.
+
+5. **Avoiding use of heavy libraries**: The faster version avoids the use of heavy libraries like iostream and string. These libraries can slow down the program because they have a lot of overhead.
+
+6. **Avoiding use of std namespace**: The faster version avoids the use of the std namespace. This can make the program faster because it reduces the number of name lookups that the compiler has to do.
+
+In summary, the faster version of the program is faster due to more efficient I/O operations, better memory management, and avoiding unnecessary operations and heavy libraries. However, the algorithmic complexity of both versions is the same.
+        </p>
+    </div>
+</body>
+    </html>
+    

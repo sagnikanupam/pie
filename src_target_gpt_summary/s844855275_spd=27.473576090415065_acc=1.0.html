@@ -1,0 +1,166 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <algorithm><br><br>#include <iostream><br><br>#include <cstring><br><br>#include <cstdio><br><br>#include <cmath><br><br>#include <queue><br><br>#include <vector><br><br>#include <map><br><br>#define mem(u, v) memset(u, v, sizeof(u))<br><br>#define INF 0x3f3f3f3f<br><br>#define pii pair<int, int ><br><br>#define LL long long<br><br>#define mid (l + r) / 2<br><br>#define lowbit(x) x & -x<br><br>using namespace std;<br><br>const int MAXN = 1e6 + 7,  MAXM = 1e6 + 7, MAXK = 1e6 + 7;<br><br><br><br>int a[MAXN], b[MAXN], sum[MAXN], c[MAXN], n;<br><br>LL ans0;<br><br><br><br>void add(int x){<br><br>	while (x <= 5 * n){<br><br>		c[x] += 1;<br><br>		x += lowbit(x);<br><br>	}<br><br>}<br><br><br><br>int get(int x){<br><br>	int y = 0;<br><br>	while (x > 0){<br><br>		y += c[x];<br><br>		x -= lowbit(x);<br><br>	}<br><br>	return y;<br><br>}<br><br><br><br>bool judge(int x){<br><br>	sum[0] = 0;<br><br>	for (int i = 1; i <= n; i++){<br><br>		if (a[i] >= x) sum[i] = sum[i - 1] + 1;<br><br>		else sum[i] = sum[i - 1];<br><br>	}<br><br>	for (int i = 0; i <= n; i++) sum[i] = 2 * sum[i] - i + n + 1;<br><br>	LL ans1 = 0;<br><br>	mem(c, 0);<br><br>	for (int i = 0; i <= n; i++){<br><br>		ans1 += get(sum[i]);<br><br>		add(sum[i]);<br><br>	}<br><br>	if (ans1 >= ans0) return true;<br><br>	return false;<br><br>}<br><br><br><br>int main(){<br><br>	scanf("%d", &n);<br><br>	for (int i = 1; i <= n; i++) scanf("%d", &a[i]), b[i] = a[i];<br><br>	sort(b + 1, b + n + 1);<br><br>	int l = 1, r = n, ans = 0;<br><br>	ans0 = (1LL * n * (n - 1) / 2 + n + 1) / 2LL;<br><br>	while (l <= r){<br><br>		if (judge(b[mid])) ans = mid, l = mid + 1;<br><br>		else r = mid - 1;<br><br>	}<br><br>	printf("%d\n", b[ans]);<br><br>	return 0;<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 27.473576090415065 <br>
+#include <stdio.h><br><br>#include <string.h><br><br>#include <algorithm><br><br>using namespace std;<br><br>int n,a[1000005],c[1000005],d[1000005],tot;<br><br>long long ans;<br><br>int read()<br><br>{<br><br>	int x=0,f=1;<br><br>	char c=getchar();<br><br>	while(c<'0'||c>'9')<br><br>	{<br><br>		if(c=='-')<br><br>		f=-1;<br><br>		c=getchar();<br><br>	}<br><br>	while(c>='0'&&c<='9')<br><br>	{<br><br>		x=x*10+c-48;<br><br>		c=getchar();<br><br>	}<br><br>	return x*f;<br><br>}<br><br>void add(int x)<br><br>{<br><br>	while(x<=n)<br><br>	{<br><br>		c[x]++;<br><br>		x+=x&-x;<br><br>	}<br><br>}<br><br>int sum(int x)<br><br>{<br><br>	int ans=0;<br><br>	while(x)<br><br>	{<br><br>		ans+=c[x];<br><br>		x-=x&-x;<br><br>	}<br><br>	return ans;<br><br>}<br><br>int main()<br><br>{<br><br>	n=read();<br><br>	for(int i=1;i<=n;i++)<br><br>	a[i]=read(),d[i]=a[i];<br><br>	sort(d+1,d+1+n);<br><br>	tot=unique(d+1,d+1+n)-(d+1);<br><br>	for(int i=1;i<=n;i++)<br><br>	a[i]=lower_bound(d+1,d+1+tot,a[i])-d;<br><br>	for(int i=1;i<=n;i++)<br><br>	{<br><br>		add(a[i]);<br><br>		int pos=lower_bound(d+1,d+1+tot,i+1-a[i])-d;<br><br>		ans+=i-sum(pos);<br><br>	}<br><br>	for(int i=1;i<=n;i++)<br><br>	if(ans<=1ll*i*(i-1)/2ll)<br><br>	{<br><br>		printf("%d\n",d[i]);<br><br>		return 0;<br><br>	}<br><br>	return 0;<br><br>}
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 5.150859494586869 <br>
+#include<iostream><br><br>#include<cstdio><br><br>#include<math.h><br><br>#include<algorithm><br><br>#include<map><br><br>#include<set><br><br>#include<bitset><br><br>#include<stack><br><br>#include<queue><br><br>#include<string><br><br>#include<cstring><br><br><br><br><br><br>using namespace std;<br><br>typedef long long LL;<br><br>const int maxn=1e6+7;<br><br>LL n;<br><br>LL tot=0;<br><br>LL mn=0x3f,mx=-0x3f;<br><br>LL a[maxn];<br><br>LL bit[maxn];<br><br><br><br>struct node {<br><br>LL val,pos;<br><br>}arr[maxn];<br><br><br><br>bool cmp(node n1,node n2)<br><br>{<br><br>    return n1.val==n2.val?n1.pos<n2.pos:n1.val<n2.val;<br><br>}<br><br><br><br>void update(LL x,LL val)<br><br>{<br><br>    for(; x< maxn ;x+=(x & -x))<br><br>    {<br><br>        bit[x]+=val;<br><br>    }<br><br>}<br><br><br><br>LL getsum(LL x)<br><br>{<br><br>    LL ans=0;<br><br>    for(;x>0;x-=(x & -x))<br><br>    {<br><br>        ans += bit[x];<br><br>    }<br><br>    return ans;<br><br>}<br><br><br><br><br><br><br><br>bool check(LL x){<br><br>    memset(bit,0,sizeof(bit));<br><br>     memset(arr,0,sizeof(arr));<br><br><br><br><br><br>	for(int i=1;i<=n;i++)<br><br>    {<br><br>        if(a[i]<=x)arr[i].val=-1;<br><br>        else arr[i].val=1;<br><br>        arr[i].pos=i+1;<br><br>    }<br><br><br><br>    arr[0].val=-1;<br><br>	arr[0].pos=1;<br><br><br><br>	for(int i=1;i<=n;i++)<br><br>	arr[i].val+=arr[i-1].val;<br><br>	sort(arr,arr+n+1,cmp);<br><br><br><br>	LL ans=0;<br><br>	for(int i=0;i<=n;i++)<br><br>    {<br><br>        ans+=(i-getsum(arr[i].pos));<br><br>        update(arr[i].pos,1);<br><br>    }<br><br>	return ans*2 > tot;<br><br>}<br><br><br><br><br><br>int main(){<br><br>   scanf("%lld",&n);<br><br><br><br>   for(int i=1;i<=n;i++)<br><br>    {<br><br>   	 scanf("%lld",&a[i]);<br><br>   	 mn=min(mn,a[i]);<br><br>   	 mx=max(mx,a[i]);<br><br>   	 tot+=i;<br><br>   }<br><br><br><br>   LL l=mn,r=mx;<br><br>   while(r-l>1)<br><br>    {<br><br>   	  LL mid=(l+r)/2;<br><br>   	 if(check(mid)) r=mid;<br><br>   	 else l=mid;<br><br>   	 //printf("s%d",mid);<br><br>   }<br><br>   printf("%lld\n",r);<br><br><br><br>   return 0;<br><br>}<br>
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is designed to solve a specific problem related to arrays and binary search. Here's a high-level overview of what it does:
+
+1. The program starts by reading an integer `n` from the standard input, which represents the size of an array. Then it reads `n` integers, which are the elements of the array `a`.
+
+2. The array `a` is then copied into another array `b`, which is sorted in ascending order.
+
+3. The program then performs a binary search on the sorted array `b` to find a certain value. The binary search is not looking for a specific value in the array, but rather it's trying to find a value `x` that satisfies a certain condition, which is implemented in the `judge` function.
+
+4. The `judge` function takes an integer `x` as input and checks whether the number of pairs `(i, j)` such that `i < j` and `a[i] <= x < a[j]` is greater than or equal to a certain value `ans0`. This is done by transforming the array `a` into a prefix sum array `sum`, where `sum[i]` is the number of elements in `a[1..i]` that are greater than or equal to `x`. Then it calculates the number of pairs `(i, j)` such that `i < j` and `sum[i] <= sum[j]`, which is equivalent to the original condition.
+
+5. The binary search continues until it finds the maximum value `x` that satisfies the condition. This value is then printed to the standard output.
+
+In summary, this program is a solution to a specific problem that involves arrays and binary search. It reads an array from the input, performs a binary search on the sorted array to find a value that satisfies a certain condition related to the number of pairs in the array, and then prints this value.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization in the faster version of the program is primarily algorithmic. The faster version of the program has a more efficient use of data structures and a more streamlined flow of logic, which reduces the number of operations performed and thus speeds up the program.
+
+The slower version of the program has a time complexity of O(n^2) due to the nested loops in the judge function. The faster version of the program has a time complexity of O(n log n) due to the use of the sort function and the binary search in the main function.
+
+Here are the optimizations made to the slow program to make it faster:
+
+1. Efficient use of data structures: The faster version of the program uses a struct to store the value and position of each element in the array. This allows for more efficient sorting and searching of the array.
+
+2. Streamlined logic: The faster version of the program simplifies the logic in the check function, reducing the number of operations performed. It also uses a binary search in the main function to find the answer, which is more efficient than the linear search used in the slow version.
+
+3. Reduced memory usage: The faster version of the program uses less memory by eliminating unnecessary arrays and variables.
+
+4. Efficient use of functions: The faster version of the program uses functions to perform common tasks, such as updating the bit array and getting the sum of the bit array. This makes the code more readable and easier to maintain.
+
+5. Improved input/output operations: The faster version of the program uses scanf and printf for input and output, which are faster than cin and cout used in the slow version.
+
+In summary, the faster version of the program is more efficient due to a combination of algorithmic optimizations, efficient use of data structures, streamlined logic, reduced memory usage, efficient use of functions, and improved input/output operations.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization here is primarily algorithmic. The original program has a time complexity of O(n^2) due to the nested loops in the judge function, while the optimized version has a time complexity of O(n log n) due to the use of the binary indexed tree (BIT) data structure and binary search.
+
+Here are the optimizations made:
+
+1. Binary Indexed Tree (BIT): The optimized version uses a BIT (also known as a Fenwick tree) to efficiently compute prefix sums. This reduces the time complexity from O(n) to O(log n) for each update and query operation.
+
+2. Binary Search: The optimized version uses binary search to find the position of an element in the sorted array, reducing the time complexity from O(n) to O(log n).
+
+3. Input/Output Optimization: The optimized version uses a faster method for reading input, which can significantly speed up the program when the input size is large.
+
+4. Memory Optimization: The optimized version uses less memory by avoiding unnecessary arrays. It also uses the unique function to remove duplicate elements from the array, reducing the size of the array and hence the memory usage.
+
+5. Algorithmic Optimization: The optimized version changes the way the problem is approached. Instead of checking for each possible value whether it satisfies the condition (as in the original program), it calculates the number of elements that are less than or equal to each possible value and uses this information to find the answer. This reduces the number of operations and hence speeds up the program.
+
+In summary, the optimized version is faster due to a combination of algorithmic, I/O, and memory optimizations. It uses more efficient data structures and algorithms, a faster method for reading input, and less memory.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization in the faster version of the program is primarily algorithmic. The faster version of the program uses a more efficient algorithm and data structures, which significantly reduces the time complexity of the program.
+
+The slower version of the program has a time complexity of O(n log n) due to the use of the sort function and the update and getsum functions which are called in a loop. The update and getsum functions both have a time complexity of O(log n) and they are called n times, hence the overall time complexity is O(n log n).
+
+The faster version of the program also has a time complexity of O(n log n) due to the use of the sort function and the add and sum functions which are called in a loop. However, the faster version of the program is more efficient because it uses less memory and performs fewer operations.
+
+Here are the optimizations that were made to the slower program to make it faster:
+
+1. The use of the read function: The read function in the faster version of the program is more efficient than the scanf function used in the slower version. The read function reads characters directly from the buffer, which is faster than the scanf function which has to parse the input.
+
+2. The use of the unique function: The unique function is used to remove duplicates from the array, which reduces the size of the array and hence the number of operations that need to be performed.
+
+3. The use of the lower_bound function: The lower_bound function is used to find the position of a specific value in the array. This is more efficient than the method used in the slower version of the program, which involves looping through the array to find the position.
+
+4. The use of the add and sum functions: The add and sum functions in the faster version of the program are more efficient than the update and getsum functions used in the slower version. The add and sum functions perform fewer operations and use less memory.
+
+5. The use of fewer variables: The faster version of the program uses fewer variables, which reduces the memory usage of the program.
+
+6. The use of fewer includes: The faster version of the program includes fewer libraries, which reduces the compilation time of the program.
+        </p>
+    </div>
+</body>
+    </html>
+    

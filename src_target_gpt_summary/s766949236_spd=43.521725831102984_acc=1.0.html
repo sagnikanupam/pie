@@ -1,0 +1,161 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Code Comparison</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                background-color: #f4f4f4;
+            }
+
+            .code-container {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 20px;
+            }
+
+            .code-box {
+                width: 32%;
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-box pre {
+                white-space: pre-wrap;
+                background-color: #eee;
+                padding: 10px;
+                border-radius: 4px;
+                overflow-x: auto;
+            }
+
+            .explanation {
+                background-color: #ffffff;
+                border: 1px solid #e0e0e0;
+                padding: 10px;
+                box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+        </style>
+    </head>
+  <body>
+    <div class="code-container">
+        <!-- Source Program -->
+        <div class="code-box">
+            <h2>Source Program</h2>
+            <pre>
+#include <iostream><br><br>#include <map><br><br>#include <queue><br><br>#include <cmath><br><br>#include <vector><br><br>#include <string><br><br>#include <algorithm><br><br>#include <functional><br><br>using namespace std;<br><br><br><br>int N, M, P[1 << 18]; string S[1 << 18];<br><br>int flag[1 << 18], penalty[1 << 18];<br><br><br><br>int main() {<br><br>	cin >> N >> M;<br><br>	for (int i = 1; i <= M; i++) {<br><br>		cin >> P[i] >> S[i];<br><br>		if (S[i] == "AC") flag[P[i]] = 1;<br><br>		else if (flag[P[i]] == 0) penalty[P[i]]++;<br><br>	}<br><br>	int sum1 = 0, sum2 = 0;<br><br>	for (int i = 1; i <= N; i++) {<br><br>		sum1 += flag[i];<br><br>		if (flag[i] == 1) sum2 += penalty[i];<br><br>	}<br><br>	cout << sum1 << " " << sum2 << endl;<br><br>	return 0;<br><br>}
+            </pre>
+        </div>
+
+        <!-- Generated Program -->
+        <div class="code-box">
+            <h2>Generated Program</h2>
+            <pre>
+Speedup over src: 43.521725831102984 <br>
+#include<stdio.h><br><br>#include<math.h><br><br>#include<algorithm><br><br>#include<string.h><br><br>#include<queue><br><br>#include<map><br><br>#include<string><br><br>using namespace std;<br><br>int n,m;<br><br>int p[100005];<br><br>char s[100005][10];<br><br>int flag[100005],penalty[100005];<br><br>int main()<br><br>{<br><br>    scanf("%d %d",&n,&m);<br><br>    for(int i=1; i<=m; i++)<br><br>    {<br><br>        scanf("%d %s",&p[i],s[i]);<br><br>        if(flag[p[i]]==0&&strcmp(s[i],"WA")==0)<br><br>            penalty[p[i]]++;<br><br>        if(strcmp(s[i],"AC")==0)<br><br>        {<br><br>            flag[p[i]]=1;<br><br>        }<br><br>    }<br><br>    int cnt=0;<br><br>    int penalty1=0;<br><br>    for(int i=1; i<=n; i++)<br><br>    {<br><br>        if(flag[i])<br><br>        {<br><br>            cnt++;<br><br>            penalty1+=penalty[i];<br><br>        }<br><br>    }<br><br>    printf("%d %d\n",cnt,penalty1);<br><br>}<br>
+            </pre>
+        </div>
+
+        <!-- Target Program -->
+        <div class="code-box">
+            <h2>Target Program</h2>
+            <pre>
+Speedup over src: 10.262998772510189 <br>
+#include <iostream><br><br>#include <map><br><br>#include <cmath><br><br>#include <queue><br><br>#include <vector><br><br>#include <string><br><br>#include <algorithm><br><br>#include <functional><br><br>using namespace std;<br><br>#pragma warning (disable: 4996)<br><br><br><br>int N, M;<br><br>int A[1 << 18];<br><br>bool used[1 << 18];<br><br><br><br>int main() {<br><br>	cin >> N >> M;<br><br>	for (int i = 1; i <= M; i++) {<br><br>		int a; string b; cin >> a >> b;<br><br>		if (b == "WA" && used[a] == false) { A[a] += 1; }<br><br>		if (b == "AC") { used[a] = true; }<br><br>	}<br><br><br><br>	int v1 = 0, v2 = 0;<br><br>	for (int i = 1; i <= N; i++) {<br><br>		if (used[i] == false) continue;<br><br>		v1 += 1; v2 += A[i];<br><br>	}<br><br>	cout << v1 << " " << v2 << endl;<br><br>	return 0;<br><br>}
+            </pre>
+        </div>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of what the program does in natural language:</h3>
+        <p>
+This C++ program is designed to solve a problem related to competitive programming contests. It reads the number of problems (N) and the number of submissions (M) from the input. Then, it reads each submission, which consists of a problem number (P[i]) and a result (S[i]) which can be either "AC" (Accepted) or "WA" (Wrong Answer).
+
+The program keeps track of the first accepted submission for each problem and counts the number of wrong answers before the first accepted submission. If a problem has no accepted submission, the number of wrong answers for that problem is not counted.
+
+After reading all submissions, the program calculates and prints two numbers:
+
+1. The number of problems that have at least one accepted submission (sum1).
+2. The total number of wrong answers before the first accepted submission for the problems that have at least one accepted submission (sum2).
+
+The program uses bitwise shift operation (1 << 18) to define the size of arrays. This operation is equivalent to raising 2 to the power of 18, resulting in arrays of size 262144. This is a common technique in competitive programming to quickly create arrays of size 2^n.
+        </p>
+    </div>
+    
+
+    <div class="explanation">
+        <h3>Explanation of why the tgt program is faster than the source program:</h3>
+        <p>
+The optimization here is algorithmic. The optimized version of the program is faster because it reduces the number of operations performed and simplifies the logic.
+
+The original program has a time complexity of O(N+M) because it iterates over the range 1 to M to read the inputs and then over the range 1 to N to calculate the sums. The optimized program also has a time complexity of O(N+M) for the same reasons. However, the constant factors in the optimized program are smaller, which makes it faster in practice.
+
+Here are the optimizations made:
+
+1. The optimized program uses a boolean array `used` to keep track of whether a problem has been solved (AC). This is faster and more straightforward than using an integer array `flag` and checking whether its value is 1.
+
+2. The optimized program increments the penalty count `A[a]` only when a problem is not yet solved (WA and `used[a] == false`). This avoids the need to check whether a problem has been solved when calculating the penalty sum.
+
+3. The optimized program calculates the sums in one pass over the range 1 to N. It skips the problems that have not been solved, which can save time when the number of solved problems is much smaller than N.
+
+4. The optimized program reads the inputs `a` and `b` directly into local variables, which is faster than reading them into arrays `P` and `S` and then accessing the arrays.
+
+5. The optimized program does not use the `penalty` array, which saves memory.
+
+6. The optimized program does not use the `map`, `queue`, `vector`, `algorithm`, `functional` libraries, which reduces the program size and possibly the compilation time.
+
+7. The optimized program disables a specific warning (4996), which can save time if the compiler spends a significant amount of time generating this warning. However, this is not an optimization in terms of runtime performance.
+        </p>
+    </div>
+    
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the source program:</h3>
+        <p>
+The optimization in the faster version of the program is not algorithmic, but rather due to more efficient use of memory and faster input/output operations. The algorithmic complexity of both programs is the same, O(M + N), where M is the number of submissions and N is the number of problems.
+
+Here are the optimizations made in the faster version:
+
+1. Memory Usage: In the slower version, the program uses a large amount of memory by declaring arrays of size 1 << 18 (262,144). In the faster version, the arrays are declared with size 100005, which is more than enough for the problem constraints. This reduces the memory footprint of the program, which can lead to speed improvements due to better cache utilization.
+
+2. Input/Output Operations: The slower version uses cin and cout for input and output, which are slower than scanf and printf used in the faster version. This is because cin and cout have additional overhead due to their synchronization with C++ streams, while scanf and printf are C-style input/output functions which are faster but provide less error checking.
+
+3. String Comparison: In the slower version, string comparison is done using the '==' operator, which is slower than the strcmp function used in the faster version. This is because the '==' operator for strings in C++ compares the strings character by character, while strcmp stops comparison as soon as it finds a difference.
+
+4. Conditional Checks: In the slower version, the program checks if the submission is "AC" first and then checks if it is not "AC" and the problem has not been solved yet. In the faster version, the program checks if the problem has not been solved yet and the submission is "WA" first, which can be faster because "WA" submissions are likely to be more frequent than "AC" submissions.
+
+In summary, the faster version of the program is more efficient in terms of memory usage and input/output operations, and uses faster string comparison and conditional check strategies.
+        </p>
+    </div>
+
+    <div class="explanation">
+        <h3>Explanation of why the generated program is faster than the target program:</h3>
+        <p>
+The optimization in the faster version of the program is not algorithmic, but rather due to the use of more efficient data structures and functions. The algorithmic complexity of both programs is O(M), where M is the number of inputs. This is because both programs iterate over the inputs once.
+
+Here are the optimizations made:
+
+1. **Use of Arrays Instead of Vectors**: In the optimized version, arrays are used instead of vectors. Arrays are generally faster than vectors because vectors have additional overhead for dynamic resizing.
+
+2. **Use of scanf/printf Instead of cin/cout**: The optimized version uses scanf and printf for input/output, which are faster than cin and cout. This is because cin and cout have additional overhead due to synchronization with C++ streams.
+
+3. **Use of strcmp Instead of String Comparison**: The optimized version uses the strcmp function from the cstring library to compare strings, which is faster than the string comparison operator in C++.
+
+4. **Avoiding Unnecessary Operations**: In the optimized version, the penalty is only increased if the flag for a problem is 0 and the verdict is "WA". This avoids unnecessary increments of the penalty.
+
+5. **Reduced Memory Usage**: The optimized version uses less memory by avoiding the use of a large boolean array (used[] in the slower version). Instead, it uses a smaller integer array (flag[] in the faster version) to keep track of whether a problem has been solved.
+
+6. **Avoiding Unnecessary Namespace Usage**: The optimized version avoids the use of the "using namespace std;" line. This can potentially speed up the compilation time and reduce chances of name collision.
+
+In summary, the optimized version of the program is faster due to more efficient use of data structures, functions, and memory, as well as avoiding unnecessary operations.
+        </p>
+    </div>
+</body>
+    </html>
+    
