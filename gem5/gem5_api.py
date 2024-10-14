@@ -132,6 +132,7 @@ def single_submission(code, testcases, problem_id, timing_env, queue, override_f
             cpu_number=cpu_number)
         result["compile_success"] = bin_path is not None
         result['accs'] = accs
+        result['errors'] = errors
         mean_accs = np.mean(list(accs.values()))
         logging.info(f"mean_accs: {mean_accs}")
         if mean_accs < app.config["gem5_acc_threshold"]: 
