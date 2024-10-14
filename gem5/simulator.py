@@ -130,7 +130,7 @@ class PieSingleResult(PieResult):
     tc2time: Dict[str, float]
     tc2success: Dict[str, bool]
     tc2stats: Dict[str, List[float]]
-    
+    errors: Dict
     agg_runtime_binary: float = None
     agg_stdev_binary: float = None
     tc2time_binary: Dict[str, float] = None
@@ -147,6 +147,7 @@ class PieSingleResult(PieResult):
         result["compile_success"] = self.compilation #self.compile_success
         result["accs"] = self.accs
         result["mean_acc"] = self.mean_acc
+        result["errors"] = self.errors
         result["agg_runtime"] = self.agg_runtime
         result["agg_stdev"] = self.agg_stdev
         result["tc2time"] = self.tc2time
@@ -237,10 +238,12 @@ def _parse_single_submission(result: Dict[str, Any]):
     compilation = result["compile_success"]
     accs = result["accs"]
     mean_acc = np.mean([acc for acc in accs.values()])
+    errors = result["errors"]
     
     parsed_result["compilation"] = compilation
     parsed_result["accs"] = accs
     parsed_result["mean_acc"] = mean_acc
+    parsed_result["errors"] = errors
     
     tc2time = {}
     agg_runtime = 0
