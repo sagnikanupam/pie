@@ -124,12 +124,12 @@ def compile_and_check_outputs(code_path, problem_id, testcases_dir, timeout=None
         out_path = os.path.join(testcases_dir, problem_id, f"output.{tc_no}.txt")
         input_output_pairs[tc_no] = (in_path, out_path)
     logging.info(f"Found {len(input_output_pairs)} testcases for problem: {problem_id} in testcases_dir: {testcases_dir} with testcases: {testcases}")
-    errors = {"compile": None, "exec": {}}
+    errors = {"compile": str(None), "exec": {}}
     try: 
         bin_path = compile_cpp_code(code_path, timeout, cflags=cflags, cpu_number=cpu_number)
         logging.info(f"Compiled {code_path} to {bin_path}")
     except Exception as e:
-        errors["compile"] = e
+        errors["compile"] = str(e)
         return None, {tc_no: 0 for tc_no in input_output_pairs.keys()}, errors
     
     accs = {}    
@@ -140,11 +140,11 @@ def compile_and_check_outputs(code_path, problem_id, testcases_dir, timeout=None
         try:
             acc = exec_bin_for_acc(bin_path, in_path, ground_truth_output, timeout)
             accs[tc_no] = acc
-            errors["exec"][tc_no] = None
+            errors["exec"][tc_no] = str(None)
         except Exception as e:
             logging.error(f"Error executing code: {bin_path} with input: {in_path}, error: {e}")
             accs[tc_no] = 0
-            errors["exec"][tc_no] = e
+            errors["exec"][tc_no] = str(e)
     logging.info(f"bin_path: {bin_path}, accs: {accs}")
     
     return bin_path, accs, errors
