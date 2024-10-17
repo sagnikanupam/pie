@@ -249,14 +249,26 @@ def check_generated_progs(p_decomp_folder: str = "program_decompositions", natla
                 with open(f"test_cases_dict.json", 'r') as fp3:
                     test_cases_dict = json.load(fp3)
                     steps_dict = json.load(fp)
+                    problem_id = problem_id_dict[key]
+                    test_cases = test_cases_dict[key]
+                    
+                    #Add source program at very start
+                    problem_id_list.append(problem_id)
+                    code_list.append(src_progs[key])
+                    test_cases_list.append(test_cases[:6])
+                    
+                    #Add decomposition steps
                     for step in steps_dict.keys():
                         prog = json.load(open(f"{p_decomp_folder}/{key}_{step}_decomposition.json", 'r'))["optimized_code"]
-                        problem_id = problem_id_dict[key]
-                        test_cases = test_cases_dict[key]
-                        if problem_id!="Not Found":
-                            problem_id_list.append(problem_id)
-                            code_list.append(prog)
-                            test_cases_list.append(test_cases[:6])
+                        problem_id_list.append(problem_id)
+                        code_list.append(prog)
+                        test_cases_list.append(test_cases[:6])
+                    
+                    #Add target program at end
+                    problem_id_list.append(problem_id)
+                    code_list.append(target_progs[key])
+                    test_cases_list.append(test_cases[:6])
+                    
     results = env.submit_multiple_single_submissions(code_list, test_cases_list, problem_id_list, "gem5")  
     with open("six_testcase_result.txt", "w") as f1:
         f1.write(str(results))
@@ -283,9 +295,17 @@ def evaluate_comparative_perf_edits(testcase_result_json: str = "six_testcase_re
     for key in src_progs.keys():
        with open(f"{natlang_decomp_folder}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
             steps_dict = json.load(fp)
+            #Add source program at very start
+            prog_list.append([src_progs[key], problem_id_dict[key], 0, key])
+            
+            #Add decomposition steps 
             for step in steps_dict.keys():
                 prog = json.load(open(f"{p_decomp_folder}/{key}_{step}_decomposition.json", 'r'))["optimized_code"]
                 prog_list.append([prog, problem_id_dict[key], step, key])
+            
+            #Add target program at end
+            prog_list.append([target_progs[key], problem_id_dict[key], len(steps_dict.keys())+1, key])
+
     for result_ind in range(len(results)):
         prog_list[result_ind].extend([results[result_ind]["mean_acc"], results[result_ind]["agg_runtime"], results[result_ind]["errors"]])
     accuracy_dict = {}
