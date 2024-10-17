@@ -5,14 +5,9 @@ import json
 import random
 
 import numpy as np
-import torch
 from tqdm import tqdm
-from sentence_transformers import SentenceTransformer
 import pandas as pd
-import faiss
 from time import sleep
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
 
 random.seed = 42
 
@@ -221,13 +216,13 @@ def check_generated_progs(p_decomp_folder: str = "program_decompositions", natla
                             code_list.append(prog)
                             test_cases_list.append(test_cases[:6])
     results = env.submit_multiple_single_submissions(code_list, test_cases_list, problem_id_list, "gem5")  
-    with open("five_testcase_result.txt", "w") as f1:
+    with open("six_testcase_result.txt", "w") as f1:
         f1.write(str(results))
-    with open("five_testcase_result.json", "w") as f2:
+    with open("six_testcase_result.json", "w") as f2:
         dict_results = [result.to_dict() for result in results]
         json.dump(dict_results, f2)
 
-def evaluate_comparative_perf_edits(testcase_result_json: str = "five_testcase_result.json", problem_id_json: str = "problem_id_dict.json", natlang_decomp_folder: str = "natlang_decompositions", p_decomp_folder: str = "program_decompositions"):
+def evaluate_comparative_perf_edits(testcase_result_json: str = "six_testcase_result.json", problem_id_json: str = "problem_id_dict.json", natlang_decomp_folder: str = "natlang_decompositions", p_decomp_folder: str = "program_decompositions"):
     """
     Generate human-readable JSONs from PIE result files. Must run check_generated_progs() prior to running this function.
 
@@ -311,5 +306,6 @@ def get_problem_id(src_id: str):
                 return (str(testd["problem_id"]), testd["tests"])
     return ("Not Found", ["Not Found"])        
 
-if __name__ == "__main__":
-    generate_intermediates()
+if __name__== "__main__":
+    check_generated_progs()
+    evaluate_comparative_perf_edits()
