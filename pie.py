@@ -311,6 +311,7 @@ def evaluate_comparative_perf_edits(testcase_result_json: str = "six_testcase_re
     accuracy_dict = {}
     perf_dict = {}
     error_dict = {}
+    summary_src_target_best = {}
     for result_list in prog_list:
         if result_list[3] not in accuracy_dict:
             accuracy_dict[result_list[3]] = {str(result_list[2]): result_list[4]}
@@ -319,7 +320,7 @@ def evaluate_comparative_perf_edits(testcase_result_json: str = "six_testcase_re
         else:
             accuracy_dict[result_list[3]][str(result_list[2])] = result_list[4]
             perf_dict[result_list[3]][str(result_list[2])] = result_list[5]
-            error_dict[result_list[3]] = {str(result_list[2]): result_list[6]}
+            error_dict[result_list[3]][str(result_list[2])] = result_list[6]
     wrong = 0
     correctly_optimized = 0
     for program in accuracy_dict.keys():
@@ -340,8 +341,24 @@ def evaluate_comparative_perf_edits(testcase_result_json: str = "six_testcase_re
                     break
             if correct_perf:
                 correctly_optimized += 1
+    decomp_over_target = 0
+    for program in perf_dict.keys():
+        src_perf = perf_dict[program]["0"]
+        best_perf = perf_dict[program]["1"]
+        for step in range(1, len(perf_dict[program])-1):
+            if perf_dict[program][str(step)] != "Infinity":
+                if best_perf == "Infinity" or best_perf > perf_dict[program][str(step)]:
+                    best_perf = perf_dict[program][str(step)]
+        target_perf = perf_dict[program][str(len(perf_dict[program])-1)]
+        print(f"Program: {program}, Source Performance: {src_perf}, Best Performance: {best_perf}, Target Performance: {target_perf}")
+        summary_src_target_best[program] = {"source": src_perf, "best": best_perf, "target": target_perf}
+        if target_perf > best_perf:
+            decomp_over_target += 1
+    print(f"Number of programs for whom at least one decomposition is better than the target performance: {decomp_over_target}/{len(perf_dict)}")
     print(f"Number of programs whose optimizations are eventually inaccurate on some test case: {wrong}/{len(accuracy_dict)}")
     print(f"Number of programs whose optimizations are both accurate and in increasing order of optimization: {correctly_optimized}/{len(accuracy_dict)-wrong}")
+    with open("src_target_best_perf.json", "w") as f:
+        json.dump(summary_src_target_best, f)
     with open("accuracy_dict.json", "w") as f1:
         json.dump(accuracy_dict, f1)
     with open("perf_dict.json", "w") as f2:
@@ -372,5 +389,5 @@ if __name__== "__main__":
     #decompose_exps(src_progs_file="o1_src_progs.json", model="o1-preview")
     #generate_intermediates(src_progs_file="o1_src_progs.json", model="o1-preview")
     #o1_prog_txt_to_json_conversion(src_progs_file="o1_src_progs.json")
-    check_generated_progs()
-    evaluate_comparative_perf_edits()
+    check_generated_progs(src_progs_file="o1_src_progs.json")
+    evaluate_comparative_perf_edits(src_progs_file="o1_src_progs.json")

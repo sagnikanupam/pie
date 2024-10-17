@@ -1,0 +1,39 @@
+```cpp
+#include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <climits>
+
+#define ll long long
+
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    ll n, k;
+    cin >> n >> k;
+    ll* ar = new ll[n];
+    ll* dp = new ll[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> ar[i];
+        dp[i] = LLONG_MAX;
+    }
+    dp[0] = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 1; j <= k; j++)
+        {
+            if (i + j >= n) break;
+            ll temp = dp[i] + abs(ar[i] - ar[i + j]);
+            dp[i + j] = min(dp[i + j], temp);
+        }
+    }
+    ll ans = dp[n - 1];
+    cout << ans << endl;
+    delete[] ar;
+    delete[] dp;
+    return 0;
+}
+```

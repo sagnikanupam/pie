@@ -1,0 +1,1 @@
+{"1": "Removed the memset call that initialized dp with a large number.", "2": "Initialized dp[i] with dp[i-1] + abs(arr[i] - arr[i-1]) for i > 1, outside of the inner loop.", "3": "Modified the inner loop to iterate j from 2 to k instead of 1 to k, reducing the number of operations by skipping the unnecessary calculation for j = 1."}
