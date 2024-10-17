@@ -334,7 +334,7 @@ def evaluate_comparative_perf_edits(testcase_result_json: str = "six_testcase_re
             correct_perf = True
             for step in perf_dict[program].keys():
                 max_step = max(max_step, int(step))
-            for step in range(1, max_step):
+            for step in range(1, max_step-1): #-1 to exclude target program, we only check performance for src >= ....decomps >= final_decomp
                 if perf_dict[program][str(step)] < perf_dict[program][str(step+1)]: #performance in earlier step is strictly better than post-optimization
                     correct_perf = False
                     break
