@@ -389,5 +389,5 @@ if __name__== "__main__":
     #decompose_exps(src_progs_file="o1_src_progs.json", model="o1-preview")
     #generate_intermediates(src_progs_file="o1_src_progs.json", model="o1-preview")
     #o1_prog_txt_to_json_conversion(src_progs_file="o1_src_progs.json")
-    check_generated_progs(src_progs_file="o1_src_progs.json")
-    evaluate_comparative_perf_edits(src_progs_file="o1_src_progs.json")
+    check_generated_progs()
+    evaluate_comparative_perf_edits()

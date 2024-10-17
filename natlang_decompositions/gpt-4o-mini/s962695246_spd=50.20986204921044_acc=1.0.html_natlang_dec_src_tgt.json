@@ -1,1 +1,0 @@
-{"1": "Removed the unnecessary vector declaration 'vector<int> v(2000001);', as it was not used in the program and allocated memory that was not needed.", "2": "Kept the same algorithmic logic, ensuring the for loop still runs from 'begin' to 'end' while outputting the integers.", "3": "Resulting in a reduction in memory usage, which improved the program's performance."}
