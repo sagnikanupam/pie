@@ -1,0 +1,1 @@
+{"optimized_code": "#include <bits/stdc++.h>\n\nusing namespace std;\n\nint main() {\n    int s; cin >> s;\n    unordered_set<int> se;\n    int pre = s;\n\n    int steps = 1;\n    while (se.find(pre) == se.end()) {\n        se.insert(pre);\n        pre = (pre % 2 == 0) ? pre / 2 : 3 * pre + 1;\n        steps++;\n    }\n    cout << steps << endl;\n    \n    return 0;\n}"}

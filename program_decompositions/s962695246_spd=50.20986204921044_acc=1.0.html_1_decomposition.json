@@ -1,1 +1,1 @@
-{"optimized_code": "#include <bits/stdc++.h>\n\nusing namespace std;\n\n\nint main() {\n    int k, x;\n    cin >> k >> x;\n    int begin = x - (k-1);\n    int end = x + (k-1);\n\n    for (int i = begin; i <= end; ++i) {\n        cout << i << \" \";\n    }\n}"}
+{"optimized_code": "#include <iostream>\n\nusing namespace std;\n\nint main() {\n    int k, x;\n\n    cin >> k >> x;\n\n    int begin = x - (k-1);\n    int end = x + (k-1);\n\n    for (int i = begin; i <= end; ++i) {\n        cout << i << \" \";\n    }\n}\n"}
