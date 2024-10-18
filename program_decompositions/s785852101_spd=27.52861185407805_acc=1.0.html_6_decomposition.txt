@@ -1,0 +1,71 @@
+```cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+
+// Custom iterator class to facilitate range-based for loops
+struct _in {
+    int start;
+    int end;
+    
+    _in(int s, int e) : start(s), end(e) {}
+    
+    struct iterator {
+        int current;
+        
+        iterator(int c) : current(c) {}
+        
+        bool operator!=(const iterator& other) const {
+            return current != other.current;
+        }
+        
+        int operator*() const {
+            return current;
+        }
+        
+        iterator& operator++() {
+            ++current;
+            return *this;
+        }
+    };
+    
+    iterator begin() const {
+        return iterator(start);
+    }
+    
+    iterator end() const {
+        return iterator(end);
+    }
+};
+
+int main(){
+    string a, b;
+    cin >> a >> b;
+
+    int n = a.size(), m = b.size();
+    // Initialize dp vector with (n+1) rows and (m+1) columns set to 0
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+
+    for(auto i : _in(0, m + 1)) {
+        dp[0][i] = i;
+    }
+    for(auto i : _in(0, n + 1)) {
+        dp[i][0] = i;
+    }
+
+    for(auto i : _in(1, n + 1)) {
+        for(auto j : _in(1, m + 1)) {
+            dp[i][j] = dp[i - 1][j - 1];
+            if(a[i - 1] != b[j - 1]) {
+                dp[i][j] += 1;
+            }
+            int temp = min(dp[i - 1][j] + 1, dp[i][j - 1] + 1);
+            dp[i][j] = min(temp, dp[i][j]);
+        }
+    }
+
+    cout << dp[n][m] << "\n";
+
+    return 0;
+}
+```

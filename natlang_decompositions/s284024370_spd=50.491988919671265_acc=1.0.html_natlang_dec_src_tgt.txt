@@ -1,0 +1,7 @@
+```json
+{
+  "1": "Removed the use of a vector named 'memo' used for memoization, thereby saving memory and reducing access time.",
+  "2": "Added a direct check at the beginning of the program to immediately return the result '4' when the input number 's' is 1, 2, or 4, bypassing the main loop.",
+  "3": "Eliminated the check for the number '4' inside the loop, as the program now handles these cases upfront, ensuring the loop only processes necessary iterations."
+}
+```

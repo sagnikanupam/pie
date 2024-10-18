@@ -1,0 +1,50 @@
+```cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define int ll
+#define endl "\n"
+#define pb push_back
+#define mp make_pair
+#define ff first
+#define ss second
+#define all(c) c.begin(), c.end()
+#define vi vector<int>
+#define pii pair<int,int>
+#define For(i,s,e) for (ll i=(s); i<(e); i++)
+#define MAX 500005
+#define initialize(arr,elem) memset(arr,elem,sizeof(arr))
+
+typedef long long ll;
+
+int memo[MAX], arr[MAX];
+int k = 2;
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int n;
+    cin >> n >> k;
+
+    For(i,1,n+1) cin >> arr[i];
+
+    // Initialize all dp values to a large number
+    For(i,1,n+1) memo[i] = 100000000000000;
+
+    memo[1] = 0;
+
+    For(i,2,n+1){
+        for(int j = i-1; j >= max((int)1, i - k); j--){
+            memo[i] = min(memo[i], memo[j] + abs(arr[i] - arr[j]));
+        }
+    }
+
+    cout << memo[n] << endl;
+
+    return 0;
+}
+```

@@ -1,0 +1,39 @@
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+#define endl "\n"
+#define For(i,s,e) for (ll i=(s); i<(e); i++)
+#define MAX 500005
+
+const ll INF = 100000000000000;
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    ll n, k;
+    cin >> n >> k;
+
+    vector<ll> arr(n + 1);
+    For(i, 1, n + 1) cin >> arr[i];
+
+    // Initialize memo with INF directly
+    vector<ll> memo(n + 1, INF);
+    memo[1] = 0;
+
+    For(i, 1, n + 1){
+        for(ll j = i + 1; j <= min(n, i + k); j++){
+            memo[j] = min(memo[j], memo[i] + abs(arr[j] - arr[i]));
+        }
+    }
+
+    cout << memo[n] << endl;
+
+    return 0;
+}
+```

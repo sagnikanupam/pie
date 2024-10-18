@@ -1,1 +1,6 @@
-{"1": "Replaced the recursive approach with a dynamic programming approach to reduce overhead and improve time complexity.", "2": "Changed input/output methods from scanf and printf to cin and cout for faster performance.", "3": "Replaced the array used for storing minimum costs with a vector for better flexibility and efficiency.", "4": "Removed unnecessary functions such as valid and Fast which were not utilized in the optimized program, simplifying the code."}
+{
+  "1": "Algorithmic Optimization: Replaced the recursive approach with memoization in the `solve` function with a bottom-up dynamic programming approach. This change eliminates the recursion overhead and improves the time complexity from O(N*M) to O(N*K).",
+  "2": "Input/Output Optimization: Switched from using `scanf` and `printf` for input and output operations to using `cin` and `cout`. This enhances the I/O performance in the program.",
+  "3": "Data Structure Optimization: Changed the usage of fixed-size arrays (`ll a[Max]` and `ll mem[Max]`) to using `std::vector`. This provides a more flexible and efficient way to manage dynamic data.",
+  "4": "Code Simplification: Removed unnecessary functions such as `valid` and `Fast`, as well as unnecessary macros and definitions. This streamlines the code, making it cleaner and faster."
+}

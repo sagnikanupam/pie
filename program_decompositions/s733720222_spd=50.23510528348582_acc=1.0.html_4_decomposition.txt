@@ -1,0 +1,28 @@
+```cpp
+#include <bits/stdc++.h>
+
+#define MAX 1000006
+#define INF 2000000000
+
+using namespace std;
+
+int n, k;
+int ara[MAX], dp_arr[MAX];
+
+int main()
+{
+    cin >> n >> k;
+    for(int i = 0; i < n; i++) cin >> ara[i];
+    
+    dp_arr[n-1] = 0;
+    for(int i = n-2; i >= 0; i--){
+        dp_arr[i] = INF;
+        for(int j = 1; j <= k && i + j < n; j++){
+            dp_arr[i] = min(dp_arr[i], abs(ara[i+j] - ara[i]) + dp_arr[i+j]);
+        }
+    }
+    
+    cout << dp_arr[0] << "\n";
+    return 0;
+}
+```

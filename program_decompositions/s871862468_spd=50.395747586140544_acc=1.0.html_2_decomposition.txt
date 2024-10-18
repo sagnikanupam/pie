@@ -1,0 +1,32 @@
+```cpp
+#include <bits/stdc++.h>
+
+using ll = long long;
+constexpr long double PI = 3.1415926535897932384626433832795L;
+const ll MAX_NUM = 1000000000;
+
+using namespace std;
+
+ll main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    ll n, k;
+    cin >> n >> k;
+    vector<ll> h(n);
+    for(auto &height : h) cin >> height;
+
+    vector<ll> dp(n, MAX_NUM);
+    dp[n-1] = 0;
+    for(ll i = n - 2; i >= 0; --i)
+    {
+        for(int j = 1; j <= k && i + j < n; ++j)
+        {
+            dp[i] = min(dp[i], abs(h[i] - h[i + j]) + dp[i + j]);
+        }
+    }
+
+    cout << dp[0] << "\n";
+}
+```

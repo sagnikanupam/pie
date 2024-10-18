@@ -1,0 +1,44 @@
+```cpp
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+#define int ll
+#define endl "\n"
+#define For(i,s,e) for (ll i=(s); i<(e); i++)
+#define MAX 500005
+
+typedef long long ll;
+
+const ll INF = 100000000000000;
+
+int memo[MAX], arr[MAX];
+int k = 2;
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int n;
+    cin >> n >> k;
+
+    For(i,1,n+1) cin >> arr[i];
+
+    For(i,1,n+1) memo[i] = INF;
+
+    memo[1] = 0;
+
+    For(i,1,n+1){
+        for(int j = i+1; j <= min((int)n, i + k); j++){
+            memo[j] = min(memo[j], memo[i] + abs(arr[j] - arr[i]));
+        }
+    }
+
+    cout << memo[n] << endl;
+
+    return 0;
+}
+```

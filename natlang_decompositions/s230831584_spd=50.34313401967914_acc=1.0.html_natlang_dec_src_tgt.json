@@ -1,1 +1,15 @@
-{"1": "Replaced arrays with vectors for dynamic and efficient data management.", "2": "Modified the inner loop to start from i+1 and go up to min(n, i+k+1) to avoid unnecessary iterations.", "3": "Implemented the 'read(v)' function for more efficient input handling compared to reading each element individually.", "4": "Integrated a set of efficient debugging and printing functions, enhancing the flexibility of output compared to the original cout and cin.", "5": "Initialized memory for vectors 'arr' and 'dp' once at the beginning of the program instead of repeated allocations."}
+{
+  "1": "Replace the fixed-size arrays `a` and `dp` with dynamic vectors `arr` and `dp` to utilize C++ vectors for better flexibility and memory management.",
+  
+  "2": "Implement the `read(v)` function to efficiently read input values into the `arr` vector, enhancing input reading performance compared to individual `cin` operations.",
+  
+  "3": "Optimize the inner loop by modifying its range to start from `i+1` and iterate up to the minimum of `n` and `i+k+1`, thereby avoiding unnecessary iterations when the remaining elements are fewer than `k`.",
+  
+  "4": "Add a comprehensive set of debugging and printing functions to replace basic `cout` and `cin` operations, providing more efficient and flexible debugging capabilities.",
+  
+  "5": "Allocate memory for the `arr` and `dp` vectors once at the beginning of the program using the `assign` method, reducing the overhead associated with repeated memory allocations in the original program.",
+  
+  "6": "Update the input/output synchronization by replacing the `IO` macro with direct calls to `ios_base::sync_with_stdio(false)` and `cin.tie(0)`, enhancing I/O performance.",
+  
+  "7": "Modify the loop structures by using macros like `forn` for forward loops and adjusting loop indices to be zero-based, aligning with the use of vectors and improving loop efficiency."
+}

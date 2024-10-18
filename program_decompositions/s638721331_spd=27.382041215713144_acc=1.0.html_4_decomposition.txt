@@ -1,0 +1,31 @@
+```cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+    int s;
+    cin >> s;
+
+    set<int> se = {s};
+
+    int current = s;
+    int pre = s;
+
+    while (true) {
+        pre = current;
+        if (current % 2 == 0) {
+            current /= 2;
+        } else {
+            current = 3 * current + 1;
+        }
+
+        if (se.find(current) != se.end()) {
+            cout << se.size() + 1 << endl;
+            return 0;
+        }
+
+        se.insert(current);
+    }
+}
+```

@@ -1,0 +1,101 @@
+```cpp
+#include <bits/stdc++.h>
+
+#define mem(x, v) memset(x, v, sizeof(x))
+#define go(i, a, b) for (int i = a; i <= b; i++)
+#define og(i, a, b) for (int i = a; i >= b; i--)
+#define MID(a, b) ((a + b) >> 1)
+#define lson(now) ((now) << 1)
+#define rson(now) (((now) << 1) | 1)
+#define low(x) ((x) & -(x))
+
+using namespace std;
+
+typedef long long LL;
+
+const double EPS = 1e-10;
+const int INF = 1e9 + 100;
+const int N = 1e6 + 10;
+
+int a[N], b[N];
+int n, tt;
+
+namespace BIT {
+    const int SIZE = 4 * N;
+    LL f[4 * N];
+
+    void Reset() {
+        mem(f, 0);
+    }
+
+    void Add(int x) {
+        while (x <= 4 * n) {
+            f[x] += 1;
+            x += low(x);
+        }
+    }
+
+    int Query(int x) {
+        int ans = 0;
+        while (x > 0) {
+            ans += f[x];
+            x -= low(x);
+        }
+        return ans;
+    }
+}
+
+bool check(int k) {
+    static LL Ans = 0;
+    BIT::Reset();
+    Ans = 0;
+    b[0] = 0;
+
+    go(i, 1, n) {
+        if (a[i] >= k)
+            b[i] = b[i - 1] + 1;
+        else
+            b[i] = b[i - 1];
+    }
+
+    go(i, 0, n) {
+        b[i] = 2 * b[i] - i + n + 1;
+    }
+
+    go(i, 0, n) {
+        Ans += BIT::Query(b[i]);
+        BIT::Add(b[i]);
+    }
+
+    LL total = (1LL * n * (n + 1)) / 2;
+    return Ans >= (total + 1) / 2;
+}
+
+int main() {
+    scanf("%d", &n);
+    int min_val = INF, max_val = -INF;
+
+    go(i, 1, n) {
+        scanf("%d", &a[i]);
+        if(a[i] < min_val) min_val = a[i];
+        if(a[i] > max_val) max_val = a[i];
+    }
+
+    int l = min_val, r = max_val;
+    int ans = 0;
+
+    while(l <= r) {
+        int mid = MID(l, r);
+        if(check(mid)) {
+            ans = mid;
+            l = mid + 1;
+        }
+        else {
+            r = mid - 1;
+        }
+    }
+
+    printf("%d\n", ans);
+    return 0;
+}
+```

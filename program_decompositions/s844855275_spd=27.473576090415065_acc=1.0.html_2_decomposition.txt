@@ -1,0 +1,87 @@
+```cpp
+#include <algorithm>
+#include <cstdio>
+#include <cstring>
+
+using namespace std;
+
+typedef long long LL;
+
+const int MAXN = 1000007;
+
+struct Node {
+    int val;
+    int pos;
+} a[MAXN], b[MAXN];
+
+int sum[MAXN], c[MAXN], n;
+LL ans0;
+
+// Function to get the lowest bit
+inline int lowbit(int x){
+    return x & (-x);
+}
+
+// Comparator for sorting nodes
+bool cmp(const Node &x, const Node &y){
+    return x.val < y.val;
+}
+
+// Add function for BIT
+void add(int x){
+    while (x <= 5 * n){
+        c[x] += 1;
+        x += lowbit(x);
+    }
+}
+
+// Query function for BIT
+int get_cnt(int x){
+    int res = 0;
+    while (x > 0){
+        res += c[x];
+        x -= lowbit(x);
+    }
+    return res;
+}
+
+// Judge function to check condition
+bool judge(int x){
+    sum[0] = 0;
+    for(int i = 1; i <= n; i++){
+        sum[i] = sum[i-1] + (a[i].val >= x ? 1 : 0);
+        sum[i] = 2 * sum[i] - i + n + 1;
+    }
+    LL ans1 = 0;
+    memset(c, 0, sizeof(c));
+    for(int i = 0; i <= n; i++){
+        ans1 += get_cnt(sum[i]);
+        add(sum[i]);
+    }
+    return ans1 >= ans0;
+}
+
+int main(){
+    scanf("%d", &n);
+    for(int i = 1; i <= n; i++){
+        scanf("%d", &a[i].val);
+        a[i].pos = i;
+        b[i] = a[i];
+    }
+    sort(b + 1, b + n + 1, cmp);
+    int l = 1, r = n, ans = 0;
+    ans0 = (1LL * n * (n - 1) / 2 + n + 1) / 2;
+    while(l <= r){
+        int m = l + (r - l) / 2;
+        if(judge(b[m].val)){
+            ans = m;
+            l = m + 1;
+        }
+        else{
+            r = m - 1;
+        }
+    }
+    printf("%d\n", b[ans].val);
+    return 0;
+}
+```

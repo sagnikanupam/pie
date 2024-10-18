@@ -1,0 +1,16 @@
+```cpp
+//Speedup over src: 9.456199783539988
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+    int k, x;
+    cin >> k >> x;
+    int begin = x - (k-1);
+    int end = x + (k-1);
+    for (int i = begin; i <= end; ++i) {
+        cout << i << " "s;
+    }
+}
+```

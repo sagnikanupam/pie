@@ -1,0 +1,39 @@
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int N, M;
+    cin >> N >> M;
+    // Assuming N and M are up to 1 << 18, but using vectors for flexibility
+    vector<int> P(M + 1);
+    vector<string> S(M + 1);
+    vector<bool> used(N + 1, false);
+    vector<int> A(N + 1, 0);
+    
+    for (int i = 1; i <= M; i++) {
+        cin >> P[i] >> S[i];
+        if (S[i] == "AC") {
+            used[P[i]] = true;
+        }
+        else if (!used[P[i]]) {
+            A[P[i]]++;
+        }
+    }
+
+    int sum1 = 0, sum2 = 0;
+    for (int i = 1; i <= N; i++) {
+        if (used[i]) {
+            sum1++;
+            sum2 += A[i];
+        }
+    }
+
+    cout << sum1 << " " << sum2 << "\n";
+    return 0;
+}
+```

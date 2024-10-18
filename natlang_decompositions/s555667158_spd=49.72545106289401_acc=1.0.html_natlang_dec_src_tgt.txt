@@ -1,0 +1,9 @@
+```json
+{
+  "1": "Removed unused library inclusions such as <iostream>, <algorithm>, <cmath>, <cstring>, <cstdio>, and <string.h> to reduce compilation overhead.",
+  "2": "Consolidated two arrays (h and dp) into a single array (arr) to optimize memory usage.",
+  "3": "Modified the inner loop in the dynamic programming calculation to run min(k, i-1) iterations instead of i-1, thereby reducing the number of loop iterations and improving efficiency.",
+  "4": "Changed output operations from printf to cout to leverage faster input/output capabilities.",
+  "5": "Enhanced code cleanliness by removing clutter, organizing macros, and improving overall readability and maintainability."
+}
+```

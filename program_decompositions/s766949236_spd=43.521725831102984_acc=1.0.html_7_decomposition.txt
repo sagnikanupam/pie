@@ -1,0 +1,42 @@
+```cpp
+#include <iostream>
+#include <string>
+#pragma warning(disable:4996)
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int N, M;
+    cin >> N >> M;
+    // Using a single array to manage both usage and penalties
+    int* A = new int[N + 1]();
+    
+    for (int i = 1; i <= M; i++) {
+        int a;
+        string b;
+        cin >> a >> b;
+        if (b == "AC") {
+            // Mark as used by negating the penalty count
+            A[a] = -A[a];
+        }
+        else if (A[a] >= 0) {
+            // Increment penalty if not yet used
+            A[a]++;
+        }
+    }
+
+    int sum1 = 0, sum2 = 0;
+    for (int i = 1; i <= N; i++) {
+        if (A[i] < 0) {
+            sum1++;
+            sum2 += -A[i];
+        }
+    }
+
+    cout << sum1 << " " << sum2 << "\n";
+    delete[] A;
+    return 0;
+}
+```

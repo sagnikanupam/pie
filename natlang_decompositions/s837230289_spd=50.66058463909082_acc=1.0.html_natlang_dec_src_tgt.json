@@ -1,1 +1,79 @@
-{"1": "Reduced the size of the array from 1e6 to 1e5 + 2 to optimize memory usage.", "2": "Implemented loop unrolling in the recursive function by using a for loop iterator starting from 1 to k, improving loop efficiency.", "3": "Changed the recursive function 'minCost' to 'ans' and modified it to store results in the 'dp' array to avoid recomputation.", "4": "Added input/output optimizations by using ios::sync_with_stdio(false), cin.tie(NULL), and cout.tie(NULL) for faster operations.", "5": "Removed unnecessary code comments and definitions to improve code cleanliness and readability."}
+{
+  "1": "Added a single-line comment: `//Speedup over src: 5.179183751113913` to indicate performance improvement.",
+  "2": "Inserted a multi-line comment containing Arabic text:
+  ```
+  /*
+      " اللهم صلي و سلم علي سيدنا محمد و علي اله وصحبه اجمعين "
+  */
+  ```",
+  "3": "Added macro definition: `#define _CRT_SECURE_NO_WARNINGS` to disable security warnings in Visual Studio.",
+  "4": "Defined additional macros:
+    - `#define f for` to shorten the `for` loop keyword.
+    - `#define ull unsigned long long` to create an alias for `unsigned long long` types.",
+  "5": "Changed the `endl` macro from `'\n'` to `\"\\n\"`:
+    - From: `#define endl '\\n'`
+    - To: `#define endl \"\\n\"`",
+  "6": "Renamed the constant `PI` to `BI` with a macro definition:
+    - Added: `#define BI acos(-1)`",
+  "7": "Adjusted the `all` macro to accept a parameter:
+    - From: `#define all(v) v.begin(),v.end()`
+    - To: `#define all(a) a.begin(), a.end()`",
+  "8": "Added a new function `Open()` to handle file input/output redirection for local testing:
+  ```
+  void Open()
+  {
+      #ifndef ONLINE_JUDGE
+          freopen(\"Input.txt\", \"r\", stdin);
+          freopen(\"Output.txt\", \"w\", stdout);
+      #endif
+  }
+  ```",
+  "9": "Introduced a `gcd` function to compute the greatest common divisor:
+  ```
+  ll gcd(ll a, ll b)
+  {
+      return b == 0 ? a : gcd(b, a % b);
+  }
+  ```",
+  "10": "Added a new function `madesetprobblem()` containing various placeholder comments and LaTeX-like syntax for problem setting documentation.",
+  "11": "Changed variable declarations:
+    - From:
+      ```
+      ll arr[10000000], n, k;
+      vector<ll> v(1e6, -1);
+      ```
+    - To:
+      ```
+      int n, k;
+      vector<int> a(1e5 + 2), dp(1e5 + 2, -1);
+      ```",
+  "12": "Renamed the `minCost` function to `ans` and modified its implementation:
+    - Changed return type from `ll` (long long) to `int`.
+    - Updated variable types within the function to `int`.
+    - Replaced the loop with the `f` macro:
+      ```
+      f(int i = 1; i <= k; i++)
+      ```",
+  "13": "Removed the `fast()` function call from the `main` function.",
+  "14": "Directly applied I/O optimizations in the `main` function:
+    ```
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    ```",
+  "15": "Commented out the `Open()` function call in the `main` function:
+    - From: `//Open();`",
+  "16": "Modified the `main` function's input reading loop to use the `f` macro:
+    ```
+    f(int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    ```",
+  "17": "Changed the output statement in `main` to call the `ans` function without parameters and removed `endl`:
+    - From: `cout << minCost(0) << endl;`
+    - To: `cout << ans();`",
+  "18": "Updated the global vector from `v` with type `ll` and size `1e6` to `dp` with type `int` and size `1e5 + 2`.",
+  "19": "Replaced the array `arr` with `a` and reduced its size from `1e7` to `1e5 + 2` with type `int`.",
+  "20": "Removed unnecessary commented-out code related to file operations and string transformations for cleaner codebase."
+}

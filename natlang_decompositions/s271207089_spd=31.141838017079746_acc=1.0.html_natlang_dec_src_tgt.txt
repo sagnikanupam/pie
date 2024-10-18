@@ -1,0 +1,13 @@
+```json
+{
+  "1": "Replaced the input reading function `in()` with more efficient `read` and `readl` functions. The `read` function is used for integers, and the `readl` function is used for long long integers, reducing unnecessary operations and checks during input processing.",
+  
+  "2": "Changed the data structure for the binary indexed tree from an array of size `MN<<2` to an array `c` of size `N*10`. This modification decreases the memory footprint and enhances access and modification speeds by allocating only the necessary memory.",
+  
+  "3": "Optimized the binary indexed tree operations by refining the `add` and `query` functions. The updated implementations eliminate redundant operations and checks, resulting in faster execution of these critical functions.",
+  
+  "4": "Refactored the `check` function to compute the sum of elements in the array `s` more efficiently. The optimized `check` function removes unnecessary operations and employs a streamlined approach to calculate the required sums, improving overall performance.",
+  
+  "5": "Enhanced the `main` function for better efficiency. The optimized version avoids unnecessary operations and checks, and implements a more effective method for finding the maximum element in the array `a`. This results in a faster and more reliable main execution flow."
+}
+```

@@ -1,0 +1,31 @@
+```cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+
+int main() {
+    int s;
+    cin >> s;
+    set<int> used;
+    used.insert(s);
+    int current = s;
+
+    // Compute the next step before entering the loop
+    if (current % 2 == 0)
+        current /= 2;
+    else
+        current = current * 3 + 1;
+
+    while (used.count(current) == 0) {
+        used.insert(current);
+        if (current % 2 == 0)
+            current /= 2;
+        else
+            current = current * 3 + 1;
+    }
+
+    cout << used.size() << endl;
+}
+```

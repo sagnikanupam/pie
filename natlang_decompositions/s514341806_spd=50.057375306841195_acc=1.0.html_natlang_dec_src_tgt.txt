@@ -1,0 +1,9 @@
+```json
+{
+  "1": "Reduced memory usage by decreasing the size of the array `f` from `5*n` to `4*n`. Introduced a new array `c` within the `BIT` namespace to enhance cache efficiency.",
+  "2": "Replaced the `find` function with a more efficient `check` function. The new `check` function only recalculates the `sum` array and resets the `c` array in the `BIT` namespace when necessary, thereby avoiding redundant computations in each iteration of the binary search loop.",
+  "3": "Eliminated the use of the `sort` function on the array `c`. Instead, the program now tracks the minimum and maximum values of the array `a` to adjust the search range in the binary search, reducing the overhead associated with sorting large arrays.",
+  "4": "Optimized the binary search implementation by modifying it to check the middle value between the minimum and maximum values of the array `a` instead of using the middle index of the sorted array `c`. This change improves the efficiency of the binary search process.",
+  "5": "Simplified the codebase by removing unnecessary macros and typedefs. This enhancement improves code readability and maintainability without affecting the program's runtime performance."
+}
+```

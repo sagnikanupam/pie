@@ -1,0 +1,53 @@
+```cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#define IO ios::sync_with_stdio(false), cin.tie(0)
+
+typedef long long ll;
+
+const int inf = 0x3f3f3f3f;
+
+// Efficient read function
+void read(vector<ll> &v, int start, int end){
+    for(int i = start; i <= end; ++i){
+        ll x = 0;
+        int c = getchar();
+        // Skip non-digit and non-minus characters
+        while((c < '0' || c > '9') && c != '-' && c != EOF){
+            c = getchar();
+        }
+        bool neg = false;
+        if(c == '-'){
+            neg = true;
+            c = getchar();
+        }
+        while(c >= '0' && c <= '9'){
+            x = x * 10 + (c - '0');
+            c = getchar();
+        }
+        if(neg) x = -x;
+        v[i] = x;
+    }
+}
+
+int main()
+{
+    IO;
+    int n, k;
+    cin >> n >> k;
+    vector<ll> arr(n + 1);
+    read(arr, 1, n);
+    vector<ll> dp(n + 1, inf);
+    dp[1] = 0;
+    for(int i = 2; i <= n; ++i)
+    {
+        for(int j = 1; j <= k; ++j)
+        {
+            dp[i] = min(dp[i], dp[max(i - j, 1)] + abs(arr[i] - arr[max(i - j, 1)]);
+        }
+    }
+    cout << dp[n] << endl;
+}
+```

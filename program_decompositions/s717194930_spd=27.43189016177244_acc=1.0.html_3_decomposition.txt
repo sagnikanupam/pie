@@ -1,0 +1,33 @@
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+// Welcome to my optimized source code!
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int s;
+    cin >> s;
+    unordered_set<int> seen;
+    seen.reserve(10000000); // Reserve space to prevent rehashing
+    seen.insert(s);
+    int ans = -1;
+    int i = 0;
+    while (s != 1) {
+        i++;
+        if (s % 2 == 0)
+            s /= 2;
+        else
+            s = 3 * s + 1;
+        if (seen.find(s) != seen.end()) {
+            ans = i;
+            break;
+        }
+        seen.insert(s);
+    }
+    cout << ans << "\n";
+}
+```

@@ -1,0 +1,76 @@
+```cpp
+/*
+Code By RyeCatcher
+*/
+#include <bits/stdc++.h>
+
+#define ri register int 
+#define ll long long 
+#define ull unsigned long long 
+
+using std::min;
+using std::max;
+using std::lower_bound;
+using namespace __gnu_pbds;
+
+template <class T> inline void read(T &x){
+    x = 0; int ne = 0; char c;
+    while(!isdigit(c = getchar())) ne = (c == '-');
+    x = c - '0';
+    while(isdigit(c = getchar())) x = (x << 3) + (x << 1) + c - '0';
+    x = ne ? -x : x; 
+    return;
+}
+
+const int maxn = 200005;
+const int inf = 0x7fffffff;
+
+int n, nn, a[maxn], b[maxn], c[maxn], mx = -inf, mi = inf;
+ll sum[maxn << 2];
+
+inline void update(int x, int d){
+    for(; x <= nn; x += x & (-x)) sum[x] += d;
+}
+
+inline ll query(int x){
+    ll ans = 0;
+    for(; x; x -= x & (-x)) ans += sum[x];
+    return ans;
+}
+
+inline ll chk(int k){
+    ll ans = 0;
+    b[0] = 0;
+    for(ri i = 1; i <= n; i++){
+        b[i] = b[i-1] + ((a[i] <= k) ? 1 : -1);
+        c[i] = b[i];
+        ans += (b[i] > 0);
+    }
+    std::sort(c + 1, c + 1 + n);
+    nn = std::unique(c + 1, c + 1 + n) - (c + 1);
+    memset(sum, 0, sizeof(sum));
+    for(ri i = 1; i <= n; i++){
+        b[i] = lower_bound(c + 1, c + 1 + nn, b[i]) - c;
+        ans += query(b[i] - 1);
+        update(b[i], 1);
+    }
+    return ans;
+}
+
+int main(){
+    read(n);
+    for(ri i = 1; i <= n; i++){
+        read(a[i]);
+        mi = min(mi, a[i]), mx = max(mx, a[i]);
+    }
+    int L = mi, R = mx, mid, ans;
+    ll lim = 1ll * n * (n + 1) / 4 + 1; // 注意long long 
+    while(L <= R){
+        mid = (L + R) >> 1;
+        if(chk(mid) >= lim) ans = mid, R = mid - 1;
+        else L = mid + 1;
+    }
+    printf("%d\n", ans);
+    return 0;
+}
+```

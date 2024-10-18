@@ -1,1 +1,10 @@
-{"1": "Replaced the original recursive function 'func' with an iterative loop to avoid overhead of function calls.", "2": "Introduced dynamic programming by creating a 'dp' array to store minimum costs, instead of a recursive call stack.", "3": "Modified the input array 'arr' to become a dynamic array with size 'n+1' to ensure every index is used appropriately.", "4": "Incorporated the use of the min function to directly compute minimum costs instead of using nested loops for individual comparisons.", "5": "Changed the logic to calculate the minimum cost in a single pass through the array using a loop, leading to an overall time complexity improvement."}
+{
+  "1": "Removed the recursive function `func` from the source program to eliminate the overhead associated with recursive calls.",
+  "2": "Introduced an iterative loop in the `main` function to replace the recursive approach, thereby converting the program from a recursive to an iterative paradigm.",
+  "3": "Added a dynamic programming array `dp` to store the minimum cost for each element, enabling the program to reuse previously computed results and avoid redundant calculations.",
+  "4": "Changed the array indexing from 0-based to 1-based by initializing `arr[0]` to `inf` and adjusting the input loop to start from index 1, simplifying the dynamic programming implementation.",
+  "5": "Initialized the base cases by setting `dp[0] = 0` and `dp[1] = 0` to handle the starting points for the dynamic programming solution.",
+  "6": "Implemented a nested loop structure where the outer loop iterates through each element from 2 to `n`, and the inner loop considers the previous `k` elements to calculate the minimum cost using the `min` function.",
+  "7": "Removed the memoization array `arr2` and all related recursive logic, as the dynamic programming approach with the `dp` array now handles result storage and retrieval.",
+  "8": "Replaced the variable `k2` with `k` to standardize the parameter used for the maximum number of steps, ensuring consistency throughout the program."
+}

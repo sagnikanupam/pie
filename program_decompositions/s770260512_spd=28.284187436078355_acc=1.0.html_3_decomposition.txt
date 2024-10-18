@@ -1,0 +1,47 @@
+```cpp
+#include <bits/stdc++.h>
+
+#define INF 0x3f3f3f3f
+
+using namespace std;
+
+const int maxn = 1e5+5;
+
+int a[maxn];
+int dp[maxn];
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int n, k;
+    memset(dp, INF, sizeof dp);
+    cin >> n >> k;
+
+    for(int i = 1; i <= n; i++)
+    {
+        cin >> a[i];
+    }
+
+    dp[1] = 0;
+
+    for(int i = 1; i <= n-1; i++)
+    {
+        // Compute dp[i + 1] outside the inner loop
+        if(i + 1 <= n){
+            dp[i + 1] = min(dp[i + 1], dp[i] + abs(a[i + 1] - a[i]));
+        }
+
+        // Inner loop starts from j = 2 to eliminate one iteration
+        for(int j = 2; j <= k && i + j <= n; j++)
+        {
+            dp[i + j] = min(dp[i + j], dp[i] + abs(a[i + j] - a[i]));
+        }
+    }
+
+    cout << dp[n] << "\n";
+
+    return 0;
+}
+```

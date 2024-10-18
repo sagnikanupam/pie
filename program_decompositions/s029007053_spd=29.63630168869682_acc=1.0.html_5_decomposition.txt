@@ -1,0 +1,36 @@
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, k;
+    cin >> n >> k;
+    
+    vector<int> w(n);
+    for(auto &weight : w) {
+        cin >> weight;
+    }
+    
+    const int INF = 0x3f3f3f3f;
+    vector<int> f(n, INF);
+    f[0] = 0;
+    
+    for(int i = 1; i < n; ++i)
+    {
+        int limit = min(k, i);
+        for(int j = 1; j <= limit; ++j)
+        {
+            f[i] = min(f[i], f[i - j] + abs(w[i] - w[i - j]));
+        }
+    }   
+    
+    cout << (f[n-1] == INF ? 0 : f[n-1]);
+}
+```

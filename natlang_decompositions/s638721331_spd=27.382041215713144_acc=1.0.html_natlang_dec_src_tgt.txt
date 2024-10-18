@@ -1,0 +1,11 @@
+```json
+{
+  "1": "Replace the `vector<int> A(pow(10,6)+1);` declaration with `set<int> se;` to use a set for storing seen numbers.",
+  "2": "Initialize the set with the initial number by inserting `s` into `se` using `se.insert(s);`.",
+  "3": "Introduce a variable `pre` initialized to `s` to keep track of the previous number in the sequence.",
+  "4": "Remove the variable `i` and the vector indexing (`A[i]`) from the program, eliminating the need for a nested loop.",
+  "5": "Replace the nested `for` loop that checks for repeated numbers with a set lookup using `if(se.find(now) != se.end())` to determine if a number has been seen before.",
+  "6": "Insert each new number into the set using `se.insert(now);` after checking for duplication.",
+  "7": "Update the `pre` variable with the new number `now` in each iteration instead of accessing the next element in the vector."
+}
+```

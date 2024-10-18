@@ -1,0 +1,105 @@
+```cpp
+#include <bits/stdc++.h>
+#include <cstdarg>
+#include <cstdio>
+
+using namespace std;
+
+#define IO ios::sync_with_stdio(false), cin.tie(0)
+
+// Debugging macros
+#ifdef DEBUG
+    #define DEBUG_PRINT(...) debug_print(__VA_ARGS__)
+#else
+    #define DEBUG_PRINT(...)
+#endif
+
+typedef long long ll;
+
+const int inf = 0x3f3f3f3f;
+
+// Debug print function with variadic templates
+void debug_print(const char* format, ...) {
+    va_list args;
+    va_start(args, format);
+    vfprintf(stderr, format, args);
+    va_end(args);
+}
+
+// Efficient read function
+void read(vector<ll> &v, int start, int end){
+    for(int i = start; i <= end; ++i){
+        ll x = 0;
+        int c = getchar();
+        // Skip non-digit and non-minus characters
+        while((c < '0' || c > '9') && c != '-' && c != EOF){
+            c = getchar();
+        }
+        bool neg = false;
+        if(c == '-'){
+            neg = true;
+            c = getchar();
+        }
+        while(c >= '0' && c <= '9'){
+            x = x * 10 + (c - '0');
+            c = getchar();
+        }
+        if(neg) x = -x;
+        v[i] = x;
+        DEBUG_PRINT("Read arr[%d] = %lld\n", i, x);
+    }
+}
+
+// Custom input function replacing cin
+void read_input(int &n, int &k){
+    n = 0;
+    k = 0;
+    int c = getchar();
+    // Read n
+    while((c < '0' || c > '9') && c != EOF){
+        c = getchar();
+    }
+    while(c >= '0' && c <= '9'){
+        n = n * 10 + (c - '0');
+        c = getchar();
+    }
+    DEBUG_PRINT("Input n = %d\n", n);
+    // Read k
+    while((c < '0' || c > '9') && c != EOF){
+        c = getchar();
+    }
+    while(c >= '0' && c <= '9'){
+        k = k * 10 + (c - '0');
+        c = getchar();
+    }
+    DEBUG_PRINT("Input k = %d\n", k);
+}
+
+// Custom output function replacing cout
+void print_output(ll value){
+    printf("%lld\n", value);
+    DEBUG_PRINT("Output dp[n] = %lld\n", value);
+}
+
+int main()
+{
+    IO;
+    int n, k;
+    read_input(n, k);
+    vector<ll> arr(n + 1);
+    read(arr, 1, n);
+    vector<ll> dp(n + 1, inf);
+    dp[1] = 0;
+    DEBUG_PRINT("Initialized dp[1] = 0\n");
+    for(int i = 2; i <= n; ++i)
+    {
+        for(int j = 1; j <= min(k, i - 1); ++j)
+        {
+            dp[i] = min(dp[i], dp[i - j] + abs(arr[i] - arr[i - j]));
+            DEBUG_PRINT("dp[%d] = min(dp[%d]=%lld, dp[%d]=%lld + |%lld - %lld|=%lld) --> dp[%d]=%lld\n",
+                        i, i, dp[i], i - j, dp[i - j], arr[i], arr[i - j], abs(arr[i] - arr[i - j]), i, dp[i]);
+        }
+    }
+    print_output(dp[n]);
+}
+```

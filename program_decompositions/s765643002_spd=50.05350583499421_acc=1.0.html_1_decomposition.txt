@@ -1,0 +1,102 @@
+```cpp
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cmath>
+#include <algorithm>
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <vector>
+#include <queue>
+#include <map>
+#include <set>
+
+#define mem(x,v) memset(x,v,sizeof(x)) 
+
+#define go(i,a,b)  for (int i = a; i <= b; i++)
+    
+#define og(i,a,b)  for (int i = a; i >= b; i--)
+    
+#define MID(a,b) ((a + b) >> 1)
+    
+#define lson(now) ((now) << 1)
+    
+#define rson(now) (((now) << 1) | 1)
+    
+#define low(x) ((x) & (-(x)))
+    
+using namespace std;
+    
+typedef long long LL;
+    
+const double EPS = 1e-10;
+    
+const int INF = 1e9+100;
+    
+const int N = 1e6+10;
+    
+int a[N], b[N], c[N];
+    
+LL f[N];
+    
+int n, tt;
+    
+void Add(int x){
+    while(x <= 3*n){
+        f[x] += 1;
+        x += low(x);
+    }
+}
+    
+int Query(int x){
+    int ans = 0;
+    while(x > 0){
+        ans += f[x];
+        x -= low(x);
+    }
+    return ans; 
+}
+    
+bool find(int k){
+    mem(f, 0);
+    LL Ans = 0;	
+    b[0] = 0;
+    go(i, 1, n) {
+        if (a[i] >= c[k])
+            b[i] = b[i-1] + 1;
+        else
+            b[i] = b[i-1];
+    }
+    go(i, 0, n) {
+        b[i] = 2*b[i] - i + n + 1;
+        Ans += Query(b[i]);
+        Add(b[i]);
+    }
+    LL t = (1LL * n * (n + 1)) / 2;
+    return Ans >= ((t + 1) / 2);
+}
+    
+int main(){
+    scanf("%d", &n);
+    int l = 1, r = n;
+    go(i, 1, n){
+        scanf("%d", &a[i]);
+        c[i] = a[i];
+    }
+    sort(c + 1, c + n + 1);
+    int ans = 0;
+    while(l <= r){
+        int mid = MID(l, r);
+        if (find(mid)){
+            ans = c[mid];
+            l = mid + 1;
+        }
+        else{
+            r = mid - 1;
+        }
+    }
+    printf("%d\n", ans);
+    return 0;
+}
+```

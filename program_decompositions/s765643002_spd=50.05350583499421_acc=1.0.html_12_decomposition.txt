@@ -1,0 +1,127 @@
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long LL;
+
+class FenwickTree {
+public:
+    FenwickTree(int size) : tree(size + 1, 0) {}
+    
+    void add(int index, LL value = 1) {
+        while (index < tree.size()) {
+            tree[index] += value;
+            index += index & -index;
+        }
+    }
+    
+    LL query(int index) const {
+        LL result = 0;
+        int i = index;
+        while (i > 0) {
+            result += tree[i];
+            i -= i & -i;
+        }
+        return result;
+    }
+    
+    void reset() {
+        fill(tree.begin(), tree.end(), 0);
+    }
+
+private:
+    vector<LL> tree;
+};
+
+class Solution {
+public:
+    void run() {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+        
+        LL n;
+        cin >> n;
+        if(n == 1){
+            int single;
+            cin >> single;
+            cout << single << "\n";
+            return;
+        }
+        vector<int> a(n + 1);
+        for (LL i = 1; i <= n; ++i) {
+            cin >> a[i];
+        }
+        
+        // Create a sorted copy for binary search
+        vector<int> c(a);
+        sort(c.begin() + 1, c.end());
+        
+        LL left = 1, right = n;
+        while (left < right) {
+            LL mid = left + (right - left + 1) / 2;
+            if (check(mid, a, c, n)) {
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        
+        LL ans;
+        if (check(left, a, c, n)) {
+            ans = c[left];
+        } else {
+            ans = c[left - 1];
+        }
+        cout << ans << "\n";
+    }
+
+private:
+    bool check(LL k, const vector<int>& a, const vector<int>& c, LL n) {
+        vector<long long> b(n + 1, 0);
+        for (LL i = 1; i <= n; ++i) {
+            b[i] = (a[i] >= c[k]) ? b[i - 1] + 1 : b[i - 1];
+        }
+        
+        // Transform b[i] to r_sorted[i]
+        vector<long long> r_sorted(n + 1);
+        for (LL i = 0; i <= n; ++i) {
+            r_sorted[i] = 2 * b[i] - i + n + 1;
+        }
+        
+        // Coordinate compression
+        sort(r_sorted.begin(), r_sorted.end());
+        r_sorted.erase(unique(r_sorted.begin(), r_sorted.end()), r_sorted.end());
+        int unique_size = r_sorted.size();
+        
+        // Replace b[i] with their ranks
+        vector<int> ranked_b(n + 1);
+        for (LL i = 0; i <= n; ++i) {
+            ranked_b[i] = lower_bound(r_sorted.begin(), r_sorted.end(), r_sorted[i]) - r_sorted.begin() + 1;
+        }
+        
+        LL total_pairs = (n * (n + 1)) / 2;
+        LL target = (total_pairs + 1) / 2;
+        
+        return inversed_pair(ranked_b, n, unique_size, target);
+    }
+    
+    bool inversed_pair(const vector<int>& b_arr, LL size, int unique_size, LL target) {
+        FenwickTree fenwick(unique_size);
+        LL Ans = 0;
+        for (LL i = 0; i <= size; ++i) {
+            Ans += fenwick.query(b_arr[i]);
+            if (Ans >= target) {
+                return true;
+            }
+            fenwick.add(b_arr[i]);
+        }
+        return Ans >= target;
+    }
+};
+
+int main(){
+    Solution solution;
+    solution.run();
+    return 0;
+}
+```

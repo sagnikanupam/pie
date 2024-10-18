@@ -1,0 +1,40 @@
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int N, M;
+    cin >> N >> M;
+    // Using vectors for flexibility
+    vector<bool> used(N + 1, false);
+    vector<int> A(N + 1, 0);
+    
+    for (int i = 1; i <= M; i++) {
+        int a;
+        string b;
+        cin >> a >> b;
+        if (b == "AC") {
+            used[a] = true;
+        }
+        else if (!used[a]) {
+            A[a]++;
+        }
+    }
+
+    int sum1 = 0, sum2 = 0;
+    for (int i = 1; i <= N; i++) {
+        if (used[i]) {
+            sum1++;
+            sum2 += A[i];
+        }
+    }
+
+    cout << sum1 << " " << sum2 << "\n";
+    return 0;
+}
+```

@@ -1,0 +1,34 @@
+```cpp
+#include <iostream>
+#include <set>
+
+using namespace std;
+
+typedef long long ll;
+
+int calc(int a){
+    if(a % 2 == 0) return a / 2;
+    else return 3 * a + 1;
+}
+
+int main(){
+    int s;
+    cin >> s;
+
+    set<int> st;
+    st.insert(s);
+
+    int current = s;
+
+    for(int i = 1; i < 1000000; i++){
+        current = calc(current);
+        if(st.find(current) != st.end()){
+            cout << i + 1 << endl;
+            return 0;
+        }
+        st.insert(current);
+    }
+
+    return 0;
+}
+```

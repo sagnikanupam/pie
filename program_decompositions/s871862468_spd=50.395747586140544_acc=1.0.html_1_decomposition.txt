@@ -1,0 +1,46 @@
+```cpp
+#include "bits/stdc++.h"
+
+#define ll long long
+#define PI 3.1415926535897932384626433832795l
+#define MAX_NUM 1000000000
+
+using namespace std;
+
+template <typename T> inline T __lcm(T a, T b)
+{
+    return (a * b) / __gcd(a, b);
+}
+
+ll h[1000000];
+ll dp[1000000];
+ll n, k;
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
+    cin >> n >> k;
+    for(int i = 0; i < n; i++)
+    {
+        cin >> h[i];
+    }
+
+    dp[n-1] = 0;
+    for(ll i = n - 2; i >= 0; --i)
+    {
+        ll minimum = MAX_NUM;
+        for(int j = 1; j <= k; j++)
+        {
+            if(i + j < n)
+            {
+                minimum = min(minimum, abs(h[i] - h[i + j]) + dp[i + j]);
+            }
+        }
+        dp[i] = minimum;
+    }
+
+    cout << dp[0] << "\n";
+}
+```

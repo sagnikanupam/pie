@@ -1,1 +1,13 @@
-{"1": "Replaced raw arrays with std::vector for the dynamic programming table (dp), improving memory management and safety.", "2": "Removed unnecessary macros REP and rep, replacing them with range-based for loops for clarity and potential performance improvement.", "3": "Removed typedef for long long int (ll) and the constant int INF as they were not utilized in the program.", "4": "Eliminated cin.tie(0) and ios::sync_with_stdio(false) as they are unnecessary due to the absence of mixed C and C++ input/output.", "5": "Changed post-increment (i++) to pre-increment (++i) in loop constructs for potential performance enhancement.", "6": "Introduced a custom iterator class _in for more efficient iteration over ranges, which can improve performance."}
+{
+  "1": "Replaced the raw 2D array `dp[1001][1001]` with a `std::vector<std::vector<int>> dp` to utilize dynamic sizing and efficient memory management provided by `std::vector`.",
+  
+  "2": "Removed the macros `REP(i, s, n)` and `rep(i, n)` and replaced them with range-based for loops. This change makes the code cleaner, easier to understand, and allows the compiler to better optimize the loops.",
+  
+  "3": "Eliminated the unused `typedef long long int ll` and the constant `const int INF = 1000000000` to clean up the code and reduce unnecessary parsing by the compiler.",
+  
+  "4": "Removed `cin.tie(0)` and `ios::sync_with_stdio(false)` since they were unnecessary for this program. This simplification makes the code cleaner and removes redundant operations.",
+  
+  "5": "Changed post-increment operators (`i++`) to pre-increment (`++i`) in loop constructs to improve performance by avoiding the creation of temporary variables.",
+  
+  "6": "Introduced a custom iterator class `_in` to facilitate range-based for loops. This allows for more readable loops and enables the compiler to optimize loop iterations more effectively."
+}

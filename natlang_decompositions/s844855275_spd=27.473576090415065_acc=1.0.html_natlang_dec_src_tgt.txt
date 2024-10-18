@@ -1,0 +1,9 @@
+```json
+{
+  "1": "Introduced a struct `node` to store both the value and position of each element in the array. This allows for more efficient sorting and searching operations by encapsulating related data together.",
+  "2": "Streamlined the logic in the `check` function by simplifying the computation of cumulative sums and replacing nested loops with more efficient algorithms. Implemented a binary search in the `main` function to reduce the time complexity from O(n²) to O(n log n).",
+  "3": "Reduced memory usage by eliminating unnecessary arrays such as `b[MAXN]` and minimizing the use of global variables. Optimized the usage of existing arrays to store essential data only.",
+  "4": "Modularized the code by creating separate functions `update` and `getsum` for updating the BIT array and calculating prefix sums, respectively. This promotes code reusability and enhances readability.",
+  "5": "Replaced `cin` and `cout` with `scanf` and `printf` for input and output operations, significantly improving the execution speed due to the faster I/O handling of C-style functions."
+}
+```

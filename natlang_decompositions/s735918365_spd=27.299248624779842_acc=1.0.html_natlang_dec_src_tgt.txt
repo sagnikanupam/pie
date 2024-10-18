@@ -1,0 +1,9 @@
+```json
+{
+  "1": "Removed the declaration and usage of the vector `v` within the `solve` function, eliminating the creation of a new vector in each recursive call.",
+  "2": "Introduced a single integer variable `ans` to track the minimum result instead of storing all results in a vector, thereby replacing the vector operations with a simple minimum comparison.",
+  "3": "Eliminated the `v.clear()` statement and the usage of `min_element`, updating the logic to directly assign the minimum value to `dp[i]` using the `ans` variable.",
+  "4": "Renamed the `solve` function to `f` to improve clarity and consistency within the program.",
+  "5": "Removed unnecessary code and commented-out sections from both the `solve`/`f` function and the `main` function, resulting in a cleaner and more maintainable codebase."
+}
+```

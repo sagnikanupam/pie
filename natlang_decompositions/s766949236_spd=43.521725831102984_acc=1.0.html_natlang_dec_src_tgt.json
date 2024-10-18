@@ -1,1 +1,15 @@
-{"1": "Replace the integer array 'flag' with a boolean array 'used' to track whether each problem has been solved (AC).", "2": "Modify the penalty count increment to update 'A[a]' only when the status is WA and 'used[a]' is false.", "3": "Refactor the sum calculation to be a single pass over the range from 1 to N, skipping problems that have not been solved.", "4": "Change the input reading mechanism to read 'a' and 'b' directly into local variables instead of arrays 'P' and 'S'.", "5": "Remove the 'penalty' array to save memory.", "6": "Eliminate the use of the libraries 'map', 'queue', 'vector', 'algorithm', and 'functional' to reduce program size and possibly compilation time.", "7": "Add a pragma directive to disable warning 4996, potentially saving time during compilation."}
+{
+  "1": "Replaced the integer array `flag` with a boolean array `used` to track whether a problem has been solved (AC). This simplifies the logic and improves performance by using a more straightforward data type.",
+  
+  "2": "Changed the penalty count array from `penalty` to `A` and modified the logic to increment `A[a]` only when a problem is not yet solved (`WA` and `used[a] == false`). This reduces unnecessary checks when calculating the penalty sum.",
+  
+  "3": "Consolidated the sum calculations into a single loop that iterates over the range 1 to N, skipping unsolved problems. This optimization reduces the number of operations by avoiding redundant iterations.",
+  
+  "4": "Modified the input reading process by reading values `a` and `b` directly into local variables instead of storing them in arrays `P` and `S`. This change decreases memory usage and improves input processing speed.",
+  
+  "5": "Removed the `penalty` array entirely to save memory, as the penalty counts are now managed using the `A` array.",
+  
+  "6": "Eliminated the inclusion of unnecessary libraries (`map`, `queue`, `vector`, `algorithm`, `functional`) to reduce the program size and potentially decrease compilation time.",
+  
+  "7": "Added `#pragma warning (disable: 4996)` to disable a specific compiler warning (4996). While this does not impact runtime performance, it can prevent the compiler from spending time generating this warning."
+}

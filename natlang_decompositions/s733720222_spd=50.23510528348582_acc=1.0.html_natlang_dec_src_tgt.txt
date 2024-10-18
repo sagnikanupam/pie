@@ -1,0 +1,9 @@
+```json
+{
+  "1": "Changed the dynamic programming approach from top-down (recursive with memoization) to bottom-up (iterative). Removed the `solve` recursive function and implemented an iterative loop in the `main` function to compute `dp[i]` values.",
+  "2": "Removed unnecessary macros and includes. Kept only `#include <bits/stdc++.h>`, `#define MAX 1000006`, and `#define INF 2e9`, eliminating other unused macros and library includes to make the code cleaner.",
+  "3": "Changed data types from `long long int` to `int` for the arrays `ara` and `dp` since `int` was sufficient, reducing memory usage and potentially increasing speed.",
+  "4": "Removed the `fastRead` macro and its invocation in the `main` function. This eliminated the overhead associated with input/output synchronization.",
+  "5": "Removed the use of global variables by declaring `n`, `k`, `ara`, and `dp` within the `main` function, enhancing code readability and maintainability."
+}
+```

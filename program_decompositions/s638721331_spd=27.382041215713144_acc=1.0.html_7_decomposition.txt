@@ -1,0 +1,30 @@
+```cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+    int s;
+    cin >> s;
+
+    set<int> se = {s};
+
+    int pre = s;
+    int now;
+
+    while (true) {
+        if (pre % 2 == 0) {
+            now = pre / 2;
+        } else {
+            now = 3 * pre + 1;
+        }
+
+        if (!se.insert(now).second) {
+            cout << se.size() + 1 << endl;
+            return 0;
+        }
+
+        pre = now;
+    }
+}
+```

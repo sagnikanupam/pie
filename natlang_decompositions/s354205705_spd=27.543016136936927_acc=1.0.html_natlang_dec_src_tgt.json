@@ -1,1 +1,7 @@
-{"1": "Change the size of the memo array from a fixed size of 1000000 to a dynamic size of n+2 in the optimized program.", "2": "Modify the array indexing from 0-indexed in the slow program to 1-indexed in the optimized program for better clarity.", "3": "Alter the inner loop range from running from i+1 to i+k in the slow program to running from 1 to m in the optimized program to reduce unnecessary iterations.", "4": "Update variable names in the optimized program to be more meaningful, improving code readability.", "5": "Incorporate the macro 'ft' to speed up input and output operations in the optimized program."}
+{
+  "1": "Changed the size of the `memo` array from a fixed size of 1,000,000 to a dynamic size of `n + 2` to optimize memory usage based on the input size.",
+  "2": "Switched array indexing from 0-based to 1-based by starting loops from 1 instead of 0 and adjusting array indices accordingly, making the code cleaner and eliminating the need for boundary checks.",
+  "3": "Modified the inner loop range from iterating from `i + 1` to `i + k` to iterating from `1` to `m`, thereby reducing the number of iterations when `m` is less than `k`.",
+  "4": "Updated variable names to more meaningful ones, such as renaming `memo` to `d` and using single-letter variables (`i`, `j`) for loop indices, enhancing code readability.",
+  "5": "Added the macro `ft` to speed up input and output operations by disabling synchronization between C and C++ standard streams and untying `cin` from `cout`."
+}

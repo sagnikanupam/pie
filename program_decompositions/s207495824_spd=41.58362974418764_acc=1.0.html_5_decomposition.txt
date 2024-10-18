@@ -1,0 +1,91 @@
+```cpp
+/*
+Code By OptimizedProgrammer
+*/
+#include <bits/stdc++.h>
+
+using namespace std;
+typedef long long ll;
+
+// Fast input
+inline void read(int &x){
+    x = 0; int ne = 0; char c;
+    while(!isdigit(c = getchar()) && c != '-');
+    if(c == '-') { ne = 1; c = getchar(); }
+    x = c - '0';
+    while(isdigit(c = getchar())) x = x * 10 + c - '0';
+    if(ne) x = -x;
+}
+
+const int maxn = 200005;
+ll bit[maxn];
+
+// Binary Indexed Tree functions
+inline void update(int x){
+    while(x < maxn){
+        bit[x]++;
+        x += x & -x;
+    }
+}
+
+inline ll query(int x){
+    ll res = 0;
+    while(x > 0){
+        res += bit[x];
+        x -= x & -x;
+    }
+    return res;
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
+    int n, val, mi = INT32_MAX, mx = INT32_MIN;
+    read(n);
+    vector<int> a(n);
+    for(auto &x : a){
+        read(x);
+        mi = min(mi, x);
+        mx = max(mx, x);
+    }
+
+    // Lambda for checking
+    auto chk = [&](int k) -> ll {
+        vector<int> prefix(n + 1, 0);
+        for(int i = 0; i < n; i++) prefix[i+1] = prefix[i] + (a[i] <= k ? 1 : -1);
+
+        // Coordinate compression
+        vector<int> sorted = prefix;
+        sort(sorted.begin(), sorted.end());
+        sorted.erase(unique(sorted.begin(), sorted.end()), sorted.end());
+
+        fill(bit, bit + maxn, 0);
+        ll ans = 0;
+        prefix[0] = lower_bound(sorted.begin(), sorted.end(), prefix[0]) - sorted.begin() + 1;
+        update(prefix[0]);
+
+        for(int i = 1; i <= n; i++){
+            prefix[i] = lower_bound(sorted.begin(), sorted.end(), prefix[i]) - sorted.begin() + 1;
+            ans += query(prefix[i] - 1);
+            update(prefix[i]);
+        }
+        return ans;
+    };
+
+    ll lim = 1LL * n * (n + 1) / 4 + 1;
+    int L = mi, R = mx, ans_val = mx;
+    while(L <= R){
+        int mid = L + (R - L) / 2;
+        if(chk(mid) >= lim){
+            ans_val = mid;
+            R = mid - 1;
+        }
+        else{
+            L = mid + 1;
+        }
+    }
+    printf("%d\n", ans_val);
+    return 0;
+}
+```

@@ -1,0 +1,28 @@
+```cpp
+//Speedup over src: 5.154455235128371
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <cstring>
+#include <iomanip>
+
+using namespace std;
+typedef long long ll;
+const int maxn=1e5+1111;
+
+int arr[maxn];
+int dp[maxn];
+int main(){
+    int n,k;
+    scanf("%d%d",&n,&k);
+    dp[0]=dp[1]=0;
+    for(int i=1;i<=n;++i){
+        scanf("%d",arr+i);
+        for(int j=1;j<=k&&i-j>0;++j){
+            dp[i]=min(dp[i-j]+abs(arr[i]-arr[i-j]),dp[i]);
+        }
+    }
+    printf("%d\n",dp[n]);
+    return 0;
+}
+```

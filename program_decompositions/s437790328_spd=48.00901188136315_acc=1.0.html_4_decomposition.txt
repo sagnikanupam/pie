@@ -1,0 +1,49 @@
+```cpp
+//g++ -std=gnu++14 a.cpp
+
+#include <algorithm>
+#include <bitset>
+#include <complex>
+#include <deque>
+#include <iostream>
+#include <istream>
+#include <iterator>
+#include <map>
+#include <queue>
+#include <set>
+#include <stack>
+#include <string>
+#include <vector>
+#include <tuple>
+#include <iomanip>
+#include <random>
+#include <math.h>
+
+using namespace std;
+
+#define ll long long
+#define rep(i, n) for(ll i = 0; i < (n); i++)
+
+const ll MOD = 1e9 + 7;
+const ll INFL = 1LL << 60;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    int N, K;
+    cin >> N >> K;
+    vector<int> h(N);
+    for(int &height : h) cin >> height;
+    
+    vector<ll> dp(N, INFL);
+    dp[0] = 0;
+    
+    for(int i = 0; i < N; i++){
+        for(int j = 1; j <= K && i + j < N; j++){
+            dp[i + j] = min(dp[i + j], dp[i] + abs(h[i + j] - h[i]));
+        }
+    }
+    cout << dp[N - 1] << "\n";
+}
+```

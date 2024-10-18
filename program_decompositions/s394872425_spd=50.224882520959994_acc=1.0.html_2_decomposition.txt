@@ -1,0 +1,26 @@
+```cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+
+int main() {
+    int s;
+    cin >> s;
+    set<int> used;
+    used.insert(s);
+    int current = s;
+    while (true) {
+        if (current % 2 == 0)
+            current /= 2;
+        else
+            current = current * 3 + 1;
+        if (used.find(current) != used.end()) {
+            cout << used.size() << endl;
+            return 0;
+        }
+        used.insert(current);
+    }
+}
+```

@@ -1,0 +1,43 @@
+```cpp
+#include <iostream>
+#include <map>
+#include <queue>
+#include <cmath>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <functional>
+using namespace std;
+
+int N, M, P[1 << 18]; 
+string S[1 << 18];
+bool used[1 << 18];
+int A[1 << 18];
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    cin >> N >> M;
+    for (int i = 1; i <= M; i++) {
+        cin >> P[i] >> S[i];
+        if (S[i] == "AC") {
+            used[P[i]] = true;
+        }
+        else if (!used[P[i]]) {
+            A[P[i]]++;
+        }
+    }
+
+    int sum1 = 0, sum2 = 0;
+    for (int i = 1; i <= N; i++) {
+        sum1 += used[i];
+        if (used[i]) {
+            sum2 += A[i];
+        }
+    }
+
+    cout << sum1 << " " << sum2 << "\n";
+    return 0;
+}
+```

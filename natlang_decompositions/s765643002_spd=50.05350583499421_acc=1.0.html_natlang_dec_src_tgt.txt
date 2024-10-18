@@ -1,0 +1,29 @@
+```json
+{
+  "1": "Replace the single `#include <bits/stdc++.h>` directive with specific standard library includes such as `<cstdio>`, `<cstdlib>`, `<cstring>`, `<cmath>`, `<algorithm>`, `<iostream>`, `<iomanip>`, `<string>`, `<vector>`, `<queue>`, `<map>`, and `<set>` to reduce compilation overhead and improve clarity.",
+  
+  "2": "Remove unused macros like `mem(x,v)`, `go(i,a,b)`, `og(i,a,b)`, `MID(a,b)`, `lson`, `rson`, and `low(x)`. Introduce new macros for commonly used types and debugging, such as `#define ll long long`, `#define ull unsigned long long`, and `#define BUG printf(\"************\\n\")` for easier debugging.",
+  
+  "3": "Change variable types from `int` to `long long` (using the `ll` macro) for variables that handle larger values. Specifically, update declarations from `int n, tt;` to `ll n, m;` to accommodate larger input sizes and prevent overflow.",
+  
+  "4": "Introduce a new array `r` to store the indices of the array `f` in sorted order. This facilitates the calculation of inversed pairs more efficiently, thereby optimizing memory usage and improving the overall speed of the program.",
+  
+  "5": "Replace the `find` function in the source program with a more efficient `check` function in the target program. The `check` function utilizes a binary search and a Fenwick tree (Binary Indexed Tree) to reduce the time complexity from O(n²) to O(n log n).",
+  
+  "6": "Implement fast input and output by adding `ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);` in the `main` function. Replace `scanf` and `printf` with `cin` and `cout` to leverage faster I/O operations provided by C++ streams.",
+  
+  "7": "Modify the sorting mechanism by introducing a custom comparison function `cmp`. This function sorts the array `r` based on the values in array `f`, enhancing the efficiency of the sort operation compared to the generic `sort` function used in the source program.",
+  
+  "8": "Optimize the binary search implementation in the `main` function. Change the loop condition from `while(l <= r)` to `while(l < r)` and adjust the update rules within the loop to correctly narrow down the search space using the `check` function.",
+  
+  "9": "Incorporate the `inversed_pair` function, which utilizes the Fenwick tree for efficiently calculating the number of inversed pairs. This function replaces the nested loops in the `find` function, thus significantly reducing the time complexity.",
+  
+  "10": "Implement conditional optimization within the `check` function to terminate the binary search early when the desired condition is met. This reduces the number of iterations required in the binary search, further enhancing the program's performance.",
+  
+  "11": "Remove unnecessary global variables and reorganize the code structure to improve readability and maintainability. For example, separate the declarations and implementations of functions like `add`, `read`, `cmp`, `inversed_pair`, and `check`.",
+  
+  "12": "Update the `main` function to handle edge cases more gracefully. Specifically, add a condition to immediately return the single element when `n == 1`, improving the program's robustness.",
+  
+  "13": "Adjust the input range for binary search from `1` to `n` in the source program to a broader range `1` to `1e9+10` in the target program. This change accommodates larger input values and enhances the applicability of the program."
+}
+```

@@ -1,0 +1,110 @@
+```cpp
+#include <bits/stdc++.h>
+#define ll long long
+#define MN 100005
+using namespace std;
+
+// Efficient input reading functions
+inline int read() {
+    int x = 0;
+    bool f = false;
+    char c = getchar();
+    while (c < '0' || c > '9') { 
+        if (c == '-') f = true; 
+        c = getchar(); 
+    }
+    while (c >= '0' && c <= '9') { 
+        x = x * 10 + (c - '0'); 
+        c = getchar(); 
+    }
+    return f ? -x : x;
+}
+
+inline ll readl() {
+    ll x = 0;
+    bool f = false;
+    char c = getchar();
+    while (c < '0' || c > '9') { 
+        if (c == '-') f = true; 
+        c = getchar(); 
+    }
+    while (c >= '0' && c <= '9') { 
+        x = x * 10 + (c - '0'); 
+        c = getchar(); 
+    }
+    return f ? -x : x;
+}
+
+int c_tree[200005];
+int a[MN];
+int n;
+ll num;
+
+// Binary Indexed Tree operations
+inline void add(int x, int v){
+    while(x <= ((n << 1) | 1)){
+        c_tree[x] += v;
+        x += x & -x;
+    }
+}
+
+inline int query(int x){
+    int res = 0;
+    while(x > 0){
+        res += c_tree[x];
+        x -= x & -x;
+    }
+    return res;
+}
+
+// Optimized check function
+inline bool check(int threshold){
+    // Reset the Fenwick Tree
+    memset(c_tree, 0, sizeof(int) * (((n << 1) | 1) + 1));
+    add(n + 1, 1);
+    num = 0LL;
+    int sum = 0;
+    
+    for(int i = 1; i <= n; ++i){
+        sum += (a[i] > threshold);
+        int d_i = 2 * sum - i + n + 1;
+        if(d_i < 0) d_i = 0;
+        num += (ll)(query(((n << 1) | 1)) - query(d_i));
+        add(d_i, 1);
+    }
+    
+    return (num > ((ll)n * (n + 1)) / 4LL);
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    n = read();
+    int max_val = INT32_MIN;
+    int min_val = INT32_MAX;
+    for(int i = 1; i <= n; ++i){
+        a[i] = read();
+        if(a[i] > max_val) max_val = a[i];
+        if(a[i] < min_val) min_val = a[i];
+    }
+    
+    int l = min_val;
+    int r = max_val;
+    int res = max_val;
+    
+    while(l <= r){
+        int mid = l + ((r - l) >> 1);
+        if(check(mid)){
+            res = mid;
+            r = mid - 1;
+        }
+        else{
+            l = mid + 1;
+        }
+    }
+    
+    printf("%d", res);
+    return 0;
+}
+```

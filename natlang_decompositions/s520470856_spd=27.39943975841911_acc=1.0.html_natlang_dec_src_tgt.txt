@@ -1,0 +1,8 @@
+```json
+{
+  "1": "Reduced the size of the vector from 1,000,000 to 10,000, decreasing memory usage and the number of operations performed.",
+  "2": "Changed the method of checking for repeated numbers by storing each number in the vector and iterating through previous entries to check for equality, instead of incrementing counts and checking if a count reaches 2.",
+  "3": "Decreased the maximum number of iterations from 1,000,000 to 10,000, thereby reducing the number of operations and memory consumption.",
+  "4": "Simplified the calculation of the next number by replacing the if-else statements with a single line of code that calculates `n = 3*n + 1` for odd numbers or `n /= 2` for even numbers, reducing the number of operations performed."
+}
+```

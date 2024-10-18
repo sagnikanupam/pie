@@ -1,0 +1,25 @@
+```json
+{
+  "1": "Remove the integer array declaration `int a[1000010]={};` from the source program.",
+  
+  "2": "Declare a new `set<int>` named `set1` to replace the array `a`.",
+  
+  "3": "After reading the input `s` using `cin >> s;`, insert `s` into `set1` using `set1.insert(s);` instead of incrementing the array with `a[s]++;`.",
+  
+  "4": "Modify the `for` loop to iterate from `1` to `999999` as in the source program, but adjust the loop body to use the set operations.",
+  
+  "5": "Within the loop, remove the conditional checks that use the array `a`. Specifically, eliminate the `if` statements checking `a[s/2]==1` and `a[s*3+1]==1`.",
+  
+  "6": "Simplify the loop logic by directly updating the value of `s` based on its parity:
+    - If `s` is even, update `s` to `s / 2`.
+    - If `s` is odd, update `s` to `3*s + 1`.",
+  
+  "7": "After updating `s`, insert the new value into `set1` using `set1.insert(s);`.",
+  
+  "8": "Replace the condition that checks for repetition by comparing the size of `set1` to `i + 1`. Specifically, add a condition `if(set1.size() != i + 1)` to determine if a duplicate has been encountered.",
+  
+  "9": "If the condition in step 8 is met, output the current step number `i + 1` using `cout << i+1 << endl;` and terminate the program with `return 0;`.",
+  
+  "10": "Remove all increment operations on the array, such as `a[s/2]++` and `a[s*3+1]++`, as they are no longer necessary with the introduction of the set."
+}
+```

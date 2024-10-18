@@ -1,0 +1,15 @@
+```json
+{
+  "1": "Replaced the raw 2D array `dp[1001][1001]` with a `std::vector<std::vector<int>> dp` to utilize dynamic sizing and efficient memory management provided by `std::vector`.",
+  
+  "2": "Removed the macros `REP(i, s, n)` and `rep(i, n)` and replaced them with range-based for loops. This change makes the code cleaner, easier to understand, and allows the compiler to better optimize the loops.",
+  
+  "3": "Eliminated the unused `typedef long long int ll` and the constant `const int INF = 1000000000` to clean up the code and reduce unnecessary parsing by the compiler.",
+  
+  "4": "Removed `cin.tie(0)` and `ios::sync_with_stdio(false)` since they were unnecessary for this program. This simplification makes the code cleaner and removes redundant operations.",
+  
+  "5": "Changed post-increment operators (`i++`) to pre-increment (`++i`) in loop constructs to improve performance by avoiding the creation of temporary variables.",
+  
+  "6": "Introduced a custom iterator class `_in` to facilitate range-based for loops. This allows for more readable loops and enables the compiler to optimize loop iterations more effectively."
+}
+```

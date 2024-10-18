@@ -1,0 +1,38 @@
+```cpp
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long int ll;
+
+void solve(){
+    int n, k; 
+    cin >> n >> k;
+
+    vector<int> a(n);
+    for (int &x : a) {
+        cin >> x;
+    }
+
+    vector<int> memo(n + 2, INT_MAX);
+    memo[0] = 0;
+
+    for (int i = 0; i < n; ++i)
+    {
+        for(int j = i + 1; j <= i + k && j < n; j++){
+            memo[j] = min(memo[j], memo[i] + abs(a[i] - a[j]));
+        }
+    }
+
+    cout << memo[n-1] << "\n";
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    // ll t; cin>>t;
+    // while(t--)
+    solve();
+    return 0;
+}
+```

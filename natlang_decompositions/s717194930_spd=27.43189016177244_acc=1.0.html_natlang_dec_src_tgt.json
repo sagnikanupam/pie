@@ -1,1 +1,7 @@
-{"1": "Eliminated the array used to store previous numbers to reduce memory usage.", "2": "Removed the inner loop that checks if the current number has appeared before, significantly reducing the number of operations.", "3": "Simplified the condition in the while loop to continue until the number becomes 1, making it more straightforward.", "4": "Modified the loop to take advantage of the sequence reaching 1, stopping when reaching 4 or 3 and adding 3 to the answer."}
+{
+  "1": "Removed the array 'a[MAX]' used to store previous numbers, reducing memory usage and eliminating the need to initialize and access the array.",
+  "2": "Eliminated the inner loop that checks for duplicate numbers by scanning through all previous entries, thereby removing the quadratic time complexity.",
+  "3": "Replaced the outer 'for' loop with a 'while' loop that continues until the number becomes 1, simplifying the loop structure and controlling the termination condition more effectively.",
+  "4": "Simplified the condition in the while loop to stop when the number is greater than 4 or exactly 3, leveraging the fact that the sequence will reach 1 through the steps 4, 2, 1.",
+  "5": "Adjusted the final answer by adding 3 to account for the remaining steps (4, 2, 1) once the loop terminates, ensuring the correct result without performing unnecessary iterations."
+}

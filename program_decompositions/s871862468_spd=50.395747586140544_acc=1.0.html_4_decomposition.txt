@@ -1,0 +1,30 @@
+```cpp
+#include <bits/stdc++.h>
+
+using ll = long long;
+
+int main()
+{
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+
+    ll n, k;
+    std::cin >> n >> k;
+    
+    std::vector<ll> h(n);
+    for(auto &height : h) std::cin >> height;
+
+    std::vector<ll> dp(n, 1000000000);
+    dp[n-1] = 0;
+    
+    for(ll i = n - 2; i >= 0; --i)
+    {
+        for(ll j = 1; j <= k && i + j < n; ++j)
+        {
+            dp[i] = std::min(dp[i], std::abs(h[i] - h[i + j]) + dp[i + j]);
+        }
+    }
+
+    std::cout << dp[0] << "\n";
+}
+```

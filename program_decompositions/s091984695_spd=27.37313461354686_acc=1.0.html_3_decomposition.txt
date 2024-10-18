@@ -1,0 +1,32 @@
+```cpp
+#include <iostream>
+#include <set>
+
+using namespace std;
+
+typedef long long ll;
+
+int main(){
+    int s;
+    cin >> s;
+
+    set<int> st;
+    st.insert(s);
+
+    int current = s;
+
+    for(int i = 1; i < 1000000; i++){
+        if(current % 2 == 0)
+            current = current / 2;
+        else
+            current = 3 * current + 1;
+        if(st.count(current)){
+            cout << i + 1 << endl;
+            return 0;
+        }
+        st.insert(current);
+    }
+
+    return 0;
+}
+```

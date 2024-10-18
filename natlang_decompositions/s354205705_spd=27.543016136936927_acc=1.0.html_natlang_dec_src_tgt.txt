@@ -1,0 +1,9 @@
+```json
+{
+  "1": "Changed the size of the `memo` array from a fixed size of 1,000,000 to a dynamic size of `n + 2` to optimize memory usage based on the input size.",
+  "2": "Switched array indexing from 0-based to 1-based by starting loops from 1 instead of 0 and adjusting array indices accordingly, making the code cleaner and eliminating the need for boundary checks.",
+  "3": "Modified the inner loop range from iterating from `i + 1` to `i + k` to iterating from `1` to `m`, thereby reducing the number of iterations when `m` is less than `k`.",
+  "4": "Updated variable names to more meaningful ones, such as renaming `memo` to `d` and using single-letter variables (`i`, `j`) for loop indices, enhancing code readability.",
+  "5": "Added the macro `ft` to speed up input and output operations by disabling synchronization between C and C++ standard streams and untying `cin` from `cout`."
+}
+```

@@ -1,0 +1,33 @@
+```cpp
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    int s;
+    cin >> s;
+    vector<int> visited;
+    visited.push_back(s);
+    for(int i = 2; i < 10000; i++){
+        if(s % 2 == 0){
+            s /= 2;
+        }
+        else{
+            s = s * 3 + 1;
+        }
+        bool repeated = false;
+        for(auto num : visited){
+            if(num == s){
+                cout << i << endl;
+                repeated = true;
+                break;
+            }
+        }
+        if(repeated){
+            break;
+        }
+        visited.push_back(s);
+    }
+    return 0;
+}
+```
