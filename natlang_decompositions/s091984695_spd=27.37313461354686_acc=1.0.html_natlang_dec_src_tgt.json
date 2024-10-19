@@ -1,7 +1,1 @@
-{
-  "1": "Replace the `vector<int> a` with a `set<int> st` to store the sequence of numbers, eliminating the need for a vector and enabling efficient duplicate checks.",
-  "2": "Remove the separate `calc` function and integrate its logic directly into the main loop, simplifying the code and reducing function call overhead.",
-  "3": "Eliminate the nested `for` loop that checks for duplicates by using the `set`'s `count` method to determine if a number has already been encountered, thereby reducing the time complexity from O(n²) to O(n log n).",
-  "4": "Change the loop structure from a `for` loop with a fixed number of iterations to a `while` loop that continues until a duplicate number is found, improving the program's efficiency.",
-  "5": "Update the output statement to use `st.size() + 1` instead of `i + 1` to correctly reflect the number of unique elements in the sequence."
-}
+{  "1": "Replace the `vector<int> a` with a `set<int> st` to store the sequence of numbers, eliminating the need for a vector and enabling efficient duplicate checks.",  "2": "Remove the separate `calc` function and integrate its logic directly into the main loop, simplifying the code and reducing function call overhead.",  "3": "Eliminate the nested `for` loop that checks for duplicates by using the `set`'s `count` method to determine if a number has already been encountered, thereby reducing the time complexity from O(n²) to O(n log n).",  "4": "Change the loop structure from a `for` loop with a fixed number of iterations to a `while` loop that continues until a duplicate number is found, improving the program's efficiency.",  "5": "Update the output statement to use `st.size() + 1` instead of `i + 1` to correctly reflect the number of unique elements in the sequence."}

@@ -1,0 +1,33 @@
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    set<int> set1;
+    int s;
+    cin >> s;
+    set1.insert(s);
+    for(int i = 1; i < 1000000; i++) {
+        if(s % 2 == 0) {
+            if(set1.find(s / 2) != set1.end()) {
+                cout << i + 1 << endl;
+                return 0;
+            }
+            else {
+                set1.insert(s / 2);
+                s /= 2;
+            }
+        }
+        else {
+            if(set1.find(3 * s + 1) != set1.end()) {
+                cout << i + 1 << endl;
+                return 0;
+            }
+            else {
+                set1.insert(3 * s + 1);
+                s = 3 * s + 1;
+            }
+        }
+    }
+}
+```

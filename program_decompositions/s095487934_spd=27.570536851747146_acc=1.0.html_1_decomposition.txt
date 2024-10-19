@@ -1,0 +1,33 @@
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    unordered_set<int> a;
+    int s;
+    cin >> s;
+    a.insert(s);
+    for(int i = 1; i < 1000000; i++) {
+        if(s % 2 == 0) {
+            if(a.find(s / 2) != a.end()) {
+                cout << i + 1 << endl;
+                return 0;
+            }
+            else {
+                a.insert(s / 2);
+                s /= 2;
+            }
+        }
+        else {
+            if(a.find(3 * s + 1) != a.end()) {
+                cout << i + 1 << endl;
+                return 0;
+            }
+            else {
+                a.insert(3 * s + 1);
+                s = 3 * s + 1;
+            }
+        }
+    }
+}
+```

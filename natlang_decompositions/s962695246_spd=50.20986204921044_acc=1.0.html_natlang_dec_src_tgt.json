@@ -1,4 +1,1 @@
-{
-  "1": "Remove the declaration and initialization of the vector `v` with size 2000001 from the `main` function.",
-  "2": "Add the comment `//Speedup over src: 9.456199783539988` at the top of the program."
-}
+{  "1": "Remove the declaration and initialization of the vector `v` with size 2000001 from the `main` function.",  "2": "Add the comment `//Speedup over src: 9.456199783539988` at the top of the program."}

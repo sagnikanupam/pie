@@ -1,0 +1,58 @@
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+const constexpr int INF = 1e9;
+
+//typedef std::pair<std::string,double> P;
+
+
+
+#define FOR(i, a, n) for (ll i = (ll)a; i<(ll)n; ++i)
+#define REP(i, n) FOR(i, 0, n)
+
+typedef long long ll;
+typedef vector<int> VI;
+const constexpr ll MOD = 10000000000+7;
+
+vector<pair<int, int> > vp;
+
+
+struct Less {
+    bool operator()(const pair<int, int>& x, const pair<int, int>& y) const {
+        return x.first > y.first;
+    }
+};
+
+ll GCD(ll a, ll b){
+    if(b==0) return a;
+    return GCD(b, a%b);
+}
+
+//グラフの隣接リスト
+VI g[200010];
+//頂点の入次数を管理
+int h[100010];
+ll N, K;
+string s;
+ll v[51];
+
+int main(void) {
+    cin >> N >> K;
+
+    ll cnt=0;
+    if(K==0) cout << N*N << endl;
+    else {
+        for(ll i=K+1; i<=N; ++i){
+            cnt += N/i*max(ll(0), i-K) + max(ll(0), N%i-K+1);
+        }
+        cout << cnt << endl;
+    }
+
+    return 0;
+}
+```

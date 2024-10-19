@@ -1,7 +1,1 @@
-{
-  "1": "Add a comment at the top of the program: `//Speedup over src: 5.154455235128371`.",
-  "2": "Change the `maxn` constant from `1e6+1111` to `1e5+1111` to reduce memory usage.",
-  "3": "Remove the line `memset(dp, 0x3f3f3f, sizeof(dp));` to eliminate unnecessary initialization.",
-  "4": "Add a conditional statement after reading the input values to initialize `dp[i]`: `if(i > 1) dp[i] = dp[i-1] + abs(arr[i] - arr[i-1]);`.",
-  "5": "Modify the inner loop to start from `j = 2` instead of `j = 1`, changing the loop condition to `for(int j = 2; j <= k && i - j > 0; ++j) { ... }`."
-}
+{  "1": "Add a comment at the top of the program: `//Speedup over src: 5.154455235128371`.",  "2": "Change the `maxn` constant from `1e6+1111` to `1e5+1111` to reduce memory usage.",  "3": "Remove the line `memset(dp, 0x3f3f3f, sizeof(dp));` to eliminate unnecessary initialization.",  "4": "Add a conditional statement after reading the input values to initialize `dp[i]`: `if(i > 1) dp[i] = dp[i-1] + abs(arr[i] - arr[i-1]);`.",  "5": "Modify the inner loop to start from `j = 2` instead of `j = 1`, changing the loop condition to `for(int j = 2; j <= k && i - j > 0; ++j) { ... }`."}

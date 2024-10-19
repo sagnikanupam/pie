@@ -1,8 +1,1 @@
-{
-  "1": "Changed the recursive dynamic programming approach with memoization to an iterative bottom-up dynamic programming approach to avoid function call overhead and enhance performance.",
-  "2": "Removed unnecessary computations by eliminating recursive calls for each possible next step and calculating the minimum cost directly using the dynamic programming table.",
-  "3": "Removed unnecessary variables and functions, including the template function for calculating the least common multiple and other unused variables, and defined variables closer to their usage to improve code readability and maintainability.",
-  "4": "Used faster input/output methods by adding 'ios_base::sync_with_stdio(false);' to speed up C++ I/O operations.",
-  "5": "Replaced the 'fabs' function with 'abs' for integer inputs to enhance performance.",
-  "6": "Reduced the size of the dynamic programming table from 1000000 to n+1 to save memory when n is significantly smaller than 1000000."
-}
+{  "1": "Changed the recursive dynamic programming approach with memoization to an iterative bottom-up dynamic programming approach to avoid function call overhead and enhance performance.",  "2": "Removed unnecessary computations by eliminating recursive calls for each possible next step and calculating the minimum cost directly using the dynamic programming table.",  "3": "Removed unnecessary variables and functions, including the template function for calculating the least common multiple and other unused variables, and defined variables closer to their usage to improve code readability and maintainability.",  "4": "Used faster input/output methods by adding 'ios_base::sync_with_stdio(false);' to speed up C++ I/O operations.",  "5": "Replaced the 'fabs' function with 'abs' for integer inputs to enhance performance.",  "6": "Reduced the size of the dynamic programming table from 1000000 to n+1 to save memory when n is significantly smaller than 1000000."}

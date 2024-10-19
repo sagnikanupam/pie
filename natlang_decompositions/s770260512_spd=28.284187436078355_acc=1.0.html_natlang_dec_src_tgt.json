@@ -1,6 +1,1 @@
-{
-  "1": "Optimized input/output operations by replacing `scanf` and `printf` with `cin` and `cout`, and added `ios::sync_with_stdio(0)` and `cin.tie(0)` to speed up I/O.",
-  "2": "Reduced memory usage by decreasing the size of arrays `h` and `d` from `maxn = 1e6 + 10` to `maxn = 1e5 + 5`, improving cache utilization.",
-  "3": "Improved calculation efficiency by computing the minimum cost for the second position outside the main loop, thereby eliminating one iteration from the inner loop.",
-  "4": "Enhanced loop efficiency by using the `min` function to set the upper bound of the inner loop to the minimum of `k` and `i-1`, reducing unnecessary iterations."
-}
+{  "1": "Optimized input/output operations by replacing `scanf` and `printf` with `cin` and `cout`, and added `ios::sync_with_stdio(0)` and `cin.tie(0)` to speed up I/O.",  "2": "Reduced memory usage by decreasing the size of arrays `h` and `d` from `maxn = 1e6 + 10` to `maxn = 1e5 + 5`, improving cache utilization.",  "3": "Improved calculation efficiency by computing the minimum cost for the second position outside the main loop, thereby eliminating one iteration from the inner loop.",  "4": "Enhanced loop efficiency by using the `min` function to set the upper bound of the inner loop to the minimum of `k` and `i-1`, reducing unnecessary iterations."}

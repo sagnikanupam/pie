@@ -1,0 +1,18 @@
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    unordered_set<int> set1;
+    int s;
+    cin >> s;
+    set1.insert(s);
+    for(int i = 1; i < 1000000; i++) {
+        s = (s % 2 == 0) ? (s / 2) : (3 * s + 1);
+        if(!set1.insert(s).second) {
+            cout << i + 1 << endl;
+            return 0;
+        }
+    }
+}
+```
