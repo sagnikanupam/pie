@@ -251,6 +251,7 @@ def o1_natlang_txt_to_json_conversion(natlang_decomp_folder: str = "natlang_deco
         code_lines = open(f"{natlang_decomp_folder}/{key}_natlang_dec_src_tgt.txt", 'r').readlines()
         actual_code = code_lines[1:-1]
         json_string = "".join(actual_code)
+        json_string = json_string.replace("\n", "")
         with open(f"{natlang_decomp_folder}/{key}_natlang_dec_src_tgt.json", 'w') as fp:
             fp.write(json_string)
             
@@ -412,8 +413,8 @@ def get_problem_id(src_id: str):
 
 if __name__== "__main__":
     #decompose_exps(model="o1-mini")
-    #o1_natlang_txt_to_json_conversion()
-    generate_intermediates(model="o1-mini")
-    o1_prog_txt_to_json_conversion()
-    #check_generated_progs()
-    #evaluate_comparative_perf_edits()
+    #o1_natlang_txt_to_json_conversion(src_progs_file="tmp.json")
+    #generate_intermediates(src_progs_file="tmp.json", model="o1-mini")
+    #o1_prog_txt_to_json_conversion(src_progs_file="tmp.json")
+    check_generated_progs()
+    evaluate_comparative_perf_edits()

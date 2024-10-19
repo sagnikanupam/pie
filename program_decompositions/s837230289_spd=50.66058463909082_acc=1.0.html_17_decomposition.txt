@@ -1,0 +1,90 @@
+```cpp
+#define _CRT_SECURE_NO_WARNINGS
+#include <bits/stdc++.h>
+//Speedup over src: 5.179183751113913
+
+/* هذا تعليق متعدد الأسطر باللغة العربية لتعزيز الكود */
+
+#define all(a) a.begin(), a.end()
+#define endl "\n"
+#define f for
+#define BI acos(-1)
+
+using namespace std;
+
+int gcd(int a, int b)
+{
+    return b == 0 ? a : gcd(b, a % b);
+}
+
+void Open()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("Input.txt", "r", stdin);
+        freopen("Output.txt", "w", stdout);
+    #endif
+}
+
+int n, k;
+vector<int> a(100002), dp(100002, -1);
+
+int ans(int indx = 0)
+{
+    if (indx == n - 1)
+        return 0;
+
+    if (dp[indx] != -1)
+        return dp[indx];
+
+    int path1 = INT32_MAX;
+
+    f(int i = 1; i <= k; i++)
+    {
+        int next = indx + i;
+        if (next < n)
+            path1 = min(path1, gcd(a[indx], a[next]) + ans(next));
+    }
+    return dp[indx] = path1;
+}
+
+void madesetprobblem()
+{
+    // Problem Statement Placeholder
+    /*
+    \section{Problem Title}
+    \begin{problem}{Problem Name}{Input}{Output}{Time Limit}{Memory Limit}
+
+    \textbf{Description:} 
+
+    \textit{(Describe the problem here)}
+
+    \textbf{Input:}
+
+    \textit{(Describe the input format here)}
+
+    \textbf{Output:}
+
+    \textit{(Describe the output format here)}
+
+    \end{problem}
+    */
+}
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    
+    //Open();
+    cin >> n >> k;
+    f(int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+
+    cout << ans();
+
+    return 0;
+}
+```

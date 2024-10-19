@@ -1,0 +1,94 @@
+```cpp
+#define _CRT_SECURE_NO_WARNINGS
+#include <bits/stdc++.h>
+//Speedup over src: 5.179183751113913
+
+/* هذا تعليق متعدد الأسطر باللغة العربية لتعزيز الكود */
+
+#define all(a) a.begin(), a.end()
+#define endl "\n"
+#define ll long long
+#define f for
+#define ull unsigned long long
+#define BI acos(-1)
+
+using namespace std;
+
+ll gcd(ll a, ll b)
+{
+    return b == 0 ? a : gcd(b, a % b);
+}
+
+void Open()
+{
+    #ifndef ONLINE_JUDGE
+        freopen("Input.txt", "r", stdin);
+        freopen("Output.txt", "w", stdout);
+    #endif
+}
+
+void fast()
+{
+    std::ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+}
+
+ll arr[10000000], n, k;
+vector<ll> v(1e6, -1);
+
+ll minCost(ll indx)
+{
+    if (indx == n - 1)
+        return 0;
+
+    if (v[indx] != -1)
+        return v[indx];
+
+    ll path1 = LLONG_MAX;
+
+    for(int i = 0; i < k; i++)
+    {
+        ll next = indx + 1 + i;
+        if (next < n)
+            path1 = min(path1, gcd(arr[indx], arr[next]) + minCost(next));
+    }
+    return v[indx] = path1;
+}
+
+void madesetprobblem()
+{
+    // Problem Statement Placeholder
+    /*
+    \section{Problem Title}
+    \begin{problem}{Problem Name}{Input}{Output}{Time Limit}{Memory Limit}
+    
+    \textbf{Description:} 
+    
+    \textit{(Describe the problem here)}
+    
+    \textbf{Input:}
+    
+    \textit{(Describe the input format here)}
+    
+    \textbf{Output:}
+    
+    \textit{(Describe the output format here)}
+    
+    \end{problem}
+    */
+}
+
+int main()
+{
+    Open();
+    fast();
+    cin >> n >> k;
+    for(int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    cout << minCost(0) << endl;
+
+    return 0;
+}
+```

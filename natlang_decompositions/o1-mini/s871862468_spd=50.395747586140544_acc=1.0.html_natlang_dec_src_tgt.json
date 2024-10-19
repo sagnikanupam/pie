@@ -1,8 +1,0 @@
-{
-  "1": "Changed the recursive approach to an iterative one to eliminate function call overhead and improve execution speed.",
-  "2": "Removed unnecessary computations by directly calculating the minimum cost using the dynamic programming table instead of making multiple recursive calls.",
-  "3": "Eliminated unused variables and functions, such as the template function for calculating the least common multiple, and restructured the code to define variables closer to their usage for better readability and maintenance.",
-  "4": "Implemented faster input/output methods by adding the statement `ios_base::sync_with_stdio(false);` to speed up C++ I/O operations.",
-  "5": "Replaced the `fabs` function with `abs` for handling integer inputs more efficiently.",
-  "6": "Optimized memory usage by reducing the size of the dynamic programming table from 1,000,000 to `n+1`, which conserves memory when `n` is significantly smaller."
-}
