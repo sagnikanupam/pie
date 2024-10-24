@@ -1,4 +1,3 @@
 *.jsonl
-*.gz
 merged_test_cases/
 trustml_creds.json
