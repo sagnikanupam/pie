@@ -282,7 +282,7 @@ def o1_natlang_txt_to_json_conversion(natlang_decomp_folder: str = "natlang_deco
         with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'w') as fp:
             fp.write(json_string)
             
-def check_generated_progs(p_decomp_folder: str = "program_decompositions", natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "src_progs.json", model: str = "gpt-4o", problem_id_file: str = "jsons_from_pie_html/problem_id_dict.json", test_cases_file: str = "jsons_from_pie_html/test_cases_dict.json", result_folder: str = "decomposition_results", result_txt: str = "six_testcase_result.txt", result_json: str = "six_testcase_result.json", num_test_cases: int = 6) -> None:
+def check_generated_progs_chain_decompose(p_decomp_folder: str = "program_decompositions", natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "src_progs.json", model: str = "gpt-4o", problem_id_file: str = "jsons_from_pie_html/problem_id_dict.json", test_cases_file: str = "jsons_from_pie_html/test_cases_dict.json", result_folder: str = "decomposition_results", result_txt: str = "six_testcase_result.txt", result_json: str = "six_testcase_result.json", num_test_cases: int = 6) -> None:
     """
     Check the generated programs for correctness and performance, and store the values in a JSON file. Must run get_programs_and_explanations(), decompose_exps(), generate_intermediates() prior to running this function.
 
@@ -338,9 +338,9 @@ def check_generated_progs(p_decomp_folder: str = "program_decompositions", natla
         dict_results = [result.to_dict() for result in results]
         json.dump(dict_results, f2)
 
-def evaluate_comparative_perf_edits(testcase_result_json: str = "six_testcase_result.json", problem_id_json: str = "jsons_from_pie_html/problem_id_dict.json", natlang_decomp_folder: str = "natlang_decompositions", p_decomp_folder: str = "program_decompositions", src_progs_file: str = "jsons_from_pie_html/src_progs.json", result_folder: str = "decomposition_results", model: str = "gpt-4o") -> None:
+def evaluate_comparative_perf_edits_chain_decompose(testcase_result_json: str = "six_testcase_result.json", problem_id_json: str = "jsons_from_pie_html/problem_id_dict.json", natlang_decomp_folder: str = "natlang_decompositions", p_decomp_folder: str = "program_decompositions", src_progs_file: str = "jsons_from_pie_html/src_progs.json", result_folder: str = "decomposition_results", model: str = "gpt-4o") -> None:
     """
-    Generate human-readable JSONs from PIE result files. Must run check_generated_progs() prior to running this function.
+    Generate human-readable JSONs from PIE result files. Must run check_generated_progs_chain_decompose() prior to running this function.
 
     Args:
         testcase_result_json (str, optional): Result of running decompositions on testcases using gem5. Defaults to "five_testcase_result.json".
@@ -462,25 +462,173 @@ def regenerate_from_decompositions(natlang_decomp_folder: str = "natlang_decompo
     """
     src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
     print("Generating program regenerations...")
-    with open("prompts/decompose_regenerate.txt", "r") as f:
-        base_prompt = f.read()
-        for key, _ in tqdm(src_progs.items()):
-            try:
-                with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
-                    steps_dict = json.load(fp)
-                    prompt_string_base_generation = "Below is a program. Optimize the program and provide a more efficient version.\n\n### Program:\n" + src_progs[key] + "\n\n### Optimized Version:\n"
-                    prompt_string_natlang_provided = base_prompt + " Source Program: \n" + src_progs[key] + "\n Optimizations: \n" + str(steps_dict)
+    for key, _ in tqdm(src_progs.items()):
+        try:
+            with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
+                steps_dict = json.load(fp)
+                with open("prompts/no_decompose_regenerate.txt", "r") as f_no_decompose:
+                    #prompt_string_base_generation = "Below is a program. Optimize the program and provide a more efficient version.\n\n### Program:\n" + src_progs[key] + "\n\n### Optimized Version:\n"
+                    prompt_string_base_generation = f_no_decompose.read() + " Source Program: \n" + src_progs[key]
                     llm_call(prompt_string_base_generation, key, f"{regeneration_folder}/base_regeneration/{model}", f"{key}_regeneration", model)
+                with open("prompts/decompose_regenerate.txt", "r") as f:
+                    base_prompt = f.read()
+                    prompt_string_natlang_provided = base_prompt + " Source Program: \n" + src_progs[key] + "\n Optimizations: \n" + str(steps_dict)
                     llm_call(prompt_string_natlang_provided, key, f"{regeneration_folder}/natlang_provided/{model}", f"{key}_regeneration", model)
-            except Exception as e:
-                print(f"Error in generating decompositions for {key}: {e}")
-                continue 
+        except Exception as e:
+            print(f"Error in generating decompositions for {key}: {e}")
+            continue 
+
+def check_generated_progs_regenerate(regeneration_folder: str = "decomposition_results/decompose_and_regenerate", natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "src_progs.json", model: str = "gpt-4o", problem_id_file: str = "jsons_from_pie_html/problem_id_dict.json", test_cases_file: str = "jsons_from_pie_html/test_cases_dict.json", result_folder: str = "decomposition_results/decompose_and_regenerate/results", result_txt: str = "six_testcase_result.txt", result_json: str = "six_testcase_result.json", num_test_cases: int = 6):
+    src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
+    env = simulator.make(timeout_seconds_gem5=120, verbose=True, use_logical_cpus=True, port=80, workers=80, exit_early_on_fail=True)
+    code_list = []
+    test_cases_list = []
+    problem_id_list = []
+    for key, _ in tqdm(src_progs.items()):
+       with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
+            with open(problem_id_file, 'r') as fp2:
+                problem_id_dict = json.load(fp2)
+                with open(test_cases_file, 'r') as fp3:
+                    test_cases_dict = json.load(fp3)
+                    steps_dict = json.load(fp)
+                    problem_id = problem_id_dict[key]
+                    test_cases = test_cases_dict[key]
+                    
+                    #Add source program at very start
+                    problem_id_list.append(problem_id)
+                    code_list.append(src_progs[key])
+                    test_cases_list.append(test_cases[:num_test_cases])
+                    
+                    #Add base generation program
+                    prog = json.load(open(f"{regeneration_folder}/base_regeneration/{model}/{key}_regeneration.json", 'r'))["optimized_code"]
+                    problem_id_list.append(problem_id)
+                    code_list.append(prog)
+                    test_cases_list.append(test_cases[:num_test_cases])
+                    
+                    #Add program generated from natlang decomposition steps
+                    prog = json.load(open(f"{regeneration_folder}/natlang_provided/{model}/{key}_regeneration.json", 'r'))["optimized_code"]
+                    problem_id_list.append(problem_id)
+                    code_list.append(prog)
+                    test_cases_list.append(test_cases[:num_test_cases])
+                    
+                    #Add target program at end
+                    problem_id_list.append(problem_id)
+                    code_list.append(target_progs[key])
+                    test_cases_list.append(test_cases[:num_test_cases])
+                    
+    results = env.submit_multiple_single_submissions(code_list, test_cases_list, problem_id_list, "gem5")  
+    with open(f"{result_folder}/{model}/{result_txt}", "w") as f1:
+        f1.write(str(results))
+    with open(f"{result_folder}/{model}/{result_json}", "w") as f2:
+        dict_results = [result.to_dict() for result in results]
+        json.dump(dict_results, f2)
+
+def evaluate_comparative_perf_edits_regenerate(testcase_result_json: str = "six_testcase_result.json", problem_id_json: str = "jsons_from_pie_html/problem_id_dict.json", natlang_decomp_folder: str = "natlang_decompositions", regeneration_folder: str = "decomposition_results/decompose_and_regenerate", src_progs_file: str = "jsons_from_pie_html/src_progs.json", result_folder: str = "decomposition_results/decompose_and_regenerate/results", model: str = "gpt-4o") -> None:
+    """
+    Generate human-readable JSONs from PIE result files. Must run check_generated_progs_chain_decompose() prior to running this function.
+
+    Args:
+        testcase_result_json (str, optional): Result of running decompositions on testcases using gem5. Defaults to "five_testcase_result.json".
+        problem_id_json (str, optional): JSON file containing problem ids of each source code. Defaults to "jsons_from_pie_html/problem_id_dict.json".
+        natlang_decomp_folder (str, optional): Folder containing natural_language decompositions of the source code. Defaults to "natlang_decompositions".
+        p_decomp_folder (str, optional): Program decomposition folder containing program decompositions. Defaults to "program_decompositions".
+        src_progs_file (str, optional): Contains the source programs to be optimized by the language model. Defaults to "jsons_from_pie_html/src_progs.json".
+        result_folder (str, optional): Folder to store the results. Defaults to "decomposition_results".
+        model (str, optional): Name of OpenAI model with which natlang decompositions were generated. Defaults to "gpt-4o".
+    """
+    src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
+    with open(f"{result_folder}/{model}/{testcase_result_json}", "r") as fp:
+        results = json.load(fp)
+    with open(problem_id_json, "r") as fp:
+        problem_id_dict = json.load(fp)
+    prog_list = []
+    for key in src_progs.keys():
+       with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
+            steps_dict = json.load(fp)
+            #Add source program at very start
+            prog_list.append([src_progs[key], problem_id_dict[key], 0, key])
+            
+             #Add base generation program
+            prog = json.load(open(f"{regeneration_folder}/base_regeneration/{model}/{key}_regeneration.json", 'r'))["optimized_code"]
+            prog_list.append([prog, problem_id_dict[key], 1, key])
+            
+            #Add program generated from natlang decomposition steps
+            prog = json.load(open(f"{regeneration_folder}/natlang_provided/{model}/{key}_regeneration.json", 'r'))["optimized_code"]
+            prog_list.append([prog, problem_id_dict[key], 2, key])
+            
+            #Add target program at end
+            prog_list.append([target_progs[key], problem_id_dict[key], 3, key])
+
+    for result_ind in range(len(results)):
+        prog_list[result_ind].extend([results[result_ind]["mean_acc"], results[result_ind]["agg_runtime"], results[result_ind]["errors"]])
+    accuracy_dict = {}
+    perf_dict = {}
+    error_dict = {}
+    summary_src_target_best = {}
+    for result_list in prog_list:
+        if result_list[3] not in accuracy_dict:
+            accuracy_dict[result_list[3]] = {str(result_list[2]): result_list[4]}
+            perf_dict[result_list[3]] = {str(result_list[2]): result_list[5]}
+            error_dict[result_list[3]] = {str(result_list[2]): result_list[6]}
+        else:
+            accuracy_dict[result_list[3]][str(result_list[2])] = result_list[4]
+            perf_dict[result_list[3]][str(result_list[2])] = result_list[5]
+            error_dict[result_list[3]][str(result_list[2])] = result_list[6]
+    base_incorrectly_optimized = 0
+    natlang_incorrectly_optimized = 0
+    for program in accuracy_dict.keys():
+        if accuracy_dict[program]["1"] != 1.0:
+            base_incorrectly_optimized += 1
+        if accuracy_dict[program]["2"] != 1.0:
+            natlang_incorrectly_optimized += 1
+    base_outperforms_target = 0
+    natlang_outperforms_target = 0
+    base_outperforms_src = 0
+    natlang_outperforms_src = 0
+    natlang_outperforms_base = 0
+    for program in perf_dict.keys():
+        src_perf = perf_dict[program]["0"]
+        base_perf = perf_dict[program]["1"]
+        natlang_perf = perf_dict[program]["2"]
+        target_perf = perf_dict[program]["3"]
+        print(f"Program: {program}, Source Performance: {src_perf}, Base Performance: {base_perf}, Natlang Performance: {natlang_perf}, Target Performance: {target_perf}")
+        summary_src_target_best[program] = {"source": src_perf, "base": base_perf, "natlang": natlang_perf, "target": target_perf}
+        
+        if base_perf != "Infinity" and base_perf < target_perf:
+            base_outperforms_target += 1
+        if natlang_perf != "Infinity" and natlang_perf < target_perf:
+            natlang_outperforms_target += 1
+        if base_perf != "Infinity" and base_perf < src_perf:
+            base_outperforms_src += 1
+        if natlang_perf != "Infinity" and natlang_perf < src_perf:
+            natlang_outperforms_src += 1
+        if (natlang_perf != "Infinity" and base_perf!="Infinity" and  natlang_perf < base_perf) or (base_perf == "Infinity" and natlang_perf != "Infinity"):
+            natlang_outperforms_base += 1
+    print(f"Number of programs whose base optimizations are inaccurate on some test case: {base_incorrectly_optimized}/{len(accuracy_dict)}")
+    print(f"Number of programs whose natlang optimizations are inaccurate on some test case: {natlang_incorrectly_optimized}/{len(accuracy_dict)}")
+    print(f"Number of programs whose base optimizations outperform the target performance: {base_outperforms_target}/{len(perf_dict)}")
+    print(f"Number of programs whose natlang optimizations outperform the target performance: {natlang_outperforms_target}/{len(perf_dict)}")
+    print(f"Number of programs whose base optimizations outperform the source performance: {base_outperforms_src}/{len(perf_dict)}")
+    print(f"Number of programs whose natlang optimizations outperform the source performance: {natlang_outperforms_src}/{len(perf_dict)}")
+    print(f"Number of programs whose natlang optimizations outperform the base performance: {natlang_outperforms_base}/{len(perf_dict)}")
+    with open(f"{result_folder}/{model}/src_target_best_perf.json", "w") as f:
+        json.dump(summary_src_target_best, f)
+    with open(f"{result_folder}/{model}/accuracy_dict.json", "w") as f1:
+        json.dump(accuracy_dict, f1)
+    with open(f"{result_folder}/{model}/perf_dict.json", "w") as f2:
+        json.dump(perf_dict, f2)
+    with open(f"{result_folder}/{model}/error_dict.json", "w") as f3:
+        json.dump(error_dict, f3)
+    with open(f"{result_folder}/{model}/final_result.json", "w") as f4:
+        json.dump(prog_list, f4)
 
 if __name__== "__main__":
     #decompose_exps(model="o1-mini")
     #o1_natlang_txt_to_json_conversion()
     #generate_intermediates(src_progs_file="tmp.json", model="o1-mini")
     #o1_prog_txt_to_json_conversion()
-    #check_generated_progs()
-    #evaluate_comparative_perf_edits()
-    regenerate_from_decompositions()
+    #check_generated_progs_chain_decompose()
+    #evaluate_comparative_perf_edits_chain_decompose()
+    #regenerate_from_decompositions()
+    check_generated_progs_regenerate()
+    evaluate_comparative_perf_edits_regenerate()
