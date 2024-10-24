@@ -18,36 +18,20 @@ with open("trustml_creds.json") as fp:
 ORGANIZATION = creds["ORGANIZATION"]
 PROJECT_KEY = creds["OPEN_AI_KEY"]
 
-def load_programs_and_explanations(src_progs_file: str = "src_progs.json", target_progs_file: str = "target_progs.json", gen_progs_file: str = "gen_progs.json", explanation_tgt_src_file: str = "explanation_tgt_src.json", explanation_gen_src_file: str = "explanation_gen_src.json", explanation_gen_tgt_file: str = "explanation_gen_tgt.json", src_prog_exps_file: str = "src_prog_exps.json"):
+def get_programs_and_explanations(pfolder: str = "src_target_gpt_summary", type: str = "html", src_progs_file: str = "jsons_from_pie_html/src_progs.json", target_progs_file: str = "jsons_from_pie_html/target_progs.json", gen_progs_file: str = "jsons_from_pie_html/gen_progs.json", explanation_tgt_src_file: str = "jsons_from_pie_html/explanation_tgt_src.json", explanation_gen_src_file: str = "jsons_from_pie_html/explanation_gen_src.json", explanation_gen_tgt_file: str = "jsons_from_pie_html/explanation_gen_tgt.json", src_prog_exps_file: str = "jsons_from_pie_html/src_prog_exps.json"):
     """
-    Load the programs and GPT-4 explanations from the JSON files.
-
-    Returns:
-        tuple[dict, dict, dict, dict, dict, dict, dict]: Tuple containing the source programs, target programs, generated programs, explanations of why target is faster than source, explanations of why generated is faster than source, explanations of why generated is faster than target, and explanations of the programs in natural language.
-    """
-    with open(src_progs_file, "r") as fp:
-        src_progs = json.load(fp)
-    with open(target_progs_file, "r") as fp:
-        target_progs = json.load(fp)
-    with open(gen_progs_file, "r") as fp:
-        gen_progs = json.load(fp)
-    with open(explanation_tgt_src_file, "r") as fp:
-        explanation_tgt_src = json.load(fp)
-    with open(explanation_gen_src_file, "r") as fp:
-        explanation_gen_src = json.load(fp)
-    with open(explanation_gen_tgt_file, "r") as fp:
-        explanation_gen_tgt = json.load(fp)
-    with open(src_prog_exps_file, "r") as fp:
-        src_prog_exps = json.load(fp)
-    return (src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps)
-
-def get_programs_and_explanations(pfolder: str = "src_target_gpt_summary", type: str = "html"):
-    """
-    Gets the programs and GPT-4 explanations from the folder containing the PIE dataset programs + explanations
+    Gets the programs and GPT-4 explanations from the folder containing the  PIE dataset programs + explanations.
 
     Args:
         pfolder (str): PIE dataset folder path
-        type (str, optional): Whether to extract from HTML or some other source. Defaults to "html".
+        type (str, optional): Whether to extract from HTML or some other source. Currently only supports HTML (as PIE dataset samples are in HTML), so defaults to "html".
+        src_progs_file (str, optional): Source programs file. Defaults to "jsons_from_pie_html/src_progs.json".
+        target_progs_file (str, optional): Target programs file. Defaults to "jsons_from_pie_html/target_progs.json".
+        gen_progs_file (str, optional): Generated programs file. Defaults to "jsons_from_pie_html/gen_progs.json".
+        explanation_tgt_src_file (str, optional): Explanation of why target program is faster than source program. Defaults to "jsons_from_pie_html/explanation_tgt_src.json".
+        explanation_gen_src_file (str, optional): Explanation of why generated program is faster than source program. Defaults to "jsons_from_pie_html/explanation_gen_src.json".
+        explanation_gen_tgt_file (str, optional): Explanation of why generated program is faster than target file. Defaults to "jsons_from_pie_html/explanation_gen_tgt.json".
+        src_prog_exps_file (str, optional): Source program explanations file. Defaults to "jsons_from_pie_html/src_prog_exps.json".
         
     Returns:
         tuple[dict, dict, dict, dict, dict, dict, dict]: Tuple containing the source programs, target programs, generated programs, explanations of why target is faster than source, explanations of why generated is faster than source, explanations of why generated is faster than target, and explanations of the programs in natural language.
@@ -79,20 +63,52 @@ def get_programs_and_explanations(pfolder: str = "src_target_gpt_summary", type:
                 explanation_gen_tgt[file] = gen_tgt_exp
                 src_prog_exps[file] = prog_exp
                 print(f"Program {file} extracted.")
-        with open("src_progs.json", "w") as fp:
+        with open(src_progs_file, "w") as fp:
             json.dump(src_progs, fp)
-        with open("target_progs.json", "w") as fp:
+        with open(target_progs_file, "w") as fp:
             json.dump(target_progs, fp)
-        with open("gen_progs.json", "w") as fp:
+        with open(gen_progs_file, "w") as fp:
             json.dump(gen_progs, fp)
-        with open("explanation_tgt_src.json", "w") as fp:
+        with open(explanation_tgt_src_file, "w") as fp:
             json.dump(explanation_tgt_src, fp)
-        with open("explanation_gen_src.json", "w") as fp:
+        with open(explanation_gen_src_file, "w") as fp:
             json.dump(explanation_gen_src, fp)
-        with open("explanation_gen_tgt.json", "w") as fp:
+        with open(explanation_gen_tgt_file, "w") as fp:
             json.dump(explanation_gen_tgt, fp)
-        with open("src_prog_exps.json", "w") as fp:
+        with open(src_prog_exps_file, "w") as fp:
             json.dump(src_prog_exps, fp)
+    return (src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps)
+
+def load_programs_and_explanations(src_progs_file: str = "jsons_from_pie_html/src_progs.json", target_progs_file: str = "jsons_from_pie_html/target_progs.json", gen_progs_file: str = "jsons_from_pie_html/gen_progs.json", explanation_tgt_src_file: str = "jsons_from_pie_html/explanation_tgt_src.json", explanation_gen_src_file: str = "jsons_from_pie_html/explanation_gen_src.json", explanation_gen_tgt_file: str = "jsons_from_pie_html/explanation_gen_tgt.json", src_prog_exps_file: str = "jsons_from_pie_html/src_prog_exps.json"):
+    """
+    Load the programs and GPT-4 explanations from the JSON files provided as parameters. Requires running get_programs_and_explanations first.
+
+    Args:
+        src_progs_file (str, optional): Source programs file. Defaults to "jsons_from_pie_html/src_progs.json".
+        target_progs_file (str, optional): Target programs file. Defaults to "jsons_from_pie_html/target_progs.json".
+        gen_progs_file (str, optional): Generated programs file. Defaults to "jsons_from_pie_html/gen_progs.json".
+        explanation_tgt_src_file (str, optional): Explanation of why target program is faster than source program. Defaults to "jsons_from_pie_html/explanation_tgt_src.json".
+        explanation_gen_src_file (str, optional): Explanation of why generated program is faster than source program. Defaults to "jsons_from_pie_html/explanation_gen_src.json".
+        explanation_gen_tgt_file (str, optional): Explanation of why generated program is faster than target file. Defaults to "jsons_from_pie_html/explanation_gen_tgt.json".
+        src_prog_exps_file (str, optional): Source program explanations file. Defaults to "jsons_from_pie_html/src_prog_exps.json".
+    
+    Returns:
+        tuple[dict, dict, dict, dict, dict, dict, dict]: Tuple containing the source programs, target programs, generated programs, explanations of why target is faster than source, explanations of why generated is faster than source, explanations of why generated is faster than target, and explanations of the programs in natural language.
+    """
+    with open(src_progs_file, "r") as fp:
+        src_progs = json.load(fp)
+    with open(target_progs_file, "r") as fp:
+        target_progs = json.load(fp)
+    with open(gen_progs_file, "r") as fp:
+        gen_progs = json.load(fp)
+    with open(explanation_tgt_src_file, "r") as fp:
+        explanation_tgt_src = json.load(fp)
+    with open(explanation_gen_src_file, "r") as fp:
+        explanation_gen_src = json.load(fp)
+    with open(explanation_gen_tgt_file, "r") as fp:
+        explanation_gen_tgt = json.load(fp)
+    with open(src_prog_exps_file, "r") as fp:
+        src_prog_exps = json.load(fp)
     return (src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps)
 
 def llm_call(final_prompt_string: str, index: str, json_output_folder: str, suffix: str, model: str = "gpt-4o") -> None:
@@ -126,78 +142,83 @@ def llm_call(final_prompt_string: str, index: str, json_output_folder: str, suff
             with open(f"{json_output_folder}/{index}_{suffix}.json", 'w') as fp:
                 loaded_response = json.loads(response.choices[0].message.content)
                 json.dump(loaded_response, fp)
-    sleep(1)
+    sleep(0.02)
 
-def decompose_exps(natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "src_progs.json", model: str = "gpt-4o") -> None:
+def decompose_exps(natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "jsons_from_pie_html/src_progs.json", model: str = "gpt-4o", use_preexisting: bool = True) -> None:
     """
     Decompose the natural language description of performance edits to JSON-style lists. Must run get_programs_and_explanations() prior to running this function.
 
     Args:
         natlang_decomp_folder (str, optional): Folder for saving LLM call outputs for natural language decompositions. Defaults to "natlang_decompositions".
+        src_progs_file: str, optional): Contains the source programs to be optimized by the language model. Defaults to "jsons_from_pie_html/src_progs.json".
+        model (str, optional): Name of OpenAI model to use for decompositions. Defaults to "gpt-4o".
+        use_preexisting (bool, optional): Whether to use preexisting descriptions from PIE, located in src_target_gpt_summary. Defaults to True.
     """
     src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
     print("Generating natural language decompositions...")
-    if (model.find("o1") != -1):
-        with open("decompose_nat_lang_not_preexisting.txt", "r") as f:
+    if (model.find("o1") != -1 or not use_preexisting):
+        with open("prompts/decompose_nat_lang_not_preexisting.txt", "r") as f:
             base_prompt = f.read()
             for key, _ in tqdm(src_progs.items()):
                 prompt_string = base_prompt + " Natural Language Description of Edits: \n" + explanation_tgt_src[key] + "\n Source Program: \n" + src_progs[key] + "\n Target Program: \n" + target_progs[key]
-                llm_call(prompt_string, key, natlang_decomp_folder, "natlang_dec_src_tgt", model) 
+                llm_call(prompt_string, key, f"{natlang_decomp_folder}/{model}", "natlang_dec_src_tgt", model) 
     else:
-        with open("decompose_nat_lang_preexisting.txt", "r") as f:
+        with open("prompts/decompose_nat_lang_preexisting.txt", "r") as f:
             base_prompt = f.read()
             for key, _ in tqdm(src_progs.items()):
                 prompt_string = base_prompt + " Natural Language Description of Edits: \n" + explanation_tgt_src[key] + "\n Source Program: \n" + src_progs[key] + "\n Target Program: \n" + target_progs[key]
-                llm_call(prompt_string, key, natlang_decomp_folder, "natlang_dec_src_tgt", model)
+                llm_call(prompt_string, key, f"{natlang_decomp_folder}/{model}", "natlang_dec_src_tgt", model)
 
-def generate_intermediates(natlang_decomp_folder: str = "natlang_decompositions", p_decomp_folder: str = "program_decompositions", src_progs_file: str = "src_progs.json", model="gpt-4o") -> None:
+def generate_intermediates(natlang_decomp_folder: str = "natlang_decompositions", p_decomp_folder: str = "program_decompositions", src_progs_file: str = "jsons_from_pie_html/src_progs.json", model: str ="gpt-4o") -> None:
     """
     Use GPT to generate decompositions of the programs in the PIE dataset using the steps discovered in the natural language decompositions.  Must run get_programs_and_explanations() and decompose_exps() prior to running this function.
     
     Args:
         natlang_decomp_folder (str, optional): Folder containing the natural language decompositions produced by decompose_exps(). Defaults to "natlang_decompositions".
         p_decomp_folder (str, optional): Folder to save the program decompositions. Defaults to "program_decompositions".
+        src_progs_file: str, optional): Contains the source programs to be optimized by the language model. Defaults to "jsons_from_pie_html/src_progs.json".
+        model (str, optional): Name of OpenAI model to use for decompositions. Defaults to "gpt-4o".
+        
     """
     src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
     print("Generating program decompositions...")
-    #error_dict_tmp = {"s962695246_spd=50.20986204921044_acc=1.0.html": 1, " s394872425_spd=50.224882520959994_acc=1.0.html": 2, "s735918365_spd=27.299248624779842_acc=1.0.html": 4, "s871862468_spd=50.395747586140544_acc=1.0.html": 4, "s717194930_spd=27.43189016177244_acc=1.0.html": 2, "s437790328_spd=48.00901188136315_acc=1.0.html": 3, "s766949236_spd=43.521725831102984_acc=1.0.html": 7}
-    #error_dict_tmp ={"s717194930_spd=27.43189016177244_acc=1.0.html": 2, "s735918365_spd=27.299248624779842_acc=1.0.html": 11}
+    
     error_dict = {}
-    with open("decompose_prog.txt", "r") as f:
+    with open("prompts/decompose_prog.txt", "r") as f:
         base_prompt = f.read()
         for key, _ in tqdm(src_progs.items()):
-        #for key, _ in tqdm(error_dict_tmp.items()):
             try:
-                with open(f"{natlang_decomp_folder}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
+                with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
                     steps_dict = json.load(fp)
                     step_list = [int(s) for s in steps_dict.keys()]
                     step_list.sort()
                     start_prog = src_progs[key]
-                    # if error_dict_tmp[key] == 1:
-                    #     start_prog = json.load(open(f"{p_decomp_folder}/{key}_{error_dict_tmp[key]-1}_decomposition.json", 'r'))["optimized_code"]
-                    # for step in range(error_dict_tmp[key], max(step_list)+1):
                     for step in step_list:
                         optimization = steps_dict[str(step)]
                         if model.find("o1") != -1:
-                            base_prompt = "You are an expert programmer who needs to optimize a given program. You are given the description of the optimization to be performed as well as the source code of the program. Rewrite the source code in a way that incorporates the optimization, and the rewritten code. Do not output anything other than C++ code."
-                            prompt_string = base_prompt + " Source Program: \n" + start_prog + "\n Optimization: \n" + optimization
-                            llm_call(prompt_string, key, p_decomp_folder, f"{step}_decomposition", model)
-                            if f"{p_decomp_folder}/{key}_{step}_decomposition.txt" not in glob.glob(f"{p_decomp_folder}/*.txt"):
+                            base_prompt_o1 = "You are an expert programmer who needs to optimize a given program. You are given the description of the optimization to be performed as well as the source code of the program. Rewrite the source code in a way that incorporates the optimization, and the rewritten code. Do not output anything other than C++ code."
+                            prompt_string = base_prompt_o1 + " Source Program: \n" + start_prog + "\n Optimization: \n" + optimization
+                            llm_call(prompt_string, key, f"{p_decomp_folder}/{model}", f"{step}_decomposition", model)
+                            if f"{p_decomp_folder}/{model}/{key}_{step}_decomposition.txt" not in glob.glob(f"{p_decomp_folder}/{model}/*.txt"):
                                 error_dict[key] = step
-                            start_prog = open(f"{p_decomp_folder}/{key}_{step}_decomposition.txt", 'r').read()
+                            start_prog = open(f"{p_decomp_folder}/{model}/{key}_{step}_decomposition.txt", 'r').read()
                         else:
                             prompt_string = base_prompt + " Source Program: \n" + start_prog + "\n Optimization: \n" + optimization
-                            llm_call(prompt_string, key, p_decomp_folder, f"{step}_decomposition", model)
-                            if f"{p_decomp_folder}/{key}_{step}_decomposition.json" not in glob.glob(f"{p_decomp_folder}/*.json"):
+                            llm_call(prompt_string, key, f"{p_decomp_folder}/{model}", f"{step}_decomposition", model)
+                            if f"{p_decomp_folder}/{model}/{key}_{step}_decomposition.json" not in glob.glob(f"{p_decomp_folder}/{model}/*.json"):
                                 error_dict[key] = step
-                            start_prog = json.load(open(f"{p_decomp_folder}/{key}_{step}_decomposition.json", 'r'))["optimized_code"]
+                            start_prog = json.load(open(f"{p_decomp_folder}/{model}/{key}_{step}_decomposition.json", 'r'))["optimized_code"]
             except Exception as e:
                 print(f"Error in generating decompositions for {key}: {e}")
                 continue
             
-def identify_problem_ids_tests() -> None:   
+def identify_problem_ids_tests(problem_id_file: str = "jsons_from_pie_html/problem_id_dict.json", test_cases_file: str = "jsons_from_pie_html/test_cases_dict.json") -> None:   
     """
     Identify the problem IDs and test cases for each program in the PIE dataset and store them in JSON files. Must run get_programs_and_explanations() prior to running this function.
+    
+    Args:
+        problem_id_file (str, optional): File to store the problem IDs. Defaults to "jsons_from_pie_html/problem_id_dict.json".
+        test_cases_file (str, optional): File to store the test cases. Defaults to "jsons_from_pie_html/test_cases_dict.json".
     """
     
     src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations()
@@ -207,76 +228,87 @@ def identify_problem_ids_tests() -> None:
         problem_id, test_cases = get_problem_id(key.split("_")[0])
         problem_id_dict[key] = problem_id
         test_cases_dict[key] = test_cases
-    with open("problem_id_dict.json", "w") as f1:
+    with open(problem_id_file, "w") as f1:
         json.dump(problem_id_dict, f1)        
-    with open("test_cases_dict.json", "w") as f2:
+    with open(test_cases_file, "w") as f2:
         json.dump(test_cases_dict, f2)
  
-def o1_prog_txt_to_json_conversion(natlang_decomp_folder: str = "natlang_decompositions", p_decomp_folder: str = "program_decompositions", src_progs_file: str = "src_progs.json"):
+def o1_prog_txt_to_json_conversion(natlang_decomp_folder: str = "natlang_decompositions", p_decomp_folder: str = "program_decompositions", src_progs_file: str = "jsons_from_pie_html/src_progs.json", model: str = "gpt-4o") -> None:
     """
     Convert the text files generated by o1 to JSON files. Must run generate_intermediates() prior to running this function.
     
     Args:
         natlang_decomp_folder (str, optional): Folder containing o1's natural language decompositions in JSON format. Defaults to "natlang_decompositions".
         p_decomp_folder (str, optional): Folder containing o1's decompositions in .txt format, and also output folder for .json programs. Defaults to "program_decompositions".
-        src_progs_file (str, optional): Contains the source programs optimized by the o1 model. Defaults to "src_progs.json".
+        src_progs_file (str, optional): Contains the source programs to be optimized by the language model. Defaults to "jsons_form_pie_html/src_progs.json".
+        model (str, optional): Name of OpenAI model with which natlang decompositions were generated. Defaults to "gpt-4o".
     """
     
     src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
     print("Converting o1 program decompositions...")
     for key, _ in tqdm(src_progs.items()):
         try:
-            with open(f"{natlang_decomp_folder}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
+            with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
                 steps_dict = json.load(fp)
                 step_list = [int(s) for s in steps_dict.keys()]
                 step_list.sort()
                 for step in step_list:
-                    code_lines = open(f"{p_decomp_folder}/{key}_{step}_decomposition.txt", 'r').readlines()
+                    code_lines = open(f"{p_decomp_folder}/{model}/{key}_{step}_decomposition.txt", 'r').readlines()
                     actual_code = code_lines[1:-1]
                     code_dict = {"optimized_code": " \n ".join(actual_code)}
-                    with open(f"{p_decomp_folder}/{key}_{step}_decomposition.json", 'w') as fp:
+                    with open(f"{p_decomp_folder}/{model}/{key}_{step}_decomposition.json", 'w') as fp:
                         json.dump(code_dict, fp)
         except Exception as e:
             print(e)
             print(f"JSON conversion failed for {key}.")
 
-def o1_natlang_txt_to_json_conversion(natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "src_progs.json"):
+def o1_natlang_txt_to_json_conversion(natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "jsons_from_pie_html/src_progs.json", model: str = "gpt-4o") -> None:
     """
     Convert the text files generated by o1 to JSON files. Must run decompose_exps() prior to running this function.
     
     Args:
         natlang_decomp_folder (str, optional): Folder containing o1's natural language decompositions in .txt format, and also output folder for .json programs. Defaults to "natlang_decompositions".
-        src_progs_file (str, optional): Contains the source programs optimized by the o1 model. Defaults to "src_progs.json".
+        src_progs_file (str, optional): Contains the source programs to be optimized by the language model. Defaults to "jsons_form_pie_html/src_progs.json".
+        model (str, optional): Name of OpenAI model with which natlang decompositions were generated. Defaults to "gpt-4o".
     """
     
     src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
     print("Converting o1 natural language decompositions...")
     for key, _ in tqdm(src_progs.items()):
-        code_lines = open(f"{natlang_decomp_folder}/{key}_natlang_dec_src_tgt.txt", 'r').readlines()
+        code_lines = open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.txt", 'r').readlines()
         actual_code = code_lines[1:-1]
         json_string = "".join(actual_code)
         json_string = json_string.replace("\n", "")
-        with open(f"{natlang_decomp_folder}/{key}_natlang_dec_src_tgt.json", 'w') as fp:
+        with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'w') as fp:
             fp.write(json_string)
             
-def check_generated_progs(p_decomp_folder: str = "program_decompositions", natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "src_progs.json") -> None:
+def check_generated_progs(p_decomp_folder: str = "program_decompositions", natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "src_progs.json", model: str = "gpt-4o", problem_id_file: str = "jsons_from_pie_html/problem_id_dict.json", test_cases_file: str = "jsons_from_pie_html/test_cases_dict.json", result_folder: str = "decomposition_results", result_txt: str = "six_testcase_result.txt", result_json: str = "six_testcase_result.json", num_test_cases: int = 6) -> None:
     """
     Check the generated programs for correctness and performance, and store the values in a JSON file. Must run get_programs_and_explanations(), decompose_exps(), generate_intermediates() prior to running this function.
 
     Args:
         p_decomp_folder (str, optional): Folder containing the generated decompositions of programs by calling generate_intermediates. Defaults to "program_decompositions".
         natlang_decomp_folder (str, optional): Folder containing the natural language decompositions produced by decompose_exps(). Defaults to "natlang_decompositions".
+        src_progs_file (str, optional): Contains the source programs to be optimized by the language model. Defaults to "jsons_from_pie_html/src_progs.json".
+        model (str, optional): Name of OpenAI model with which natlang decompositions were generated. Defaults to "gpt-4o".
+        problem_id_file (str, optional): JSON file containing problem ids of each source code. Defaults to "problem_id_dict.json".
+        test_cases_file (str, optional): JSON file containing test cases for each source code. Defaults to "test_cases_dict.json".
+        result_folder (str, optional): Folder to store the results. Defaults to "decomposition_results".
+        result_txt (str, optional): File to store the results in text format. Defaults to "six_testcase_result.txt".
+        result_json (str, optional): File to store the results in JSON format. Defaults to "six_testcase_result.json".
+        num_test_cases (int, optional): Number of test cases to check for each program. Defaults to 6.
     """
+    
     src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
     env = simulator.make(timeout_seconds_gem5=120, verbose=True, use_logical_cpus=True, port=80, workers=80, exit_early_on_fail=True)
     code_list = []
     test_cases_list = []
     problem_id_list = []
     for key, _ in tqdm(src_progs.items()):
-       with open(f"{natlang_decomp_folder}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
-            with open(f"problem_id_dict.json", 'r') as fp2:
+       with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
+            with open(problem_id_file, 'r') as fp2:
                 problem_id_dict = json.load(fp2)
-                with open(f"test_cases_dict.json", 'r') as fp3:
+                with open(test_cases_file, 'r') as fp3:
                     test_cases_dict = json.load(fp3)
                     steps_dict = json.load(fp)
                     problem_id = problem_id_dict[key]
@@ -285,52 +317,55 @@ def check_generated_progs(p_decomp_folder: str = "program_decompositions", natla
                     #Add source program at very start
                     problem_id_list.append(problem_id)
                     code_list.append(src_progs[key])
-                    test_cases_list.append(test_cases[:6])
+                    test_cases_list.append(test_cases[:num_test_cases])
                     
                     #Add decomposition steps
                     for step in steps_dict.keys():
-                        prog = json.load(open(f"{p_decomp_folder}/{key}_{step}_decomposition.json", 'r'))["optimized_code"]
+                        prog = json.load(open(f"{p_decomp_folder}/{model}/{key}_{step}_decomposition.json", 'r'))["optimized_code"]
                         problem_id_list.append(problem_id)
                         code_list.append(prog)
-                        test_cases_list.append(test_cases[:6])
+                        test_cases_list.append(test_cases[:num_test_cases])
                     
                     #Add target program at end
                     problem_id_list.append(problem_id)
                     code_list.append(target_progs[key])
-                    test_cases_list.append(test_cases[:6])
+                    test_cases_list.append(test_cases[:num_test_cases])
                     
     results = env.submit_multiple_single_submissions(code_list, test_cases_list, problem_id_list, "gem5")  
-    with open("six_testcase_result.txt", "w") as f1:
+    with open(f"{result_folder}/{model}/{result_txt}", "w") as f1:
         f1.write(str(results))
-    with open("six_testcase_result.json", "w") as f2:
+    with open(f"{result_folder}/{model}/{result_json}", "w") as f2:
         dict_results = [result.to_dict() for result in results]
         json.dump(dict_results, f2)
 
-def evaluate_comparative_perf_edits(testcase_result_json: str = "six_testcase_result.json", problem_id_json: str = "problem_id_dict.json", natlang_decomp_folder: str = "natlang_decompositions", p_decomp_folder: str = "program_decompositions", src_progs_file: str = "src_progs.json"):
+def evaluate_comparative_perf_edits(testcase_result_json: str = "six_testcase_result.json", problem_id_json: str = "jsons_from_pie_html/problem_id_dict.json", natlang_decomp_folder: str = "natlang_decompositions", p_decomp_folder: str = "program_decompositions", src_progs_file: str = "jsons_from_pie_html/src_progs.json", result_folder: str = "decomposition_results", model: str = "gpt-4o") -> None:
     """
     Generate human-readable JSONs from PIE result files. Must run check_generated_progs() prior to running this function.
 
     Args:
         testcase_result_json (str, optional): Result of running decompositions on testcases using gem5. Defaults to "five_testcase_result.json".
-        problem_id_json (str, optional): JSON file containing problem ids of each source code. Defaults to "problem_id_dict.json".
+        problem_id_json (str, optional): JSON file containing problem ids of each source code. Defaults to "jsons_from_pie_html/problem_id_dict.json".
         natlang_decomp_folder (str, optional): Folder containing natural_language decompositions of the source code. Defaults to "natlang_decompositions".
         p_decomp_folder (str, optional): Program decomposition folder containing program decompositions. Defaults to "program_decompositions".
+        src_progs_file (str, optional): Contains the source programs to be optimized by the language model. Defaults to "jsons_from_pie_html/src_progs.json".
+        result_folder (str, optional): Folder to store the results. Defaults to "decomposition_results".
+        model (str, optional): Name of OpenAI model with which natlang decompositions were generated. Defaults to "gpt-4o".
     """
     src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
-    with open(testcase_result_json, "r") as fp:
+    with open(f"{result_folder}/{model}/{testcase_result_json}", "r") as fp:
         results = json.load(fp)
     with open(problem_id_json, "r") as fp:
         problem_id_dict = json.load(fp)
     prog_list = []
     for key in src_progs.keys():
-       with open(f"{natlang_decomp_folder}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
+       with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
             steps_dict = json.load(fp)
             #Add source program at very start
             prog_list.append([src_progs[key], problem_id_dict[key], 0, key])
             
             #Add decomposition steps 
             for step in steps_dict.keys():
-                prog = json.load(open(f"{p_decomp_folder}/{key}_{step}_decomposition.json", 'r'))["optimized_code"]
+                prog = json.load(open(f"{p_decomp_folder}/{model}/{key}_{step}_decomposition.json", 'r'))["optimized_code"]
                 prog_list.append([prog, problem_id_dict[key], step, key])
             
             #Add target program at end
@@ -387,15 +422,15 @@ def evaluate_comparative_perf_edits(testcase_result_json: str = "six_testcase_re
     print(f"Number of programs for whom at least one decomposition is better than the target performance: {decomp_over_target}/{len(perf_dict)}")
     print(f"Number of programs whose optimizations are eventually inaccurate on some test case: {wrong}/{len(accuracy_dict)}")
     print(f"Number of programs whose optimizations are both accurate and in increasing order of optimization: {correctly_optimized}/{len(accuracy_dict)-wrong}")
-    with open("src_target_best_perf.json", "w") as f:
+    with open(f"{result_folder}/{model}/src_target_best_perf.json", "w") as f:
         json.dump(summary_src_target_best, f)
-    with open("accuracy_dict.json", "w") as f1:
+    with open(f"{result_folder}/{model}/accuracy_dict.json", "w") as f1:
         json.dump(accuracy_dict, f1)
-    with open("perf_dict.json", "w") as f2:
+    with open(f"{result_folder}/{model}/perf_dict.json", "w") as f2:
         json.dump(perf_dict, f2)
-    with open("error_dict.json", "w") as f3:
+    with open(f"{result_folder}/{model}/error_dict.json", "w") as f3:
         json.dump(error_dict, f3)
-    with open("final_result.json", "w") as f4:
+    with open(f"{result_folder}/{model}/final_result.json", "w") as f4:
         json.dump(prog_list, f4)
 
 def get_problem_id(src_id: str):
@@ -415,10 +450,37 @@ def get_problem_id(src_id: str):
                 return (str(testd["problem_id"]), testd["tests"])
     return ("Not Found", ["Not Found"])        
 
+def regenerate_from_decompositions(natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "jsons_from_pie_html/src_progs.json", regeneration_folder: str = "decomposition_results/decompose_and_regenerate", model: str = "gpt-4o"):
+    """
+    Regenerate the target program from the natural language decompositions generated by the LLM model. Must run decompose_exps() prior to running this function.
+
+    Args:
+        natlang_decomp_folder (str, optional): Folder containing natural_language decompositions of the source code. Defaults to "natlang_decompositions".
+        src_progs_file (str, optional): Contains the source programs to be optimized by the language model. Defaults to "jsons_form_pie_html/src_progs.json".
+        regeneration_folder (str, optional): Folder to save the regenerated programs. Defaults to "regenerate".
+        model (str, optional): Name of OpenAI model with which natlang decompositions were generated. Defaults to "gpt-4o".
+    """
+    src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
+    print("Generating program regenerations...")
+    with open("prompts/decompose_regenerate.txt", "r") as f:
+        base_prompt = f.read()
+        for key, _ in tqdm(src_progs.items()):
+            try:
+                with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'r') as fp:
+                    steps_dict = json.load(fp)
+                    prompt_string_base_generation = "Below is a program. Optimize the program and provide a more efficient version.\n\n### Program:\n" + src_progs[key] + "\n\n### Optimized Version:\n"
+                    prompt_string_natlang_provided = base_prompt + " Source Program: \n" + src_progs[key] + "\n Optimizations: \n" + str(steps_dict)
+                    llm_call(prompt_string_base_generation, key, f"{regeneration_folder}/base_regeneration/{model}", f"{key}_regeneration", model)
+                    llm_call(prompt_string_natlang_provided, key, f"{regeneration_folder}/natlang_provided/{model}", f"{key}_regeneration", model)
+            except Exception as e:
+                print(f"Error in generating decompositions for {key}: {e}")
+                continue 
+
 if __name__== "__main__":
     #decompose_exps(model="o1-mini")
     #o1_natlang_txt_to_json_conversion()
     #generate_intermediates(src_progs_file="tmp.json", model="o1-mini")
     #o1_prog_txt_to_json_conversion()
-    check_generated_progs()
-    evaluate_comparative_perf_edits()
+    #check_generated_progs()
+    #evaluate_comparative_perf_edits()
+    regenerate_from_decompositions()
