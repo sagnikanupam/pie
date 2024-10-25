@@ -282,7 +282,7 @@ def o1_natlang_txt_to_json_conversion(natlang_decomp_folder: str = "natlang_deco
         with open(f"{natlang_decomp_folder}/{model}/{key}_natlang_dec_src_tgt.json", 'w') as fp:
             fp.write(json_string)
             
-def check_generated_progs_chain_decompose(p_decomp_folder: str = "program_decompositions", natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "src_progs.json", model: str = "gpt-4o", problem_id_file: str = "jsons_from_pie_html/problem_id_dict.json", test_cases_file: str = "jsons_from_pie_html/test_cases_dict.json", result_folder: str = "decomposition_results", result_txt: str = "six_testcase_result.txt", result_json: str = "six_testcase_result.json", num_test_cases: int = 6) -> None:
+def check_generated_progs_chain_decompose(p_decomp_folder: str = "program_decompositions", natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "jsons_from_pie_html/src_progs.json", model: str = "gpt-4o", problem_id_file: str = "jsons_from_pie_html/problem_id_dict.json", test_cases_file: str = "jsons_from_pie_html/test_cases_dict.json", result_folder: str = "decomposition_results", result_txt: str = "six_testcase_result.txt", result_json: str = "six_testcase_result.json", num_test_cases: int = 6) -> None:
     """
     Check the generated programs for correctness and performance, and store the values in a JSON file. Must run get_programs_and_explanations(), decompose_exps(), generate_intermediates() prior to running this function.
 
@@ -469,16 +469,16 @@ def regenerate_from_decompositions(natlang_decomp_folder: str = "natlang_decompo
                 with open("prompts/no_decompose_regenerate.txt", "r") as f_no_decompose:
                     #prompt_string_base_generation = "Below is a program. Optimize the program and provide a more efficient version.\n\n### Program:\n" + src_progs[key] + "\n\n### Optimized Version:\n"
                     prompt_string_base_generation = f_no_decompose.read() + " Source Program: \n" + src_progs[key]
-                    llm_call(prompt_string_base_generation, key, f"{regeneration_folder}/base_regeneration/{model}", f"{key}_regeneration", model)
+                    llm_call(prompt_string_base_generation, key, f"{regeneration_folder}/base_regeneration/{model}", "regeneration", model)
                 with open("prompts/decompose_regenerate.txt", "r") as f:
                     base_prompt = f.read()
                     prompt_string_natlang_provided = base_prompt + " Source Program: \n" + src_progs[key] + "\n Optimizations: \n" + str(steps_dict)
-                    llm_call(prompt_string_natlang_provided, key, f"{regeneration_folder}/natlang_provided/{model}", f"{key}_regeneration", model)
+                    llm_call(prompt_string_natlang_provided, key, f"{regeneration_folder}/natlang_provided/{model}", "regeneration", model)
         except Exception as e:
             print(f"Error in generating decompositions for {key}: {e}")
             continue 
 
-def check_generated_progs_regenerate(regeneration_folder: str = "decomposition_results/decompose_and_regenerate", natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "src_progs.json", model: str = "gpt-4o", problem_id_file: str = "jsons_from_pie_html/problem_id_dict.json", test_cases_file: str = "jsons_from_pie_html/test_cases_dict.json", result_folder: str = "decomposition_results/decompose_and_regenerate/results", result_txt: str = "six_testcase_result.txt", result_json: str = "six_testcase_result.json", num_test_cases: int = 6):
+def check_generated_progs_regenerate(regeneration_folder: str = "decomposition_results/decompose_and_regenerate", natlang_decomp_folder: str = "natlang_decompositions", src_progs_file: str = "jsons_from_pie_html/src_progs.json", model: str = "gpt-4o", problem_id_file: str = "jsons_from_pie_html/problem_id_dict.json", test_cases_file: str = "jsons_from_pie_html/test_cases_dict.json", result_folder: str = "decomposition_results/decompose_and_regenerate/results", result_txt: str = "six_testcase_result.txt", result_json: str = "six_testcase_result.json", num_test_cases: int = 6):
     src_progs, target_progs, gen_progs, explanation_tgt_src, explanation_gen_src, explanation_gen_tgt, src_prog_exps = load_programs_and_explanations(src_progs_file=src_progs_file)
     env = simulator.make(timeout_seconds_gem5=120, verbose=True, use_logical_cpus=True, port=80, workers=80, exit_early_on_fail=True)
     code_list = []
