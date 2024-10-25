@@ -1,0 +1,1 @@
+{"optimized_code": "#include <iostream>\n\nusing namespace std;\n\ntypedef long long ll;\n\nint main() {\n    int s;\n    cin >> s;\n\n    int ans = 0;\n    while (s > 4 || s == 3) {\n        if (s % 2 == 0) s /= 2;\n        else s = 3 * s + 1;\n        ans++;\n    }\n\n    cout << ans + 3 << endl;\n}"}
